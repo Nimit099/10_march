@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <brand>
-        <headerColor>#0070D2</headerColor>
+        <headerColor>#3498F1</headerColor>
+        <logo>Final_Logo_2logo</logo>
+        <logoVersion>1</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
     <formFactors>Small</formFactors>
@@ -9,9 +11,10 @@
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
-    <label>QUICK FORM</label>
+    <label>Quick Form</label>
     <navType>Standard</navType>
-    <tabs>QF_home</tabs>
+    <tabs>QF_Home</tabs>
+    <tabs>Form__c</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>QUICK_FORM_UtilityBar</utilityBar>
+    <utilityBar>Quick_Form_UtilityBar</utilityBar>
 </CustomApplication>

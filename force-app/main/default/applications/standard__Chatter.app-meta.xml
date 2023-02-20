@@ -10,6 +10,5 @@
     <tabs>standard-OtherUserProfile</tabs>
     <tabs>standard-CollaborationGroup</tabs>
     <tabs>standard-File</tabs>
-    <tabs>Notification__c</tabs>
     <tabs>Form__c</tabs>
 </CustomApplication>

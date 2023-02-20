@@ -19,6 +19,5 @@
     <tabs>standard-Product2</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
-    <tabs>Notification__c</tabs>
     <tabs>Form__c</tabs>
 </CustomApplication>

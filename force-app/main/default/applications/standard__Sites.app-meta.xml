@@ -7,6 +7,5 @@
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <tabs>standard-Chatter</tabs>
     <tabs>standard-Sites</tabs>
-    <tabs>Notification__c</tabs>
     <tabs>Form__c</tabs>
 </CustomApplication>

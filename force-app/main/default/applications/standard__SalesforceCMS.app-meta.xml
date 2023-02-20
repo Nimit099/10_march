@@ -10,15 +10,11 @@
     <tabs>standard-CmsChannel</tabs>
     <tabs>standard-CmsWorkspaces</tabs>
     <tabs>standard-CmsExperiences</tabs>
-    <tabs>Notification__c</tabs>
     <tabs>Form__c</tabs>
     <uiType>Lightning</uiType>
     <workspaceConfig>
         <mappings>
             <tab>Form__c</tab>
-        </mappings>
-        <mappings>
-            <tab>Notification__c</tab>
         </mappings>
         <mappings>
             <tab>standard-CmsAuthorHome</tab>
