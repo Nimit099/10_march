@@ -1,36 +1,36 @@
 public with sharing class FormBuilderController {
    
     
-        @AuraEnabled
-        public static List<BaseField_mdt__mdt> GetFieldsMetaData(){
-         try {
-             List<BaseField_mdt__mdt> basefield = BaseField_mdt__mdt.getAll().values();
-             return basefield;
-         } catch (Exception e) {
-             throw new AuraHandledException(e.getMessage());
-         }
-        }
+    @AuraEnabled
+    public static List<BaseField_mdt__mdt> GetFieldsMetaData(){
+     try {
+         List<BaseField_mdt__mdt> basefield = BaseField_mdt__mdt.getAll().values();
+         return basefield;
+     } catch (Exception e) {
+         throw new AuraHandledException(e.getMessage());
+     }
+    }
 
-        @AuraEnabled
-        public static StylesWrapper GetStyles(String id){
-            try {
-                StylesWrapper sw = new StylesWrapper();
-                sw.AlignmentProp = Alignment__mdt.getAll().values();
-                sw.BgPositionProp = Background_position__mdt.getAll().values();
-                sw.BgRepeatProp = Background_repeat__mdt.getAll().values();
-                sw.BgsizeProp = Background_size__mdt.getAll().values();
-                sw.BorderStylesProp=Border_styles__mdt.getAll().values();
-                sw.FixPosProp = Fix_position__mdt.getAll().values();
-                sw.FontProp = Font__mdt.getAll().values();
-                sw.FontLineHeightProp = Font_Line_Height__mdt.getAll().values();
-                sw.FontStyleProp = Font_Style__mdt.getAll().values();
-                sw.FontWeightProp = Font_Weight__mdt.getAll().values();
-                sw.FormDirectionProp = Form_Direction__mdt.getAll().values();
-                return sw;
-            } catch (Exception e) {
-                throw new AuraHandledException(e.getMessage());
-            }
+    @AuraEnabled
+    public static StylesWrapper GetStyles(){
+        try {
+            StylesWrapper sw = new StylesWrapper();
+            sw.AlignmentProp = Alignment__mdt.getAll().values();
+            sw.BgPositionProp = Background_position__mdt.getAll().values();
+            sw.BgRepeatProp = Background_repeat__mdt.getAll().values();
+            sw.BgsizeProp = Background_size__mdt.getAll().values();
+            sw.BorderStylesProp=Border_styles__mdt.getAll().values();
+            sw.FixPosProp = Fix_position__mdt.getAll().values();
+            sw.FontProp = Font__mdt.getAll().values();
+            sw.FontLineHeightProp = Font_Line_Height__mdt.getAll().values();
+            sw.FontStyleProp = Font_Style__mdt.getAll().values();
+            sw.FontWeightProp = Font_Weight__mdt.getAll().values();
+            sw.FormDirectionProp = Form_Direction__mdt.getAll().values();
+            return sw;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
+    }
 
     //Method to get Field's Data
     @Auraenabled
@@ -648,40 +648,40 @@ public with sharing class FormBuilderController {
         }
 
 
+    @AuraEnabled
+    public static List<Form_Page__c> GetFormPage(String Form_Id){
+        try {
+            List<Form_Page__c> pageList = [SELECT Id, Name, Page_Number__c FROM Form_Page__c WHERE Form__c=:Form_Id ORDER BY Page_Number__c ASC];
+            return pageList;
+     } catch (Exception e) {
+         throw new AuraHandledException(e.getMessage());
+     }
+    }
+    public class StylesWrapper{
         @AuraEnabled
-        public static List<Form_Page__c> GetFormPage(String Form_Id){
-         try {
-             List<Form_Page__c> pageList = [SELECT Id, Name, Page_Number__c FROM Form_Page__c WHERE Form__c=:Form_Id ORDER BY Page_Number__c ASC];
-             return pageList;
-         } catch (Exception e) {
-             throw new AuraHandledException(e.getMessage());
-         }
-        }
-        public class StylesWrapper{
-            @AuraEnabled
-            public list<Alignment__mdt> AlignmentProp{get; set;}
-            @AuraEnabled
-            public list<Background_position__mdt> BgPositionProp{get; set;}
-            @AuraEnabled
-            public list<Background_repeat__mdt> BgRepeatProp{get;set;}
-            @AuraEnabled
-            public list<Background_size__mdt> BgsizeProp{get;set;}
-            @AuraEnabled
-            public list<Border_styles__mdt> BorderStylesProp{get;set;}
-            @AuraEnabled
-            public list<Fix_position__mdt> FixPosProp{get;set;}
-            @AuraEnabled
-            public list<Font__mdt> FontProp{get;set;}
-            @AuraEnabled
-            public list<Font_Line_Height__mdt> FontLineHeightProp{get;set;}
-            @AuraEnabled
-            public list<Font_Style__mdt> FontStyleProp{get;set;}
-            @AuraEnabled
-            public list<Font_Weight__mdt> FontWeightProp{get;set;}
-            @AuraEnabled
-            public list<Form_Direction__mdt> FormDirectionProp{get;set;}
-    
-        }
+        public list<Alignment__mdt> AlignmentProp{get; set;}
+        @AuraEnabled
+        public list<Background_position__mdt> BgPositionProp{get; set;}
+        @AuraEnabled
+        public list<Background_repeat__mdt> BgRepeatProp{get;set;}
+        @AuraEnabled
+        public list<Background_size__mdt> BgsizeProp{get;set;}
+        @AuraEnabled
+        public list<Border_styles__mdt> BorderStylesProp{get;set;}
+        @AuraEnabled
+        public list<Fix_position__mdt> FixPosProp{get;set;}
+        @AuraEnabled
+        public list<Font__mdt> FontProp{get;set;}
+        @AuraEnabled
+        public list<Font_Line_Height__mdt> FontLineHeightProp{get;set;}
+        @AuraEnabled
+        public list<Font_Style__mdt> FontStyleProp{get;set;}
+        @AuraEnabled
+        public list<Font_Weight__mdt> FontWeightProp{get;set;}
+        @AuraEnabled
+        public list<Form_Direction__mdt> FormDirectionProp{get;set;}
+
+    }
 
     @AuraEnabled
     public static List<Scale_Rating__mdt> getScaleRating(){
@@ -783,10 +783,10 @@ public static List<Form_Fields__c> CreateFieldRecord(String Form_Id,String Name,
 //                 // field.Form_Page__c = 'a091y000004uuFeAAI';
 //                // field.Field_Order__c = 2;
 // insert field1;
-    } catch (Exception e) {
-        throw new AuraHandledException(e.getMessage());
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
-}
 
 @AuraEnabled
 public static pageWrapper addPageBreak(Id FormId,String Name,String Form_Page_Id,Integer Position,String TargetedFeild){
@@ -1092,21 +1092,27 @@ public static pageWrapper createPage(Integer totalPages,Id formId){
     @AuraEnabled
     public static pageWrapper deletePage(Id FormId, Id PageId){
         try {
-            Form_Page__c deletePage= [SELECT Id from Form_Page__c where Id=:PageId];
+            Form_Page__c deletePage= [SELECT Id, Page_Number__c from Form_Page__c where Id=:PageId];
             boolean hasRequiredField = false;
             List<Form_Fields__c> fieldContainsRequireCheck = [SELECT Name From Form_Fields__c where Form_Page__c=:PageId];
             for(Form_Fields__c it: fieldContainsRequireCheck){
-               List<String> temp=  it.Name.split(',');
-               if(temp.size()==3){
-                 if(temp.get(2) == 'isrequired'){
-                    hasRequiredField = true;
-                 }
-               }
+                List<String> temp=  it.Name.split(',');
+                if(temp.size()==3){
+                    if(temp.get(2) == 'isrequired'){
+                        hasRequiredField = true;
+                    }
+                }
             }
-            if(hasRequiredField==false){
-            delete deletePage;}
+            if(!hasRequiredField){
+                delete deletePage;
+                // Subtract 1 from Page_Number__c of all pages that have a higher page number than the deleted page
+                List<Form_Page__c> pagesToUpdate = [SELECT Id, Page_Number__c FROM Form_Page__c WHERE Form__c = :FormId AND Page_Number__c > :deletePage.Page_Number__c];
+                for (Form_Page__c p : pagesToUpdate) {
+                    p.Page_Number__c -= 1;
+                }
+                update pagesToUpdate;
+            }
             List<Form_Fields__c> formFields=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c ORDER BY Field_Order__c ASC];
-
             pageWrapper pw = new pageWrapper();
             pw.fieldList = formFields;
             pw.pageList = [SELECT Id, Name, Page_Number__c FROM Form_Page__c WHERE Form__c=:FormId ORDER BY Page_Number__c ASC];
@@ -1115,6 +1121,7 @@ public static pageWrapper createPage(Integer totalPages,Id formId){
             throw new AuraHandledException(e.getMessage());
         }
     }
+    
 
     @AuraEnabled
     public static Form__c formDetails(Id id){

@@ -2,7 +2,7 @@
      <!-- Email Id -->
      <template if:true={isTrueEmail}>
        <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:email" alternative-text="Email Id" title="Email Id"
                     size="small"> </lightning-icon> Email-Id
             </div>
@@ -12,7 +12,7 @@
   <!--Full Name -->
   <template if:true={isTrueFullName}>
     <template if:true={isFieldCompView}>
-        <div class="slds-box_xx-small fieldOutlines">
+        <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:user" alternative-text="Name" title="Name"
                     size="small"></lightning-icon> Full Name
             </div>
@@ -22,7 +22,7 @@
 <!-- Name -->
 <template if:true={isTrueName}>
     <template if:true={isFieldCompView}>
-        <div class="slds-box_xx-small fieldOutlines">
+        <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:user" alternative-text="Name" title="Name"
                     size="small"></lightning-icon> Name
         </div>
@@ -33,7 +33,7 @@
     <!-- Address -->
 <template if:true={isTrueAddress}>
     <template if:true={isFieldCompView}>
-        <div class="slds-box_xx-small fieldOutlines">
+        <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:checkin" alternative-text="Address" title="Address"
                     size="small"></lightning-icon> Address
             </div>
@@ -43,7 +43,7 @@
 
        <template if:true={isTruePhone}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:call" alternative-text="Phone" title="Phone"
                     size="small"></lightning-icon> Phone
             </div>
@@ -55,7 +55,7 @@
         <!-- Short Text -->
     <template if:true={isTrueShortText}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:justify_text" alternative-text="Short Text"
                     title="Short Text" size="small"></lightning-icon> Short Text
             </div>
@@ -66,7 +66,7 @@
 
     <template if:true={isTrueLongText}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:textarea" alternative-text="Long Text" title="Long Text"
                     size="small"></lightning-icon> Long Text
             </div>
@@ -76,7 +76,7 @@
      <!-- DropDown -->
      <template if:true={isTrueDropdown}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:down" alternative-text="DropDown" title="DropDown"
                     size="small"></lightning-icon> Dropdown
             </div>
@@ -87,7 +87,7 @@
           <!--CheckBox-->
     <template if:true={isTrueCheckBox}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:check" alternative-text="CheckBox" title="CheckBox"
                     size="small"></lightning-icon> Checkbox
             </div>
@@ -98,7 +98,7 @@
      <!-- Radio Button -->
      <template if:true={isTrueRadioButton}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:radio_button" alternative-text="CheckBox"
                     title="CheckBox" size="small"></lightning-icon> Radio Button
             </div>
@@ -107,7 +107,7 @@
      </template>
      <template if:true={isTrueFileUpload}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:upload" alternative-text="CheckBox" title="CheckBox"
                     size="small"> </lightning-icon>File Upload
             </div>
@@ -117,7 +117,7 @@
        <!-- Number -->
        <template if:true={isTrueNumber}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:richtextnumberedlist" alternative-text="Number"
                     title="Number" size="small"></lightning-icon> Number
             </div>
@@ -127,7 +127,7 @@
         <!-- Price -->
     <template if:true={isTruePrice}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:moneybag" alternative-text="Price" title="Price"
                     size="small"></lightning-icon> Price
             </div>
@@ -137,7 +137,7 @@
      <!-- Date -->
      <template if:true={isTrueDate}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:date_input" alternative-text="Date" title="Date"
                     size="small"></lightning-icon> Date
             </div>
@@ -146,7 +146,7 @@
      </template>
      <template if:true={isTrueTime}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:clock" alternative-text="Time" title="Time"
                     size="small"></lightning-icon> Time
             </div>
@@ -155,7 +155,7 @@
             </template>
                        <template if:true={isTrueDateTime}>
                         <template if:true={isFieldCompView}>
-                <div class="slds-box_xx-small fieldOutlines">
+                <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:date_time" alternative-text="DateTime" title="DateTime"
                     size="small"></lightning-icon> Date-Time
                 </div>
@@ -175,7 +175,7 @@
     <!--EMOJI RATING-->
     <template if:true={isTrueEmojiRating}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:smiley_and_people" alternative-text="Rating"
                     title="Rating" size="small"></lightning-icon> Emoji Rating
             </div>
@@ -195,7 +195,7 @@
         <!-- Terms of Service -->
         <template if:true={isTrueTerms}>
             <template if:true={isFieldCompView}>
-                <div class="slds-box_xx-small fieldOutlines">
+                <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:warranty_term" alternative-text="Terms of Service"
                     title="Terms of Service" size="small"></lightning-icon> Terms of Service
             </div>
@@ -206,7 +206,7 @@
         <!-- Link -->
         <template if:true={isTrueLink}>
             <template if:true={isFieldCompView}>
-                <div class="slds-box_xx-small fieldOutlines">
+                <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:link" alternative-text="Link" title="Link"
                     size="small"></lightning-icon> Link
                 </div>
@@ -216,7 +216,7 @@
 
  <template if:true={isTrueSign}>
     <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:drag" alternative-text="Signature" title="Signature"
                     size="small"></lightning-icon> Signature
             </div>
@@ -226,7 +226,7 @@
                   <!-- RichText -->
     <template if:true={isTrueRichText}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:display_rich_text" alternative-text="HTML BLock"
                     title="Short Text" size="small"></lightning-icon> Rich Text
             </div>
@@ -237,7 +237,7 @@
     <!--page break-->
     <template if:true={isTruePageBreak}>
         <template if:true={isFieldCompView}>
-            <div class="slds-box_xx-small fieldOutlines">
+            <div class="slds-box_xx-small fieldOutlines isSelected">
                 <lightning-icon class="icon" icon-name="utility:display_rich_text" alternative-text="Page Break"
                     title="Short Text" size="small"></lightning-icon> Page Break
             </div>

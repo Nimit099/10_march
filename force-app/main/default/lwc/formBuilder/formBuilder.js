@@ -1,14 +1,15 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import GetFormPage from '@salesforce/apex/FormBuilderController.GetFormPage';
-import HomeIcon from '@salesforce/resourceUrl/leftbar_home';
-import FieldIcon from '@salesforce/resourceUrl/leftbar_fieldmapping';
-import DesignIcon from '@salesforce/resourceUrl/leftbar_design';
-import notificationIcon from '@salesforce/resourceUrl/leftbar_notification';
-import ThankyouIcon from '@salesforce/resourceUrl/leftbar_thankyou';
-import object from '@salesforce/resourceUrl/leftbar_objectmapping';
-import PreviewIcon from '@salesforce/resourceUrl/leftbar_preview';
-import PublishIcon from '@salesforce/resourceUrl/leftbar_publish';
+import iconzip from '@salesforce/resourceUrl/NavigationBar'
+// import HomeIcon from '@salesforce/resourceUrl/leftbar_home';
+// import FieldIcon from '@salesforce/resourceUrl/leftbar_fieldmapping';
+// import DesignIcon from '@salesforce/resourceUrl/leftbar_design';
+// import notificationIcon from '@salesforce/resourceUrl/leftbar_notification';
+// import ThankyouIcon from '@salesforce/resourceUrl/leftbar_thankyou';
+// import object from '@salesforce/resourceUrl/leftbar_objectmapping';
+// import PreviewIcon from '@salesforce/resourceUrl/leftbar_preview';
+// import PublishIcon from '@salesforce/resourceUrl/leftbar_publish';
 import getFieldsRecords from '@salesforce/apex/FormBuilderController.getFieldsRecords';
 import CreateFieldRecord from '@salesforce/apex/FormBuilderController.CreateFieldRecord';
 import createPage from '@salesforce/apex/FormBuilderController.createPage';
@@ -45,19 +46,28 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
     
     
     @track spinnerDataTable = false;
+
     //     icons        // 
-    @track homeIcon = HomeIcon;
-    designIcon = DesignIcon;
+    // @track homeIcon = HomeIcon;
+    // designIcon = DesignIcon;
+    // thankyouicon = ThankyouIcon;
+    // publishIcon = PublishIcon;
+    // object =object;
+    // fieldicon = FieldIcon;
+    // notificationicon = notificationIcon;
+    // previewIcon = PreviewIcon;
+    @api homeIcon = iconzip + '/home.png';
+    fieldicon = iconzip + '/fields.png';
+    designIcon = iconzip + '/designdesign.png';
+    notificationicon = iconzip + '/notificationnotification.png';
+    thankyouicon = iconzip + '/thankyou.png';
+    previewIcon = iconzip + '/previewPreview.png';
+    publishIcon = iconzip + '/Vectorpublishment.png';
     DeleteIcon = Delete_icon;
-    thankyouicon = ThankyouIcon;
-    publishIcon = PublishIcon;
+
     editpageIcon = Edit_page_icon;
     addIcon = Add_icon;
     EditIcon = Edit_icon;
-    object =object;
-    fieldicon = FieldIcon;
-    notificationicon = notificationIcon;
-    previewIcon = PreviewIcon;
     cross = cross;
     right = right;
     outsideClick;
@@ -67,6 +77,8 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
     isModalOpen = false;
     isModalOpen1 = false;
     isModalOpen2 = false;
+    spinnerTable = false;
+    error_toast = true;
 
     @api ParentMessage = '';
     @api FormName = '';
@@ -189,7 +201,42 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
         console.log('After handlelabelCSS');
     }
 
+    handlehovercss(event){
+        console.log(event.detail);
+        console.log(this.template.querySelectorAll("c-quickformfieldcomponent"));
+        let Arr = this.template.querySelectorAll("c-quickformfieldcomponent");
+        for (let i = 0; i < Arr.length; i++) {
+            const element = Arr[i];
+            console.log(i+'--'+element);
+            element.handleeffect('hover',event.detail);
+        }
+        // this.template.querySelector("c-quickformfieldcomponent").FieldCSSUpdate(this.newCSS);
+        console.log('After handlelabelCSS');
+    }
+
+    handlefocuscss(event){
+        console.log(event.detail);
+        console.log(this.template.querySelectorAll("c-quickformfieldcomponent"));
+        let Arr = this.template.querySelectorAll("c-quickformfieldcomponent");
+        for (let i = 0; i < Arr.length; i++) {
+            const element = Arr[i];
+            console.log(i+'--'+element);
+            element.handleeffect('focus',event.detail);
+        }
+        // this.template.querySelector("c-quickformfieldcomponent").FieldCSSUpdate(this.newCSS);
+        console.log('After handlelabelCSS');
+    }
+
     handlepagecss(event){
+        // let str = event.detail;
+        // let array = this.template.querySelectorAll('.page');
+        // for (let i = 0; i < array.length; i++) {
+        //     const element = array[i];
+        //     console.log(i+'--'+element);
+        //     element.style = str;
+        // }
+        // this.spinnerDataTable = false;
+        this.spinnerDataTable = false;
         getPageCSS({id:this.ParentMessage})
         .then(result=>{
             console.log(result);
@@ -202,14 +249,15 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
                 console.log(i+'--'+element);
                 element.style = str;
             }
-            // this.spinnerDataTable = false;
+            this.spinnerDataTable = false;
         }).catch(error=>{
             console.log({error});
-            // this.spinnerDataTable = false;
+            this.spinnerDataTable = false;
         })
     }
 
     handleformcss(event){
+        this.spinnerDataTable = false;
         getFormCSS({id:this.ParentMessage})
         .then(result=>{
             console.log(result);
@@ -221,7 +269,10 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
         }).catch(error=>{
             console.log({error});
         })
-        // this.spinnerDataTable = false;
+        // console.log(event.detail);
+        // let str = event.detail;
+        // let array = this.template.querySelector('.myform');
+        // array.style=str;
     }
 
     handlebtnpos(event){
@@ -288,13 +339,13 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
                 this.setPageField(result);
                  
                 console.log(this.FieldList.length);
-                var allDiv  = this.template.querySelector('.fieldtab');
-                allDiv.style = 'background-color:#b3cce6;';
+                var allDiv  = this.template.querySelector('.tab-2');
+                allDiv.style = 'background-color: #8EBFF0;padding: 12%;border-radius: 50%;';
             })
             .catch(error => {
                 console.log(error);
-                var allDiv  = this.template.querySelector('.fieldtab');
-                allDiv.style = 'background-color:#b3cce6;';
+                var allDiv  = this.template.querySelector('.tab-2');
+                allDiv.style = 'background-color: #8EBFF0;padding: 12%;border-radius: 50%;';
             });
         this.activesidebar = true;
         
@@ -315,16 +366,14 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
         console.log('inside onclick'); 
         var divid = '.'+event.currentTarget.dataset.title;
        
-        var allDiv  = this.template.querySelectorAll('.sidebar');
-        var temp111 = this.template.querySelectorAll('.pageButtonMenu');
-        console.log(temp111.length);
+        var allDiv  = this.template.querySelectorAll('.image-tab');
         console.log(allDiv.length);
         for(var i=0;i<allDiv.length;i++){
             allDiv[i].style  = 'background-color:none';
         }
         var Div = this.template.querySelector(divid);
         console.log(Div);
-        Div.style = 'background-color:#b3cce6'
+        Div.style = 'background-color: #8EBFF0;padding: 12%;border-radius: 50%;';
         
          console.log(event.currentTarget.dataset.title);
          console.log('check if condition-=->');
@@ -334,16 +383,25 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
             componentDef: "c:qf_home",
           };
           let encodedDef = btoa(JSON.stringify(cmpDef));
+          console.log('OUTPUT : ',encodedDef);
           this[NavigationMixin.Navigate]({
-            type: "standard__webPage",
+            type: "standard__app",
             attributes: {
-              url: "/one/one.app#" + encodedDef
+              appTarget: 'c__Quick_Form',
             }
           });
+        //   this[NavigationMixin.Navigate]({
+        //     type: "standard__webPage",
+        //     attributes: {
+        //       url: "/one/one.app#" + encodedDef
+        //     }
+        //   });
+        
        }
          else if (event.currentTarget.dataset.title == 'tab-2' || event.currentTarget.dataset.title == 'tab-3') {
         console.log('in tab-2 or tab-3 code-->');
-           if (event.currentTarget.dataset.title == 'tab-2') {
+        if (event.currentTarget.dataset.title == 'tab-2') {
+               this.spinnerDataTable = true;
                this.activesidebar = true;
                this.activeDesignsidebar = false;
                this.activeNotification = false;
@@ -919,11 +977,63 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
             console.log(result);
             this.PageList = result.pageList;
             this.setPageField(result.fieldList);
-            this.showToast('Form Page updated Successfully','success');
+            // this.showToast('Form Page updated Successfully','success');
+            let toast_error_msg = 'Form Page updated Successfully';
+            this.error_toast = true;
+            this.template.querySelector('c-toast-component').showToast('success',toast_error_msg,3000);
         }).catch(err=>{
             console.log({err});
+            let toast_error_msg = 'Error while updating in the form page, Please try again later';
+            this.error_toast = true;
+            this.template.querySelector('c-toast-component').showToast('error',toast_error_msg,3000);
         })
         this.isModalOpen2 = false;
+    }
+    
+    handleValidation() {
+        let nameCmp = this.template.querySelector(".nameCls");
+        
+        console.log({nameCmp});
+        
+        
+        if (!nameCmp.value || nameCmp.value.trim().length == 0 ) {
+            console.log('test for form titel');
+            nameCmp.setCustomValidity("Form Title is required");
+        } else {
+            nameCmp.setCustomValidity(""); // clear previous value
+            // this.formdetails = false;
+            // this.objectselection = true;
+            this.submitDetails();
+        }
+        nameCmp.reportValidity();
+    }
+    handleValidation1() {
+        let nameCmp1 = this.template.querySelector(".nameCls1");
+        if (!nameCmp1.value || nameCmp1.value.trim().length == 0 ) {
+            console.log('test for form titel');
+            nameCmp1.setCustomValidity("Page Title is required");
+        } else {
+            nameCmp1.setCustomValidity(""); // clear previous value
+            // this.formdetails = false;
+            // this.objectselection = true;
+            this.handlecreatePage();
+        }
+        nameCmp1.reportValidity();
+
+    }
+    handleValidation2() {
+        let nameCmp2 = this.template.querySelector(".nameCls2");
+        if (!nameCmp2.value || nameCmp2.value.trim().length == 0 ) {
+            console.log('test for form titel');
+            nameCmp2.setCustomValidity("Page Title is required");
+        } else {
+            nameCmp2.setCustomValidity(""); // clear previous value
+            // this.formdetails = false;
+            // this.objectselection = true;
+            this.handleeditPage();
+        }
+        nameCmp2.reportValidity();
+
     }
     handlecreatePage(){
         console.log('total pages--------->' + this.PageList.length);
@@ -933,9 +1043,15 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
             console.log(result);
             this.PageList = result.pageList;
             this.setPageField(result.fieldList);
-            this.showToast('Form Page create Successfully','success');
+            // this.showToast('Form Page create Successfully','success');
+            let toast_error_msg = 'Form Page create Successfully';
+            this.error_toast = true;
+            this.template.querySelector('c-toast-component').showToast('success',toast_error_msg,3000);
         }).catch(err=>{
             console.log({err});
+            let toast_error_msg = 'Error while creating page, Please try again later';
+            this.error_toast = true;
+            this.template.querySelector('c-toast-component').showToast('error',toast_error_msg,3000);
         })
         this.isModalOpen1 = false;
         this.handleModalClose();
@@ -1149,15 +1265,21 @@ this.isModalOpen  = false;
         this.FormName = this.formtitle;
         editFormSubmit({ id:this.ParentMessage, name:this.formtitle, progressIn : this.Progressbarvalue, captcha : this.captchTypeparent}).then(result=>{
             console.log('editformsubmit result ------->' + result);
-            const event = new ShowToastEvent({
-                title: 'Form Changes Done Successfully',
-                variant: 'success',
-                mode: 'dismissable'
-            });
-            this.dispatchEvent(event);
+            // const event = new ShowToastEvent({
+            //     title: 'Form Changes Done Successfully',
+            //     variant: 'success',
+            //     mode: 'dismissable'
+            // });
+            // this.dispatchEvent(event);
+            let toast_error_msg = 'Form Changes Done Successfully';
+            this.error_toast = true;
+            this.template.querySelector('c-toast-component').showToast('success',toast_error_msg,3000);
         
         }).catch(err=>{
             console.log('editformsubmit error' + err);
+            let toast_error_msg = 'Error while changes in the form, Please try again later';
+            this.error_toast = true;
+            this.template.querySelector('c-toast-component').showToast('error',toast_error_msg,3000);
         });
        this.isModalOpen = false;        
     }

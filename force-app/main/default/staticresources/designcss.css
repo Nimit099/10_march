@@ -1,0 +1,37 @@
+.slds-color-picker__summary-button{
+    width: 18% !important;
+    border-radius: 14px;
+    border-color: #6699cc;
+}
+.slds-swatch{
+    width: 6rem !important;
+}
+
+.slds-color-picker__summary-input{
+    width: 80% !important;
+}
+.slds-color-picker__summary-input .slds-input{
+    width: 100% !important;
+}
+.slds-file-selector__button{
+    width: 100% !important;
+    border-radius: 14px;
+    border-color: #6699cc;
+}
+/* .slds-file-selector__body{
+    width: 19rem !important;
+} */
+.slds-file-selector__body{
+    width: 140% !important;
+    max-width: 140%;
+    padding: 1px;
+    border: var(--lwc-borderWidthThin,1px) dashed var(--slds-g-color-border-base-4, var(--lwc-colorBorder,rgb(229, 229, 229)));
+}
+.slds-file-selector__dropzone{
+    border: none;
+}
+.slds-file-selector_files .slds-file-selector__text, .slds-file-selector--files .slds-file-selector__text {
+    margin-right: var(--lwc-spacingSmall,0.75rem);
+    margin-left: 12%;
+    width: 70%;
+}

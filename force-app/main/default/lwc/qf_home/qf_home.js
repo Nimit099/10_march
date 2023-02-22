@@ -388,7 +388,7 @@ export default class Qf extends NavigationMixin(LightningElement) {
     //   Edited as per sheet(qf_home.js - 1)
 
     new_rename(event){
-      try {
+      try {        
         this.formId = event.currentTarget.dataset.id;
         this.formname = event.currentTarget.dataset.name;
         this.pencheck = true;

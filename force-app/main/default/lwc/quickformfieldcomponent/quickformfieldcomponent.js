@@ -172,24 +172,21 @@ export default class Quickformfieldcomponent extends LightningElement {
             console.log({error});
         })
 
-        // console.log('CSS->> '+CSSString);
-        // if (CSSString == null || CSSString == undefined) {
-        //     this.getFieldCSS1 = CSSString;
-        // }
-        // console.log('FieldCSS->> '+this.getFieldCSS1);
-        // console.log(this.template.querySelectorAll('input'));
-        // let array = this.template.querySelectorAll('input');
-        // console.log(array.length);
-        // let str = this.getFieldCSS1;
-        // let Arr = str.split(';color:');
-        // let Arr2 = Arr[1].split(';');
-        // let pcolor = Arr2[0];
-        // for (let i = 0; i < array.length; i++) {
-        //     const element = array[i];
-        //     element.style=str;
-        //     element.style.setProperty("--c",pcolor);
-        // }
-        // this.template.querySelector('select').style = str;
+        // console.log('FieldCSS->> '+CSSString);
+        //     console.log(this.template.querySelectorAll('input'));
+        //     let array = this.template.querySelectorAll('input');
+        //     console.log(array.length);
+        //     let str = this.getFieldCSS1;
+        //     let Arr = str.split(';color:');
+        //     let Arr2 = Arr[1].split(';');
+        //     let pcolor = Arr2[0];
+        //     for (let i = 0; i < array.length; i++) {
+        //         const element = array[i];
+        //         element.style=str;
+        //         element.style.setProperty("--c",pcolor);
+        //     }
+        //     this.template.querySelector('select').style = str;
+        
     }
 
     @api LabelCSSUpdate(CSSString){
@@ -220,6 +217,15 @@ export default class Quickformfieldcomponent extends LightningElement {
 
     ApplyCSS(event){
         // event.target.style = "color:blue";
+    }
+
+    @api handleeffect(type,property){
+        if(type=='hover'){
+            this.hovercssproperty = property;
+        }
+        else if(type == 'focus'){
+            this.focuscssproperty = property;
+        }
     }
 
     handlehover(event){

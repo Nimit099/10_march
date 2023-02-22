@@ -1,4 +1,4 @@
-public with sharing class customMetadata {
+public without sharing class customMetadata {
     Public static String formid{get;set;}
     Public static String test_form_id;
     public string urlvalue{get;set;}
@@ -120,7 +120,11 @@ public with sharing class customMetadata {
         SiteDetail mySiteDetail = [select SecureURL from SiteDetail where DurableId = :mySite.Id];
 
         System.debug(mySiteDetail.SecureURL+siteList.Name);
-        String testtest = mySiteDetail.SecureURL+'?formid='+formid_test;
+        String modifiedSecureURL = mySiteDetail.SecureURL;
+        if (modifiedSecureURL.endsWith('/')) {
+            modifiedSecureURL = modifiedSecureURL.substring(0, modifiedSecureURL.length() - 1);
+        }
+        String testtest = modifiedSecureURL+'?formid='+formid_test;
         System.debug(testtest);
         siteFullUrlList.add(mySiteDetail.SecureURL+siteList.Name);
             return testtest;

@@ -711,6 +711,7 @@ save(event){
                             url: "/one/one.app#" + encodedDef
                         }
                     });
+
                     this.spinnerDataTable = false;
                     this.isModalOpen = false; 
                 }).catch(error=>{

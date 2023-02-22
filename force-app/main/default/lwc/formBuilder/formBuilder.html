@@ -1,4 +1,11 @@
 <template>
+
+    <!-- ============== error toast=========== -->
+    <template if:true={error_toast}>
+        <c-toast-component></c-toast-component>
+    </template>
+        <!-- ============== error toast=========== -->
+
     <div class="MainComponent">
         <!-- spinner -->
         <template if:true={spinnerDataTable}>
@@ -13,56 +20,64 @@
         </template>
         <!-- spinner -->
    
-                        <div class="bar child1">
+        <div class="bar child1">
             <div class='barchild' data-name="home" id="tab-1" data-title="tab-1" onclick={handleActive}>
-                                <div class="home_icon sidebar tab-1 hometab"><img src={homeIcon} alt=""></div>
+                <div class="home_icon sidebar hometab">
+                    <div class="image-tab tab-1"><img src={homeIcon} alt=""></div>
+                </div>
                 <div class="home_text">
-                    <p style="font-size:small; margin-bottom:10%;">Home</p>
-                            </div>
+                    <p style="font-size:small; margin-bottom:15%;">Home</p>
+                </div>
             </div>
             <div class='barchild' data-name="field" id="tab-2" data-title="tab-2" onclick={handleActive}>
-                                <div class="field_icon sidebar tab-2 fieldtab"><img src={fieldicon} alt=""></div>
+                <div class="field_icon sidebar fieldtab">
+                    <div class="image-tab tab-2"><img src={fieldicon} alt=""></div>
+                </div>
                 <div class="field_text">
-                    <p style="font-size:small; margin-bottom:10%;">Field</p>
-                            </div>
+                    <p style="font-size:small; margin-bottom:15%;">Field</p>
+                </div>
             </div>
             <div class='barchild' data-name="design" id="tab-3" data-title="tab-3" onclick={handleActive}>
-                                <div class="design_icon sidebar tab-3 sidebar"><img src={designIcon} alt=""></div>
+                <div class="design_icon sidebar">
+                    <div class="image-tab tab-3"><img src={designIcon} alt=""></div>
+                </div>
                 <div class="desgin_text">
-                    <p style="font-size:small; margin-bottom:10%;">Design</p>
-                            </div>
+                    <p style="font-size:small; margin-bottom:15%;">Design</p>
+                </div>
             </div>
             <div class='barchild' data-name="notification" id="tab-4" data-title="tab-4" onclick={handleActive}>
-                                <div class="notification_icon tab-4 sidebar"><img src={notificationicon} alt=""></div>
+                <div class="notification_icon sidebar">
+                    <div class="image-tab tab-4"><img src={notificationicon} alt=""></div>
+                </div>
                 <div class="notification_text">
-                    <p style="font-size:small; margin-bottom:10%;">Notification</p>
-                            </div>
+                    <p style="font-size:small; margin-bottom:15%;">Notification</p>
+                </div>
             </div>
             <div class='barchild' data-name="thankyou" id="tab-5" data-title="tab-5" onclick={handleActive}>
-                                <div class="thankyou_icon tab-5 sidebar"><img src={thankyouicon} alt=""></div>
+                <div class="thankyou_icon sidebar">
+                    <div class="image-tab tab-5"><img src={thankyouicon} alt=""></div>
+                </div>
                 <div class="thankyou_text">
-                    <p style="font-size:small; margin-bottom:10%;">Thankyou</p>
-                            </div>
+                    <p style="font-size:small; margin-bottom:15%;">Thankyou</p>
+                </div>
             </div>
-            <!-- <div class="sidebar" data-name="object" id="Tab-6" data-title="tab-6" onclick={handleActive}>
-                                <div class="object_icon"><img src={object} alt=""></div>
-                <div class="object_text">
-                    <p style="font-size:xx-small;">Object</p>
-                            </div>
-            </div> -->
             <div class='barchild' data-name="preview" id="tab-7" data-title="tab-7" onclick={handleActive}>
-                                <div class="preview_icon tab-7 sidebar"><img src={previewIcon} alt=""></div>
+                <div class="preview_icon sidebar">
+                    <div class="image-tab tab-7"><img src={previewIcon} alt=""></div>
+                </div>
                 <div class="preview_text">
-                    <p style="font-size:small; margin-bottom:10%;">Preview</p>
-                            </div>
+                    <p style="font-size:small; margin-bottom:15%;">Preview</p>
+                </div>
             </div>
             <div class='barchild' data-name="publish" id="tab-8" data-title="tab-8" onclick={handleActive}>
-                                <div class="publish_icon tab-8 sidebar"><img src={publishIcon} alt=""></div>
-                <div class="publish_text">
-                    <p style="font-size:small; margin-bottom:10%;">Publish</p>
+                <div class="publish_icon sidebar">
+                    <div class="image-tab tab-8"><img src={publishIcon} alt=""></div>
                 </div>
-                            </div>
-                        </div>
+                <div class="publish_text">
+                    <p style="font-size:small; margin-bottom:15%;">Publish</p>
+                </div>
+            </div>
+        </div>
             
     <!-- <div class="slds-grid" onmouseover={SetOpacity} > -->
         <!-- <div class="" style="background-color: white; position:fixed; width:100%; height:10%; z-index:100000">Test </div> -->
@@ -83,7 +98,7 @@
 
 <template if:true={activeDesignsidebar}>
     <div class="child3">
-        <c-design-section-component ongetnewcss={handlenewCSS} ongetpagecss={handlepagecss} ongetlabelcss={handlelabelcss} ongetformcss={handleformcss} onimagespinner={startspinner} onbtnposition={handlebtnpos} ongetbuttoncss={handlebtncss} recordid={ParentMessage}></c-design-section-component>
+        <c-design-section-component ongetnewcss={handlenewCSS} ongetpagecss={handlepagecss} ongetlabelcss={handlelabelcss} ongetformcss={handleformcss} onhovercss={handlehovercss} onfocuscss={handlefocuscss} onimagespinner={startspinner} onbtnposition={handlebtnpos} ongetbuttoncss={handlebtncss} recordid={ParentMessage}></c-design-section-component>
     </div>
 </template>
 
@@ -126,7 +141,7 @@
                   
                         <div class="formButtons">
                             <button  class="FormButtons"
-                                onclick={handleeditForm} name={EditButtonName} data-record={FormName} data-id={ParentMessage} > <img src={EditIcon} alt="edit button" class="icon">Rename</button>
+                                onclick={handleeditForm} name={EditButtonName} data-record={FormName} data-id={ParentMessage} > <img src={EditIcon} alt="edit button" class="icon">Edit Form</button>
                             <button value="new page add"  class="FormButtons" 
                                 onclick={handleAddPage}
                                 name={EditButtonName}><img src={addIcon} alt="Add button" class="icon">Add Page</button>
@@ -358,7 +373,7 @@
                     <div class="bt-center">
                         <div class="bt">
                             <button class="qf-standard-button cancelbtn"  value="Cancel" onclick={closeModal} name="Cancel">Cancel</button>
-                            <button class="qf-standard-button"  value="Next" name="Next" onclick={submitDetails}>Save</button>
+                            <button class="qf-standard-button"  value="Next" name="Next" onclick={handleValidation}>Save</button>
                         </div>
                     </div>
                 </div>
@@ -386,8 +401,8 @@
                                                   </button>
                         </header>
             
-            <div class="slds-modal__content" id="modal-content-id-1">
-                <div class="form-details-input" style="margin-left: 9%; gap: 10px; width:80%;">
+                        <div class="slds-modal__content" id="modal-content-id-1" style="height:20%;">
+                            <div class="form-details-input" style="margin-left: 9%; gap: 20px; width:80%; justify-content: center; align-items: center;">
 
 
                     <div class="input_field">
@@ -402,7 +417,7 @@
                             </div>
                             <div class="slds-col slds-size_6-of-12">
                                 
-                                <lightning-input class="nameCls" variant="label-hidden"  type="text" onchange={changePageTitle} name="page_title" value={pagetitle} required="true"></lightning-input>
+                                <lightning-input class="nameCls1" variant="label-hidden"  type="text" onchange={changePageTitle} name="page_title" value={pagetitle} required="true"></lightning-input>
                               </div>
                         </div>
                     </div>
@@ -418,7 +433,7 @@
                                 :
                             </div>
                             <div class="slds-col slds-size_6-of-12">
-                                <lightning-input class="nameCls" variant="label-hidden"  type="number" onchange={changePageNo} name="page_number" value={pagenumber}></lightning-input>
+                                <lightning-input variant="label-hidden"  type="number" onchange={changePageNo} name="page_number" value={pagenumber}></lightning-input>
                             </div>
                         </div>
                     </div>
@@ -427,8 +442,8 @@
             <div class="slds-modal__footer">
                 <div class="bt-center">
                     <div class="bt">
-                        <button class="qf-standard-button cancelbtn"  value="Cancel" onclick={closeModal1} name="Cancel">Cancel Page</button>
-                        <button class="qf-standard-button"  value="Next" name="Next" onclick={handlecreatePage}>Add Page</button>
+                        <button class="qf-standard-button cancelbtn"  value="Cancel" onclick={closeModal1} name="Cancel">Cancel</button>
+                        <button class="qf-standard-button"  value="Next" name="Next" onclick={handleValidation1}>Add Page</button>
                     </div>
                 </div>
             </div>
@@ -458,10 +473,8 @@
                                       </button>
             </header>
 
-<div class="slds-modal__content" id="modal-content-id-3">
-    <div class="form-details-input" style="margin-left: 9%; gap: 10px; width:80%;">
-
-
+<div class="slds-modal__content" id="modal-content-id-3" style="height:20%;">
+    <div class="form-details-input" style="margin-left: 9%; gap: 20px; width:80%;justify-content: center;align-items: center;">
         <div class="input_field">
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-size_5-of-12">
@@ -474,7 +487,7 @@
                 </div>
                 <div class="slds-col slds-size_6-of-12">
                     
-                    <lightning-input class="nameCls" variant="label-hidden"  type="text"  onchange={changePageTitle2} name="page_title" value={pagetitle2} required="true"></lightning-input>
+                    <lightning-input class="nameCls2" variant="label-hidden"  type="text"  onchange={changePageTitle2} name="page_title" value={pagetitle2} required="true"></lightning-input>
                   </div>
             </div>
         </div>
@@ -490,7 +503,7 @@
                     :
                 </div>
                 <div class="slds-col slds-size_6-of-12">
-                    <lightning-input class="nameCls" variant="label-hidden"  type="number"  onchange={changePageNo2} name="page_number" value={pagenumber2}></lightning-input>
+                    <lightning-input class="" variant="label-hidden"  type="number"  onchange={changePageNo2} name="page_number" value={pagenumber2}></lightning-input>
                 </div>
             </div>
         </div>
@@ -500,7 +513,7 @@
     <div class="bt-center">
         <div class="bt">
             <button class="qf-standard-button cancelbtn"  value="Cancel" onclick={closeModal2} name="Cancel">Cancel</button>
-            <button class="qf-standard-button"  value="Next" name="Next" onclick={handleeditPage}>Edit Page</button>
+            <button class="qf-standard-button"  value="Next" name="Next" onclick={handleValidation2}>Edit Page</button>
         </div>
     </div>
 </div>
