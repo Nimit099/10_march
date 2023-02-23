@@ -99,7 +99,7 @@
                 <div class="panel">
                     <lightning-combobox label="Alignment" value={labelalign} data-name="justify-content:" options={optlabelalign} onchange={handleLabelCss} ></lightning-combobox>
                     <lightning-combobox label="Font" value={labelfontfamily} data-name="font-family:" options={optlabelfontfamily} onchange={handleLabelCss} ></lightning-combobox>
-                    <lightning-combobox label="Font weight" value={labelfontweight} data-name="font-weight:" options={optlabelfontweight} onchange={handleLabelCss} ></lightning-combobox>
+                    <lightning-combobox label="Font weight" value={labelfontweight} data-name="font-weight:" options={optinputfontweight} onchange={handleLabelCss} ></lightning-combobox>
                     <lightning-combobox label="Font style" value={labelfontstyle} data-name="font-style:" options={optlabelfontstyle} onchange={handleLabelCss} ></lightning-combobox>
                     <lightning-input type="number" value={labelfontsize} data-name="font-size:" label="Font size (px)" onchange={handleLabelCss} ></lightning-input>
                     <lightning-combobox label="Font line height" data-name="line-height:" value={labelineheight} options={optlabelineheight} onchange={handleLabelCss} ></lightning-combobox>
@@ -141,7 +141,7 @@
                     <lightning-input type="number" label="Border thickness (px)" value={btnborderwidth} data-name="border-width:" onchange={handleButtonCss} ></lightning-input>
                     <lightning-input type="number" label="Border radius (px)" onchange={handleButtonCss} data-name="border-radius:" value={btnborderradius} ></lightning-input>
                     <lightning-combobox label="Font" value={buttonfontfamily} options={optbuttonfontfamily} data-name="font-family:" onchange={handleButtonCss} ></lightning-combobox>
-                    <lightning-combobox label="Font weight" value={buttonfontweight} options={optbuttonfontweight} data-name="font-weight:" onchange={handleButtonCss} ></lightning-combobox>
+                    <lightning-combobox label="Font weight" value={buttonfontweight} options={optinputfontweight} data-name="font-weight:" onchange={handleButtonCss} ></lightning-combobox>
                     <lightning-combobox label="Font style" value={buttonfontstyle} options={optbuttonfontstyle} data-name="font-style:" onchange={handleButtonCss} ></lightning-combobox>
                     <lightning-input type="number" value={buttonfontsize} label="Font size (px)" onchange={handleButtonCss} data-name="font-size:" ></lightning-input>
 

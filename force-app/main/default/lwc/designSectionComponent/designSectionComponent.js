@@ -131,10 +131,10 @@ export default class DesignSectionComponent extends LightningElement {
        if(this.StylesProp!=null)
        {return this.optionsCreater(this.StylesProp.FontProp);}
       }
-      get optlabelfontweight(){
-       if(this.StylesProp!=null)
-       {return this.optionsCreater(this.StylesProp.FontWeightProp);}
-      }
+    //   get optlabelfontweight(){
+    //    if(this.StylesProp!=null)
+    //    {return this.optionsCreater(this.StylesProp.FontWeightProp);}
+    //   }
       get optlabelfontstyle(){
        if(this.StylesProp!=null)
        {return this.optionsCreater(this.StylesProp.FontStyleProp);}
@@ -195,9 +195,9 @@ export default class DesignSectionComponent extends LightningElement {
 
     get optinputfontweight() {
         if (this.StylesProp != null) {
-            console.log('labelfontweight ==>',this.labelfontweight);
-            console.log('temp ',this.StylesProp.FontWeightProp);
-            return this.optionsCreater(this.StylesProp.FontWeightProp);
+            const array = JSON.parse(JSON.stringify(this.StylesProp.FontWeightProp))
+            let sortedarray = array.sort((p1, p2) => (p1.sr__c > p2.sr__C) ? 1 : (p1.sr__c < p2.sr__c) ? -1 : 0);
+            return this.optionsCreater(sortedarray);
         }
 
     }
@@ -223,11 +223,11 @@ export default class DesignSectionComponent extends LightningElement {
         {return this.optionsCreater(this.StylesProp.FontProp);}
       
        }
-       get optbuttonfontweight(){
-        if(this.StylesProp!=null)
-        {return this.optionsCreater(this.StylesProp.FontWeightProp);}
+    //    get optbuttonfontweight(){
+    //     if(this.StylesProp!=null)
+    //     {return this.optionsCreater(this.StylesProp.FontWeightProp);}
       
-       }
+    //    }
        get optbuttonfontstyle(){
         if(this.StylesProp!=null)
         {return this.optionsCreater(this.StylesProp.FontStyleProp);}
@@ -270,7 +270,7 @@ export default class DesignSectionComponent extends LightningElement {
             .then(result => {
                 console.log('GetStyles called');
                 this.StylesProp = result;
-                console.log('Log->>>' + this.StylesProp);
+                console.log('Log->>>' + JSON.stringify(this.StylesProp));
             }).catch(error => {
                 console.log(error);
             })

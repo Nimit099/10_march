@@ -77,8 +77,9 @@ export default class Quickformfieldcomponent extends LightningElement {
             console.log(result);
             this.getFieldCSS1 = result;
             console.log('FieldCSS->> '+this.getFieldCSS1);
-            console.log(this.template.querySelectorAll('input'));
-            let array = this.template.querySelectorAll('input');
+            console.log(this.template.querySelectorAll('.slds-input'));
+            console.log(this.template.querySelectorAll('.areatext'));
+            let array = this.template.querySelectorAll('.slds-input');
             console.log(array.length);
             let str = this.getFieldCSS1;
             let Arr = str.split(';color:');
@@ -90,17 +91,18 @@ export default class Quickformfieldcomponent extends LightningElement {
                 element.style.setProperty("--c",pcolor);
             }
             this.template.querySelector('select').style = str;
-            let array2 = this.template.querySelectorAll('.slds-input');
-            console.log(array.length);
-            let str2 = this.getFieldCSS1;
-            let Arr22 = str2.split(';color:');
-            let Arr222 = Arr22[1].split(';');
-            let pcolor2 = Arr222[0];
-            for (let i = 0; i < array2.length; i++) {
-                const element = array[i];
-                element.style=str;
-                element.style.setProperty("--c",pcolor2);
-            }
+            console.log('before textarea');
+            // let array2 = this.template.querySelectorAll('.areatext');
+            // console.log({array2});
+            // console.log('after queryselector -> '+array2.length);
+            // // let Arr3 = str.split(';color:');
+            // // let Arr4 = Arr3[1].split(';');
+            // // let pcolor2 = Arr4[0];
+            // for (let i = 0; i < array2.length; i++) {
+            //     const element = array2[i];
+            //     element.style=str;
+            //     // element.style.setProperty("--c",pcolor2);
+            // }
         }).catch(error=>{
             console.log({error});
         })
@@ -166,6 +168,15 @@ export default class Quickformfieldcomponent extends LightningElement {
                 const element = array[i];
                 element.style=str;
                 element.style.setProperty("--c",pcolor);
+            }
+            let array2 = this.template.querySelectorAll('.textarea');
+            let Arr3 = str.split(';color:');
+            let Arr4 = Arr3[1].split(';');
+            let pcolor2 = Arr4[0];
+            for (let i = 0; i < array2.length; i++) {
+                const element = array2[i];
+                element.style=str;
+                element.style.setProperty("--c",pcolor2);
             }
             this.template.querySelector('select').style = str;
         }).catch(error=>{

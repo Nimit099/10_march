@@ -931,12 +931,22 @@ public list<Form_Page__c> pageList{get; set;}}
     }
 
     @AuraEnabled
-public static pageWrapper createPage(Integer totalPages,Id formId){
+public static pageWrapper createPage(Integer totalPages,Id formId, String pagename, Integer pageNumber){
     try {
         Form_Page__c newFormPage= new Form_Page__c();
         newFormPage.Form__c = formId;
-        newFormPage.Page_Number__c = totalPages +1;
-        newFormPage.Name= 'New Form Page';
+        newFormPage.Name = pagename;
+            if (pageNumber != null && pageNumber <= totalPages) {
+                // shift the existing pages forward by one page number
+                List<Form_Page__c> existingPages = [SELECT Id, Page_Number__c FROM Form_Page__c WHERE Form__c = :formId AND Page_Number__c >= :pageNumber ORDER BY Page_Number__c DESC];
+                for (Form_Page__c page : existingPages) {
+                    page.Page_Number__c += 1;
+                }
+                update existingPages;
+                newFormPage.Page_Number__c = pageNumber;
+            } else {
+                newFormPage.Page_Number__c = totalPages + 1;
+            }
         insert newFormPage;
        List<Form_Fields__c> formFields=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c ORDER BY Field_Order__c ASC];
         pageWrapper pw = new pageWrapper();

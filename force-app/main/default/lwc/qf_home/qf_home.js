@@ -388,7 +388,7 @@ export default class Qf extends NavigationMixin(LightningElement) {
     //   Edited as per sheet(qf_home.js - 1)
 
     new_rename(event){
-      try {        
+      try {
         this.formId = event.currentTarget.dataset.id;
         this.formname = event.currentTarget.dataset.name;
         this.pencheck = true;
@@ -508,4 +508,36 @@ export default class Qf extends NavigationMixin(LightningElement) {
           }
         });
       }
-}
+  @track showquickbot = false;
+    quickbot(){
+      console.log('OUTPUT : ',this.showquickbot);
+      if(this.showquickbot == true){
+          // this.template.querySelector(".Quickbot_maincontaner").style.display='block';
+        this.showquickbot = false;
+        console.log('showquickbot -> ',this.showquickbot);
+      }
+      else if(this.showquickbot == false){
+        this.showquickbot = true;
+        console.log('showquickbot -> ',this.showquickbot);
+        // this.template.querySelector(".Quickbot_maincontaner").style.display='block';
+      }
+  }
+  modalbotclose(event){
+    console.log(event.detail);
+    this.showquickbot = false;
+  }
+  sendsuccesspopup(){
+    this.error_toast = true;
+    console.log('error_toast ==>',this.error_toast);
+    let toast_error_msg = 'Message Sent Successfully';
+    this.template.querySelector('c-toast-component').showToast('success',toast_error_msg,3000);
+
+  }
+  senderrorpopup(){
+    this.error_toast = true;
+    console.log('error_toast ==>',this.error_toast);
+    let toast_error_msg = 'there was an error while sending the mail';
+    this.template.querySelector('c-toast-component').showToast('error',toast_error_msg,3000);
+    }
+
+  }

@@ -1369,7 +1369,6 @@ lightning-button{
 .help{
     width: 160px;
     height: 35px;
-    cursor: none;
     gap: 7px;
     border-radius: 28px;
     color: white;      /* Remove comment once button is working*/
@@ -1512,4 +1511,10 @@ button:after {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  @media only screen and (max-width:1440px) {  
+    .norecordfound{
+      height: 72%;
+    }
   }

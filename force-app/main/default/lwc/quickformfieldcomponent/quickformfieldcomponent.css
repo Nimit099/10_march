@@ -1,15 +1,26 @@
+.flex{
+    display: flex;
+}
+
+.rightfield{
+    width: 50%;
+    margin-left: 1%;
+}
+
+.leftfield{
+    width: 50%;
+    margin-right: 1%;
+}
+
 .fullname {
     display: flex;
     justify-content: space-between;
-   
 }
 lightning-input,lightning-select,lightning-textarea,lightning-checkbox-group ,lightning-radio-group,lightning-formatted-rich-text,lightning-input-address{
         --lwc-colorBorderInput: rgb(0, 0, 0);
         --lwc-  : rgb(255,255,255);
         /* --lwc-heightInput: 35px; */
         --lwc-colorBorderInputDisabled:rgb(0,0,0);
-        
-
 }
 .fullnamewidth{
     width: 33%;

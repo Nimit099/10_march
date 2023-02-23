@@ -163,7 +163,7 @@
                     <img src={helpIcon} alt="" class="feedback helpicon">
                     <p>Help</p>
                 </div>
-                <div class="feedback help" >
+                <div class="feedback help"  onclick={quickbot}>
                     <img src={feedbackIcon} alt="" class="feedback">
                     <p>Feedback</p>
                 </div>
@@ -215,5 +215,8 @@
     </template>
     <template if:true={isModalOpen}>
         <c-new-form-details onpopupclose={modalpopupclose}></c-new-form-details>
+    </template>
+    <template if:true={showquickbot}>
+        <c-quick-bot onbotclose={modalbotclose} onsuccess={sendsuccesspopup} onerror={senderrorpopup}></c-quick-bot>
     </template>
 </template>

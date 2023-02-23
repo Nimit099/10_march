@@ -11,6 +11,9 @@ export default class FieldsSectionComponent extends LightningElement {
      notShowField= true;
      showField = false;
      baseField=[];
+     objectoneicon;
+     objecttwoicon;
+     objectthreeicon;
      @track ObjectName = [];
      @track ObjectName1;
      @track ObjectName2;
@@ -44,14 +47,21 @@ export default class FieldsSectionComponent extends LightningElement {
           if (this.ObjectName.length==2) {
             this.ObjectName1 = this.ObjectName[0];
             this.ObjectName2 = this.ObjectName[1];
+            objectoneicon = 'standard:'+this.ObjectName[0].toLowerCase();
+            objecttwoicon = 'standard:'+this.ObjectName2.toLowerCase();
           }
           if (this.ObjectName.length==3) {
             this.ObjectName1 = this.ObjectName[0];
             this.ObjectName2 = this.ObjectName[1];
             this.ObjectName3 = this.ObjectName[2];
-            this.Object2icon = 'standard:'+this.ObjectName2;
+            objectoneicon = 'standard:'+this.ObjectName1.toLowerCase();
+            objecttwoicon = 'standard:'+this.ObjectName2.toLowerCase();
+            objectthreeicon = 'standard:'+this.ObjectName3.toLowerCase();
           }else{
             this.ObjectName1 = this.ObjectName[0];
+            console.log(this.ObjectName1);
+            objectoneicon = 'standard:'+this.ObjectName[0].toLowerCase();
+            console.log(this.objectoneicon);
           }
         }).catch(error=>{
           console.log(error);

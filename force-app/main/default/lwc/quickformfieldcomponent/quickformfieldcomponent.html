@@ -397,9 +397,34 @@
                         </label>
                     </template>
 
-                    <lightning-input-address street-placeholder="Street" city-placeholder="City"
+                    <!-- Custom Address Field -->
+                    <div class="slds-form slds-form_stacked">
+                        <div class="slds-form-element">
+                          <div class="areatext slds-form-element__control">
+                            <textarea id="street-address" class="slds-input" placeholder="Street"></textarea>
+                          </div>
+                        </div>
+                        <div class="slds-form-element flex">
+                          <div class="slds-form-element__control leftfield">
+                            <input type="text" id="city" class="slds-input" placeholder="City"/>
+                          </div>
+                          <div class="slds-form-element__control rightfield">
+                            <input type="text" id="state" class="slds-input" placeholder="State"/>
+                          </div>
+                        </div>
+                        <div class="slds-form-element flex">
+                          <div class="slds-form-element__control leftfield">
+                            <input type="text" id="zip-code" class="slds-input" placeholder="Zip Code"/>
+                          </div>
+                          <div class="slds-form-element__control rightfield">
+                            <input type="text" id="country" class="slds-input" placeholder="Country"/>
+                          </div>
+                        </div>
+                      </div>
+                    <!-- clode Custom Address Field -->
+                    <!-- <lightning-input-address street-placeholder="Street" city-placeholder="City"
                         country-placeholder="Country" province-placeholder="Region" postal-code-placeholder="PostalCode"
-                         onclick={OnFieldClick}></lightning-input-address>
+                         onclick={OnFieldClick}></lightning-input-address> -->
 
                 </template>
             </template>
