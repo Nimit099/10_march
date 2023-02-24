@@ -30,7 +30,7 @@ export default class Quickformfieldcomponent extends LightningElement {
 
    @track FieldShown = true;
    @track LabelShown =true;
-   @track isReqired =true;
+   @api isReqired;
    @track fieldHelpText = 'please fill the help text';
    @track fieldValidations='';
    FieldLabel;
@@ -42,7 +42,14 @@ export default class Quickformfieldcomponent extends LightningElement {
    @track getLabelCSS1;
    hovercssproperty;
    focuscssproperty;
-
+   @api labelvalue;
+   @api labelcheck;
+   @api salutationvalue;
+   @api helptextcheck;
+   @api helptextvalue;
+   @api isdisabled;
+   @api placeholder;
+   @api fieldtype;
     connectedCallback(){
          getScaleRating()
     .then(result=>{
@@ -145,8 +152,12 @@ export default class Quickformfieldcomponent extends LightningElement {
                 const element = array2[j];
                 element.style='margin:top:'+str2;
             }
+            const event1 = CustomEvent('startsppiner');
+            this.dispatchEvent(event1);
         }).catch(error=>{
             console.log({error});
+            const event1 = CustomEvent('startsppiner');
+            this.dispatchEvent(event1);
         })
         
     }
@@ -535,9 +546,5 @@ if(this.FieldType!=undefined && this.FieldType!='undefined' && this.FieldType!='
         } catch (error) {
             console.log('In the catch part of emojiRatingValue ==>', {error});
         }
-    }
-
-    get Address(){
-       
     }
 }

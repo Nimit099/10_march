@@ -45,11 +45,13 @@
                                             onblur={handleKeyPress}></lightning-input>
                                         <div class="email_error_msg" if:true={email_msg}>Please Enter Valid Email
                                             Details..!</div>
-                                        <template for:each={selectedValues} for:item="selectedValue" for:index="index">
-                                            <lightning-pill class="pill" id={pillid} key={selectedValue}
-                                                label={selectedValue} onremove={handleRemove}
-                                                data-index={index}></lightning-pill>
-                                        </template>
+                                        <div class="notification_pill">
+                                            <template for:each={selectedValues} for:item="selectedValue" for:index="index">
+                                                <lightning-pill class="pill" id={pillid} key={selectedValue}
+                                                    label={selectedValue} onremove={handleRemove}
+                                                    data-index={index}></lightning-pill>
+                                            </template>
+                                        </div>
                                     </div>
                                     <!-- <div class="addcc_addbcc_main">
                                                     <div if:true={open_addcc_label} class="addcc_addbcc" onclick={open_add_cc}><img class="puls_icon" src={pulsicon_img}> Add Cc</div>
@@ -76,12 +78,14 @@
                                             onkeypress={handleKeyPress_2}></lightning-input>
                                         <div class="email_error_msg" if:true={email_msg_cc}>Please Enter Valid Email
                                             Details..!</div>
-                                        <template for:each={selectedValues_2} for:item="selectedValue"
-                                            for:index="index">
-                                            <lightning-pill class="pill" id={pillid} key={selectedValue}
-                                                label={selectedValue} onremove={handleRemove_2}
-                                                data-index={index}></lightning-pill>
-                                        </template>
+                                        <div class="notification_pill">
+                                            <template for:each={selectedValues_2} for:item="selectedValue"
+                                                for:index="index">
+                                                <lightning-pill class="pill" id={pillid} key={selectedValue}
+                                                    label={selectedValue} onremove={handleRemove_2}
+                                                    data-index={index}></lightning-pill>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -115,12 +119,14 @@
                                             onkeypress={handleKeyPress_3}></lightning-input>
                                         <div class="email_error_msg" if:true={email_msg_bcc}>Please Enter Valid Email
                                             Details..!</div>
-                                        <template for:each={selectedValues_3} for:item="selectedValue"
-                                            for:index="index">
-                                            <lightning-pill class="pill" id={pillid} key={selectedValue}
-                                                label={selectedValue} onremove={handleRemove_3}
-                                                data-index={index}></lightning-pill>
-                                        </template>
+                                        <div class="notification_pill">
+                                            <template for:each={selectedValues_3} for:item="selectedValue"
+                                                for:index="index">
+                                                <lightning-pill class="pill" id={pillid} key={selectedValue}
+                                                    label={selectedValue} onremove={handleRemove_3}
+                                                    data-index={index}></lightning-pill>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

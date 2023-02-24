@@ -703,80 +703,89 @@ public static List<Form_Fields__c> CreateFieldRecord(String Form_Id,String Name,
         System.debug('isold-->'+isold);
         System.debug('Field_Page_Id-->'+Field_Page_Id);
 
-        Form_Fields__c field = new Form_Fields__c();
-        List<Form_Fields__c> updateList= new List<Form_Fields__c>();
-        
-        List<Form_Fields__c> fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c WHERE Form_Page__c=:Form_Page_Id ORDER BY Field_Order__c ASC ];
-         if(Field_Page_Id!=''){
-            Form_Fields__c field_which_page_changed = [SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c WHERE Id=:Name ORDER BY Field_Order__c ASC ];
-            field_which_page_changed.Form_Page__c = Form_Page_Id;
-            update field_which_page_changed;
-         }
-        for(Form_Fields__c it: fieldList){
-            if(it.Field_Order__c > Position){
-                if(isold){
-                    System.debug(it.Id);
-                    System.debug(Name);
-                  if(it.Id == Name)  {
-                  
-                    it.Field_Order__c = Position+1;
-                  }
-                  else{
-                    it.Field_Order__c = it.Field_Order__c+1;
-                  }
-                }
-                else{
-                    it.Field_Order__c = it.Field_Order__c+1;
-                }
-             
-               updateList.add(it);
-            }
-        }
-        if(!updateList.isEmpty()){
-            update updateList;
-        }
-        if(!isold){
-        string form = [SELECT Mapped_Objects__c from Form__c WHERE Id=:Form_Id].Mapped_Objects__c;
-        List<String> Objects = form.split(',');
-        List<String> label  = Name.split(',');
-        String firstLabel = label[0];
-        System.debug(firstLabel);
-        for (String type : Objects) {
-            Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-            Schema.SObjectType leadSchema = schemaMap.get(type);
-            Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
-            List<String> Fields = new List<String>();
-            for (String fieldName: fieldMap.keySet()) {
-                if (fieldMap.get(fieldName).getDescribe().isUpdateable()){
-                 
-                   if(fieldMap.get(fieldName).getDescribe().getLabel()==firstLabel){
-                    System.debug('##Field API Name='+fieldName);// list of all field API na
-                    System.debug('type:=>'+type);
-                    field.Mapped_Obj__c = type;
-                    field.Field_Mapping__c = fieldName;
-                   }
+    Form_Fields__c field = new Form_Fields__c();
+    List<Form_Fields__c> updateList= new List<Form_Fields__c>();
+    
+    List<Form_Fields__c> fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c WHERE Form_Page__c=:Form_Page_Id ORDER BY Field_Order__c ASC ];
+     if(Field_Page_Id!=''){
+        Form_Fields__c field_which_page_changed = [SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c WHERE Id=:Name ORDER BY Field_Order__c ASC ];
+        field_which_page_changed.Form_Page__c = Form_Page_Id;
+        update field_which_page_changed;
+     }
+    for(Form_Fields__c it: fieldList){
+        if(it.Field_Order__c > Position){
+            if(isold){
+                System.debug(it.Id);
+                System.debug(Name);
+              if(it.Id == Name)  {
               
-                     
-                }
+                it.Field_Order__c = Position+1;
+              }
+              else{
+                it.Field_Order__c = it.Field_Order__c+1;
+              }
+            }
+            else{
+                it.Field_Order__c = it.Field_Order__c+1;
+            }
+         
+           updateList.add(it);
+        }
+    }
+    if(!updateList.isEmpty()){
+        update updateList;
+    }
+    if(!isold){
+    string form = [SELECT Mapped_Objects__c from Form__c WHERE Id=:Form_Id].Mapped_Objects__c;
+    List<String> Objects = form.split(',');
+    List<String> label  = Name.split(',');
+    String firstLabel = label[0];
+    System.debug(firstLabel);
+    for (String type : Objects) {
+        Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        Schema.SObjectType leadSchema = schemaMap.get(type);
+        Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
+        List<String> Fields = new List<String>();
+        for (String fieldName: fieldMap.keySet()) {
+            if (fieldMap.get(fieldName).getDescribe().isUpdateable()){
+             
+               if(fieldMap.get(fieldName).getDescribe().getLabel()==firstLabel){
+                System.debug('##Field API Name='+fieldName);// list of all field API na
+                System.debug('type:=>'+type);
+                field.Mapped_Obj__c = type;
+                field.Field_Mapping__c = fieldName;
+               }
+          
+                 
             }
         }
-        if(Position==0){
-          Form_Fields__c maxPostion =   [SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c ORDER BY Field_Order__c DESC LIMIT 1 ];
-          if(maxPostion !=null){
-            Position = maxPostion.Field_Order__c;
-          }  
-        }
-        field.Name= Name;
-        field.Form__c =  Form_Id;
-        field.Form_Page__c = Form_Page_Id;
-        field.Field_Order__c = Position+1;
-      
-        insert field;}        
-       fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c WHERE Form__c =: Form_Id ORDER BY Field_Order__c ASC];
-    return fieldList;
-      
-        
-        //System.debug('5');
+    }
+    if(Position==0){
+      Form_Fields__c maxPostion =   [SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c ORDER BY Field_Order__c DESC LIMIT 1 ];
+      if(maxPostion !=null){
+        Position = maxPostion.Field_Order__c;
+      }  
+    }
+    field.Name= Name;
+    field.Form__c =  Form_Id;
+    field.Form_Page__c = Form_Page_Id;
+    field.Field_Order__c = Position+1;
+    if( Name.split(',')[0].replace('QF','') == 'RADIOBUTTON'|| Name.split(',')[0].replace('QF','') == 'CHECKBOX'){
+        field.Field_Validations__c = 'isLabel:true,isRequired:false,Label:'+ Name.split(',')[0].replace('QF','')+ ',Salutation:1';
+    }
+    else if(Name.split(',')[0].replace('QF','') == 'SCALERATING'){
+        field.Field_Validations__c = 'isLabel:true,isRequired:false,Label:'+ Name.split(',')[0].replace('QF','')+ ',Salutation:Very Poor,Salutation:Poor,Salutation:Good,Salutation:Very Good,Salutation:Excellent';
+    }
+    else{
+    field.Field_Validations__c = 'isLabel:true,isRequired:false,Label:'+ Name.split(',')[0].replace('QF','');
+    }
+  
+    insert field;}        
+   fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c,Field_Validations__c FROM Form_Fields__c WHERE Form__c =: Form_Id ORDER BY Field_Order__c ASC];
+return fieldList;
+  
+    
+    //System.debug('5');
 //                      Form_Fields__c field = new Form_Fields__c(Name= 'Account2',Form__c =  'a0B1y00000013pXEAQ',Form_Page__c = 'a091y000004uuFeAAI');
 //                 // field.Name= 'Account2';
 //                 // field.Form__c =  'a0B1y00000013pXEAQ';
@@ -850,73 +859,99 @@ public list<Form_Page__c> pageList{get; set;}}
     public static String ObjName(String id){
         try {
             Form__c nform = [SELECT Id, Mapped_Objects__c FROM Form__c WHERE Id = :id];
-            return nform.Mapped_Objects__c;
+            Set<String> objectset = new Set<String>{'Account', 'Address', 'AlternativePaymentMethod', 'Announcement', 'AppAnalyticsQueryRequest', 'AppointmentTopicTimeSlot', 'ApptBundleAggrDurDnscale', 'ApptBundleAggrPolicy', 'ApptBundleConfig', 'ApptBundlePolicy', 'ApptBundlePolicySvcTerr', 'ApptBundlePropagatePolicy', 'ApptBundleRestrictPolicy', 'ApptBundleSortPolicy', 'Asset', 'AssetDowntimePeriod', 'AssetRelationship', 'AssetWarranty', 'AssociatedLocation', 'AttributeDefinition', 'AuthorizationForm', 'AuthorizationFormConsent', 'AuthorizationFormDataUse', 'AuthorizationFormText', 'BusinessBrand', 'CalendarView', 'Campaign', 'CampaignMember', 'CardPaymentMethod', 'Case', 'CollaborationGroup', 'CollaborationGroupRecord', 'CommSubscription', 'CommSubscriptionChannelType', 'CommSubscriptionConsent', 'CommSubscriptionTiming', 'ConsumptionRate', 'ConsumptionSchedule', 'Contact', 'ContactPointAddress', 'ContactPointConsent', 'ContactPointEmail', 'ContactPointPhone', 'ContactPointTypeConsent', 'ContactRequest', 'ContentVersion', 'Contract', 'ContractGroupPlan', 'ContractGroupPlanGroupClass', 'ContractLineItem', 'Customer', 'DataUseLegalBasis', 'DataUsePurpose', 'DigitalWallet', 'DuplicateRecordItem', 'DuplicateRecordSet', 'EngagementChannelType', 'Entitlement', 'EntitlementContact', 'Error_Handler__c', 'Event', 'Expense', 'ExpenseReport', 'ExpenseReportEntry', 'ExpressionFilter', 'ExpressionFilterCriteria', 'FinanceTransaction', 'FlowRecordRelation', 'Form_Fields__c', 'Form_Page__c', 'Form_Submission__c', 'Form__c', 'GroupCensus', 'GroupCensusMember', 'GroupCensusMemberPlan', 'GroupClass', 'GroupClassContribution', 'Idea', 'Image', 'Individual', 'InsuranceContract', 'JobProfile', 'Lead', 'LegalEntity', 'ListEmail', 'ListEmailIndividualRecipient', 'ListEmailRecipientSource', 'Location', 'LocationGroup', 'LocationGroupAssignment', 'Macro', 'MacroInstruction', 'MaintenanceAsset', 'MaintenancePlan', 'MaintenanceWorkRule', 'Notification__c', 'Opportunity', 'Order', 'OrgMetric', 'OrgMetricScanResult','OrgMetricScanSummary','PartyConsent','Payment','PaymentAuthAdjustment','PaymentAuthorization','PaymentGateway','PaymentGatewayLog','PaymentGroup','PaymentLineInvoice','Pricebook2','ProcessException','Product2','ProductConsumed','ProductConsumptionSchedule','ProductItem','ProductRequest','ProductRequestLineItem','ProductRequired','ProductServiceCampaign','ProductServiceCampaignItem','ProductTransfer','ProductWarrantyTerm','ProfileSkill','ProfileSkillEndorsement','ProfileSkillUser','PromptAction','PromptError','QuickText','Recommendation','RecommendationResponse','RecordAction','Refund','RefundLinePayment','ResourceAbsence','ReturnOrder','ReturnOrderLineItem','SchedulingConstraint','Scorecard','ScorecardAssociation','ScorecardMetric','SearchPromotionRule','Seller','SerializedProduct','ServiceAppointment','ServiceContract','ServiceCrew','ServiceCrewMember','ServiceResource','ServiceResourcePreference','ServiceTerritory','ServiceTerritoryLocation','SetupAssistantStep','Shift','ShiftTemplate','Shipment','ShipmentItem','Solution','Task','Thankyou_Page__c','TimeSheet','TimeSheetEntry','TravelMode','UnitOfMeasure','UserEmailPreferredPerson','WarrantyTerm','WorkAccess','WorkBadge','WorkBadgeDefinition','WorkOrder','WorkOrderLineItem','WorkPlan','WorkPlanSelectionRule','WorkPlanTemplate','WorkPlanTemplateEntry','WorkStep','WorkStepTemplate','WorkThanks','WorkType','WorkTypeGroup','WorkTypeGroupMember'};
+            List<String> obj1 = nform.Mapped_Objects__c.split(',');
+            String result = nform.Mapped_Objects__c;
+            Integer n =0;
+            for (String a : obj1) {
+                String str = '';
+                if (objectset.contains(a)) {
+                    str = 'standard:'+a.toLowerCase();
+                } 
+                else {
+                    if (n==0) {
+                        str = 'standard:custom3';
+                        n++;
+                    }
+                    else if(n==1){
+                        str = 'standard:custom10';
+                        n++;
+                    }
+                    else{
+                        str = 'standard:custom11';
+                        n++;
+                    }
+                }
+                result = result+','+str;
+            }
+            return result;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
 
 
-    @AuraEnabled
-    public static List<Form_Fields__c> getFieldsRecords(Id id){
-        try {
-            //string form = [SELECT Mapped_Objects__c from Form__c WHERE Id=:id].Mapped_Objects__c;
-           // List<String> Objects = form.split(',');
-          
-            Form__c FormDetail = [SELECT Id, Mapped_Objects__c FROM Form__c WHERE Id=:id LIMIT 1];
-            //List<Form_Page__c> pageList = [SELECT Id, Name, Page_Number__c FROM Form_Page__c WHERE Form__c=:Form_Id ORDER BY Page_Number__c ASC];
-            List<String> types = (FormDetail.Mapped_Objects__c).split(',');
-            Decimal Position =0;
-            List<Form_Page__c> AllFormPages = [SELECT ID From Form_Page__c where Form__c =: FormDetail.Id ORDER BY Page_Number__c] ;
-            boolean hasRequiredField = false;
-            List<Form_Fields__c> fieldContainsRequireCheck = [SELECT Name From Form_Fields__c where Form_Page__c=:AllFormPages.get(0).Id];
-            for(Form_Fields__c it: fieldContainsRequireCheck){
-               List<String> temp=  it.Name.split(',');
-               if(temp.size()==3){
-                 if(temp.get(2) == 'isrequired'){
-                    hasRequiredField = true;
-                 }
-               }
-            }
-            if(hasRequiredField == false){
-            Integer iteration=0;
-            List<Form_Fields__c> Fields = new List<Form_Fields__c>();
-            for (String type : types) {
-                Position = 0;
-                Form_Page__c page_Id = AllFormPages.get(iteration);
-                Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-                Schema.SObjectType leadSchema = schemaMap.get(type);
-                Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
-                for (String fieldName: fieldMap.keySet()) {
-                    if (fieldMap.get(fieldName).getDescribe().isUpdateable()){
-                        
-                        
-                        if( fieldMap.get(fieldName).getDescribe().isNillable()==false){
-                            Position=Position+1;
-                            System.debug('##Field API Name='+fieldName);
-                            Form_Fields__c field = new Form_Fields__c();
-                            //requiredFieldList.add(fieldMap.get(fieldName).getDescribe().getLabel()+'./.'+ fieldMap.get(fieldName).getDescribe().getType());
-                            field.Mapped_Obj__c = type;
-                            field.Field_Mapping__c = fieldName;
-                            field.Name= fieldMap.get(fieldName).getDescribe().getLabel()+','+fieldMap.get(fieldName).getDescribe().getType()+',isrequired';
-                            field.Form__c =  FormDetail.Id;
-                            field.Form_Page__c = page_Id.Id;
-                            field.Field_Order__c = Position+1;
-                            Fields.add(field);
-                        }
-                         
-                    }
-                }
-                iteration=iteration+1;
-            }
-        
-            for(Form_Fields__c it: Fields ){
-                System.debug(it.Name+'--->>>');
-                System.debug(it.Form_Page__c+'---->>>>');
-            }
-           insert Fields;
+@AuraEnabled
+public static List<Form_Fields__c> getFieldsRecords(Id id){
+    try {
+        //string form = [SELECT Mapped_Objects__c from Form__c WHERE Id=:id].Mapped_Objects__c;
+       // List<String> Objects = form.split(',');
+      
+        Form__c FormDetail = [SELECT Id, Mapped_Objects__c FROM Form__c WHERE Id=:id LIMIT 1];
+        //List<Form_Page__c> pageList = [SELECT Id, Name, Page_Number__c FROM Form_Page__c WHERE Form__c=:Form_Id ORDER BY Page_Number__c ASC];
+        List<String> types = (FormDetail.Mapped_Objects__c).split(',');
+        Decimal Position =0;
+        List<Form_Page__c> AllFormPages = [SELECT ID From Form_Page__c where Form__c =: FormDetail.Id ORDER BY Page_Number__c] ;
+        boolean hasRequiredField = false;
+        List<Form_Fields__c> fieldContainsRequireCheck = [SELECT Name From Form_Fields__c where Form_Page__c=:AllFormPages.get(0).Id];
+        for(Form_Fields__c it: fieldContainsRequireCheck){
+           List<String> temp=  it.Name.split(',');
+           if(temp.size()==3){
+             if(temp.get(2) == 'isrequired'){
+                hasRequiredField = true;
+             }
+           }
         }
-           List<Form_Fields__c> fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c];
+        if(hasRequiredField == false){
+        Integer iteration=0;
+        List<Form_Fields__c> Fields = new List<Form_Fields__c>();
+        for (String type : types) {
+            Position = 0;
+            Form_Page__c page_Id = AllFormPages.get(iteration);
+            Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+            Schema.SObjectType leadSchema = schemaMap.get(type);
+            Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
+            for (String fieldName: fieldMap.keySet()) {
+                if (fieldMap.get(fieldName).getDescribe().isUpdateable()){
+                    
+                    
+                    if( fieldMap.get(fieldName).getDescribe().isNillable()==false){
+                        Position=Position+1;
+                        System.debug('##Field API Name='+fieldName);
+                        Form_Fields__c field = new Form_Fields__c();
+                        //requiredFieldList.add(fieldMap.get(fieldName).getDescribe().getLabel()+'./.'+ fieldMap.get(fieldName).getDescribe().getType());
+                        field.Mapped_Obj__c = type;
+                        field.Field_Mapping__c = fieldName;
+                        field.Name= fieldMap.get(fieldName).getDescribe().getLabel()+','+fieldMap.get(fieldName).getDescribe().getType()+',isrequired';
+                        field.Form__c =  FormDetail.Id;
+                        field.Form_Page__c = page_Id.Id;
+                        field.Field_Order__c = Position+1;
+                        field.Field_Validations__c = 'isLabel:true,isRequired:true,Label:'+ fieldName.split(',')[0];
+                        Fields.add(field);
+                    }
+                     
+                }
+            }
+            iteration=iteration+1;
+        }
+    
+        for(Form_Fields__c it: Fields ){
+            System.debug(it.Name+'--->>>');
+            System.debug(it.Form_Page__c+'---->>>>');
+        }
+       insert Fields;
+    }
+       List<Form_Fields__c> fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c, Field_Validations__c FROM Form_Fields__c];
 
            return fieldList;
           

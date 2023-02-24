@@ -113,6 +113,47 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
     @track newMainFormName;
     fieldcount  = 0;
     removeObjFields = [];
+    fieldvalidationdiv = false;
+    @track tab ='tab-2';
+    @track fieldId;
+    @track fieldName;
+    
+    connectedCallback() {
+
+        this.spinnerDataTable = true;
+        console.log('Parent Massage :- '+this.ParentMessage);
+        console.log('FormId :- '+this.FormId);
+        console.log('FormName :- '+this.FormName);
+
+        GetFormPage({ Form_Id: this.ParentMessage })
+            .then(result => {
+                console.log('get form page called');
+                this.PageList = result;
+                console.log('this-->>');
+                console.log(this.PageList[0].Name);
+                console.log(this.PageList.length);
+
+            }).catch(error => {
+                console.log(error);
+            });
+            getFieldsRecords({id:this.ParentMessage})
+            .then(result => {
+                console.log('whyyyy',result);
+                this.FieldList = result;
+                this.setPageField(result);
+                 
+                console.log(this.FieldList.length);
+                var allDiv  = this.template.querySelector('.tab-2');
+                allDiv.style = 'background-color: #8EBFF0;padding: 12%;border-radius: 50%;';
+            })
+            .catch(error => {
+                console.log(error);
+                var allDiv  = this.template.querySelector('.tab-2');
+                allDiv.style = 'background-color: #8EBFF0;padding: 12%;border-radius: 50%;';
+            });
+        this.activesidebar = true;
+        
+    }
 
     renderedCallback(){
         console.log('inside the renderedcallBack--->>>');
@@ -154,10 +195,10 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
                 console.log(i+'--'+element);
                 element.style = str;
             }
-            this.spinnerDataTable = false;
+            // this.spinnerDataTable = false;
         }).catch(error=>{
             console.log({error});
-            this.spinnerDataTable = false;
+            // this.spinnerDataTable = false;
         })
 
         
@@ -314,42 +355,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
         console.log('After handlenewCSS');
     }
 
-    connectedCallback() {
 
-        this.spinnerDataTable = true;
-        console.log('Parent Massage :- '+this.ParentMessage);
-        console.log('FormId :- '+this.FormId);
-        console.log('FormName :- '+this.FormName);
-
-        GetFormPage({ Form_Id: this.ParentMessage })
-            .then(result => {
-                console.log('get form page called');
-                this.PageList = result;
-                console.log('this-->>');
-                console.log(this.PageList[0].Name);
-                console.log(this.PageList.length);
-
-            }).catch(error => {
-                console.log(error);
-            });
-        getFieldsRecords({id:this.ParentMessage})
-            .then(result => {
-                console.log('whyyyy');
-                this.FieldList = result;
-                this.setPageField(result);
-                 
-                console.log(this.FieldList.length);
-                var allDiv  = this.template.querySelector('.tab-2');
-                allDiv.style = 'background-color: #8EBFF0;padding: 12%;border-radius: 50%;';
-            })
-            .catch(error => {
-                console.log(error);
-                var allDiv  = this.template.querySelector('.tab-2');
-                allDiv.style = 'background-color: #8EBFF0;padding: 12%;border-radius: 50%;';
-            });
-        this.activesidebar = true;
-        
-    }
     //  @wire(getFieldsRecords)
     //  wiredCallback(result) {
     //   this.WieredResult = result;
@@ -726,6 +732,8 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
                 if (this.PageList[i].Id == fieldList[j].Form_Page__c) {
                     console.log('inside inner loop');
                    let fieldofObj =  fieldList[j].Name.split(',');
+                   let fieldtype = fieldofObj[1];
+                   console.log(fieldtype + 'fieldtpys');
                    console.log('in setpage field----->'+fieldofObj);
                    if(fieldofObj.length==2){
                     console.log(fieldofObj.length);
@@ -734,6 +742,70 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
                         this.removeObjFields.push(fieldofObj[0]);
                      }
                  }
+
+
+                 let isdisabledcheck;
+                 let isRequiredcheck; 
+                 let labelcheck; 
+                 let helptextcheck;
+                 let placeholdercheck;
+                 let readonlycheck;
+                 let prefixcheck;
+                 let prefixvalue;
+                 let labelvalue;
+                 let helptext;
+                 let placeholdervalue;
+                 let salutationvalue = []; 
+                
+
+                if(fieldList[j].Field_Validations__c){
+                    fieldList[j].Field_Validations__c = fieldList[j].Field_Validations__c.split(',');
+                    for(let i =0; i< fieldList[j].Field_Validations__c.length; i++){
+                        fieldList[j].Field_Validations__c[i] =  fieldList[j].Field_Validations__c[i].split(':');
+                        let labels = fieldList[j].Field_Validations__c[i][0];
+                        let value = fieldList[j].Field_Validations__c[i][1];
+
+                        if(labels == 'isRequired'){
+                            isRequiredcheck = JSON.parse(value);
+                           }
+                           else if(labels == 'isDisabled'){
+                            isdisabledcheck = JSON.parse(value);
+                           }
+                           else if(labels == 'isLabel'){
+                            labelcheck = JSON.parse(value);
+                           }
+                           else if(labels == 'isHelpText'){
+                            helptextcheck = JSON.parse(value);
+                           }
+                           else if(labels == 'isPlaceholder'){
+                            placeholdercheck = JSON.parse(value);
+                           }
+                           else if(labels == 'isReadonly'){
+                            readonlycheck = JSON.parse(value);
+                           }
+                           else if(labels == 'isPrefix'){
+                            prefixcheck = JSON.parse(value);
+                           }
+                           else if(labels == 'Prefix'){
+                            prefixvalue = value.replaceAll('"','');
+                           }
+                           else if(labels == 'Label'){
+                            labelvalue = value.replaceAll('"','');
+                           }
+                           else if(labels == 'HelpText'){
+                            helptext = value.replaceAll('"','');
+                           }
+                           else if(labels == 'Placeholder'){
+                            placeholdervalue = value.replaceAll('"','');
+                           }
+                           else if(labels == 'Salutation'){
+                            salutationvalue.push(value.replaceAll('"',''));
+                           }
+                           
+                    }
+                    fieldList[j].Field_Validations__c = ({isRequired: isRequiredcheck, isDisabled : isdisabledcheck, isLabel : labelcheck, isHelptext :helptextcheck, isPlaceholder : placeholdercheck, 
+                        isReadonly : readonlycheck, isPrefix : prefixcheck,  Prefix : prefixvalue, Label: labelvalue, HelpText : helptext, Placeholder : placeholdervalue , Salutation : salutationvalue, Fieldtype : fieldtype});
+                }
                     innerlist.push(fieldList[j]);
                 }
             }
@@ -744,7 +816,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
             isnotlast = false;
             outerlist.push(temp);
         }
-
+        this.spinnerDataTable = false;
         this.MainList = outerlist;
     }
 
@@ -1098,6 +1170,11 @@ export default class FormBuilder extends NavigationMixin(LightningElement)  {
         console.log('Spinner Start');
     }
 
+    stopspinner(event){
+        this.spinnerDataTable = false;
+        console.log('Spinner Stop');
+    }
+
     @track formtitle ; 
     @track description;
     @track ispreview_show_msg_captcha = true;
@@ -1282,5 +1359,27 @@ this.isModalOpen  = false;
             this.template.querySelector('c-toast-component').showToast('error',toast_error_msg,3000);
         });
        this.isModalOpen = false;        
+    }
+
+    openfieldvalidation(event){
+    
+        this.fieldId = event.currentTarget.dataset.id;
+        this.fieldName = event.currentTarget.dataset.fieldName;
+        this.activesidebar = false;
+        this.activeDesignsidebar = false
+        this.fieldvalidationdiv = true;
+        this.template.querySelector('.fieldvalidationdiv').style="display:block;";
+        this.template.querySelector('c-field-validation').openvalidation(this.tab,this.fieldId,this.fieldName);
+        
+    // this.template.querySelector('c-field-validation').openvalidation(this.tab,this.fieldId,fieldName);
+    }
+    closevalidation(event){
+        this.tab = event.detail;
+            this.activeDesignsidebar = false;
+            this.activeNotification = false;
+            this.activethankyou = false;
+            this.template.querySelector('.fieldvalidationdiv').style="display:none;";
+            this.connectedCallback();
+       
     }
 }

@@ -1,8 +1,8 @@
 .Quickbot_maincontaner{
     display: block;
     position: fixed;
-    bottom: 60px;
-    left: 40px;
+    bottom: 15px;
+    right: 20px;
     z-index: 2;
 }
 .Quickbot_contaner{

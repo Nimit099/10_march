@@ -1362,7 +1362,7 @@ lightning-button{
 }
 .feedback{
     display: flex;
-    justify-content: center;
+    margin: 0 0 0 10px;
     align-items: center;
     width: 15px;
 }
@@ -1474,7 +1474,7 @@ lightning-button{
     align-items: center;
 }
 
-button:after {
+/* button:after {
     content: "";
     background: #90EE90;
     display: block;
@@ -1492,7 +1492,7 @@ button:after {
     margin: 0;
     opacity: 1;
     transition: 0s
-  }
+  } */
   .penicon{
     height: 19px;
     width: 19px;

@@ -26,7 +26,7 @@
                     <div class="image-tab tab-1"><img src={homeIcon} alt=""></div>
                 </div>
                 <div class="home_text">
-                    <p style="font-size:small; margin-bottom:15%;">Home</p>
+                    <p style="font-size:12px; margin-bottom:15%;">Home</p>
                 </div>
             </div>
             <div class='barchild' data-name="field" id="tab-2" data-title="tab-2" onclick={handleActive}>
@@ -34,7 +34,7 @@
                     <div class="image-tab tab-2"><img src={fieldicon} alt=""></div>
                 </div>
                 <div class="field_text">
-                    <p style="font-size:small; margin-bottom:15%;">Field</p>
+                    <p style="font-size:12px; margin-bottom:15%;">Field</p>
                 </div>
             </div>
             <div class='barchild' data-name="design" id="tab-3" data-title="tab-3" onclick={handleActive}>
@@ -42,7 +42,7 @@
                     <div class="image-tab tab-3"><img src={designIcon} alt=""></div>
                 </div>
                 <div class="desgin_text">
-                    <p style="font-size:small; margin-bottom:15%;">Design</p>
+                    <p style="font-size:12px; margin-bottom:15%;">Design</p>
                 </div>
             </div>
             <div class='barchild' data-name="notification" id="tab-4" data-title="tab-4" onclick={handleActive}>
@@ -50,7 +50,7 @@
                     <div class="image-tab tab-4"><img src={notificationicon} alt=""></div>
                 </div>
                 <div class="notification_text">
-                    <p style="font-size:small; margin-bottom:15%;">Notification</p>
+                    <p style="font-size:12px; margin-bottom:15%;">Notification</p>
                 </div>
             </div>
             <div class='barchild' data-name="thankyou" id="tab-5" data-title="tab-5" onclick={handleActive}>
@@ -58,7 +58,7 @@
                     <div class="image-tab tab-5"><img src={thankyouicon} alt=""></div>
                 </div>
                 <div class="thankyou_text">
-                    <p style="font-size:small; margin-bottom:15%;">Thankyou</p>
+                    <p style="font-size:12px; margin-bottom:15%;">Thankyou</p>
                 </div>
             </div>
             <div class='barchild' data-name="preview" id="tab-7" data-title="tab-7" onclick={handleActive}>
@@ -66,7 +66,7 @@
                     <div class="image-tab tab-7"><img src={previewIcon} alt=""></div>
                 </div>
                 <div class="preview_text">
-                    <p style="font-size:small; margin-bottom:15%;">Preview</p>
+                    <p style="font-size:12px; margin-bottom:15%;">Preview</p>
                 </div>
             </div>
             <div class='barchild' data-name="publish" id="tab-8" data-title="tab-8" onclick={handleActive}>
@@ -74,7 +74,7 @@
                     <div class="image-tab tab-8"><img src={publishIcon} alt=""></div>
                 </div>
                 <div class="publish_text">
-                    <p style="font-size:small; margin-bottom:15%;">Publish</p>
+                    <p style="font-size:12px; margin-bottom:15%;">Publish</p>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
         <!-- <div class="" style="background-color: white; position:fixed; width:100%; height:10%; z-index:100000">Test </div> -->
 
         <!-- Vertical Tab Div  -->
-        <!-- <div class="main slds-size_1-of-1 slds-small-size_6-of-12  slds-medium-size_4-of-12 slds-large-size_3-of-12"> -->
+        <!-- <div class="main slds-size_1-of-1 slds-12px-size_6-of-12  slds-medium-size_4-of-12 slds-large-size_3-of-12"> -->
 
 
         
@@ -192,10 +192,12 @@
                                         <div id={field.ParentMessage} class="field" draggable="true" 
                                             data-order-id={field.Field_Order__c} data-page-record={field.Form_Page__c}
                                             data-record={field.ParentMessage} data-ref="inner" ondragstart={onDragStart} data-record-count={fieldcount}
-                                            onclick={handleid} key={field.ParentMessage} data-field-name={field.Name}>
+                                            onclick={openfieldvalidation} key={field.ParentMessage} data-field-name={field.Name}>
                                             <c-quickformfieldcomponent formid={ParentMessage} t-view={field.Name} compview="Full"
                                                 disable-field="true" field-attribute="" field-attribute-value=""
-                                                field-id={field.ParentMessage} page-id={page.ParentMessage}></c-quickformfieldcomponent>
+                                                field-id={field.Id} page-id={page.ParentMessage} is-reqired ={field.Field_Validations__c.isRequired} helptextcheck={field.Field_Validations__c.isHelptext}
+                                                labelcheck={field.Field_Validations__c.isLabel} labelvalue={field.Field_Validations__c.Label} helptextvalue={field.Field_Validations__c.HelpText}
+                                                salutationvalue={field.Field_Validations__c.Salutation} isdisabled ={field.Field_Validations__c.isDisabled} placeholder={field.Field_Validations__c.Placeholder} fieldtype ={field.Field_Validations__c.Fieldtype} onstartsppiner={stopspinner}></c-quickformfieldcomponent>
 
                                 </div>
                             </template>
@@ -247,6 +249,13 @@
         </div>
 
     </div>
+
+     <!-- <template if:true={fieldvalidationdiv}> -->
+        <div class="fieldvalidationdiv">
+            <c-field-validation  onclosevalidation={closevalidation} ></c-field-validation>
+        </div>
+    <!-- </template> -->
+
 </template>
     </div>
 

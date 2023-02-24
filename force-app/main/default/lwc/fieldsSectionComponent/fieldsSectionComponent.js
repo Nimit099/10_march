@@ -38,7 +38,6 @@ export default class FieldsSectionComponent extends LightningElement {
      @api formid;
      connectedCallback(){
         console.log('>>>>> '+this.formid);
-
         ObjName({id:this.formid}).then(result=>{
           this.ObjectName = result.split(',');
           console.log('result name --> '+result);
@@ -47,20 +46,20 @@ export default class FieldsSectionComponent extends LightningElement {
           if (this.ObjectName.length==2) {
             this.ObjectName1 = this.ObjectName[0];
             this.ObjectName2 = this.ObjectName[1];
-            objectoneicon = 'standard:'+this.ObjectName[0].toLowerCase();
-            objecttwoicon = 'standard:'+this.ObjectName2.toLowerCase();
+            objectoneicon = this.ObjectName[3];
+            objecttwoicon = this.ObjectName[4];
           }
           if (this.ObjectName.length==3) {
             this.ObjectName1 = this.ObjectName[0];
             this.ObjectName2 = this.ObjectName[1];
             this.ObjectName3 = this.ObjectName[2];
-            objectoneicon = 'standard:'+this.ObjectName1.toLowerCase();
-            objecttwoicon = 'standard:'+this.ObjectName2.toLowerCase();
-            objectthreeicon = 'standard:'+this.ObjectName3.toLowerCase();
+            objectoneicon = this.ObjectName[3];
+            objecttwoicon = this.ObjectName[4];
+            objectthreeicon = this.ObjectName[5];
           }else{
             this.ObjectName1 = this.ObjectName[0];
             console.log(this.ObjectName1);
-            objectoneicon = 'standard:'+this.ObjectName[0].toLowerCase();
+            objectoneicon = this.ObjectName[3];
             console.log(this.objectoneicon);
           }
         }).catch(error=>{
