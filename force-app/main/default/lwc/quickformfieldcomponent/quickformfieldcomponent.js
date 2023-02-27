@@ -79,6 +79,7 @@ export default class Quickformfieldcomponent extends LightningElement {
     }
     renderedCallback(){
         console.log('quickformfield rendered callback!');
+        console.log('formid --> '+this.formid);
         getFieldCSS({id:this.formid})
         .then(result=>{
             console.log(result);
@@ -111,7 +112,7 @@ export default class Quickformfieldcomponent extends LightningElement {
             //     // element.style.setProperty("--c",pcolor2);
             // }
         }).catch(error=>{
-            console.log({error});
+            console.log('quickformfield --> '+{error});
         })
 
         getHoverCSS({id:this.formid})

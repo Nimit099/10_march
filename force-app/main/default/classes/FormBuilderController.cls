@@ -592,7 +592,10 @@ public with sharing class FormBuilderController {
                 System.debug('CSS->>>'+nform.All_Field_Styling__c);
                 return nform.All_Field_Styling__c;
             } catch (Exception e) {
-                throw new AuraHandledException(e.getMessage());
+                //throw new AuraHandledException(e.getMessage());
+                String errorM = '';
+                errorM = 'Apex Form Id ==>'+ id + '--Error Line Number ==>' + e.getLineNumber() + ' Error Message ==>'+ e.getMessage();
+                return errorM;
             }
         }
 
@@ -859,31 +862,31 @@ public list<Form_Page__c> pageList{get; set;}}
     public static String ObjName(String id){
         try {
             Form__c nform = [SELECT Id, Mapped_Objects__c FROM Form__c WHERE Id = :id];
-            Set<String> objectset = new Set<String>{'Account', 'Address', 'AlternativePaymentMethod', 'Announcement', 'AppAnalyticsQueryRequest', 'AppointmentTopicTimeSlot', 'ApptBundleAggrDurDnscale', 'ApptBundleAggrPolicy', 'ApptBundleConfig', 'ApptBundlePolicy', 'ApptBundlePolicySvcTerr', 'ApptBundlePropagatePolicy', 'ApptBundleRestrictPolicy', 'ApptBundleSortPolicy', 'Asset', 'AssetDowntimePeriod', 'AssetRelationship', 'AssetWarranty', 'AssociatedLocation', 'AttributeDefinition', 'AuthorizationForm', 'AuthorizationFormConsent', 'AuthorizationFormDataUse', 'AuthorizationFormText', 'BusinessBrand', 'CalendarView', 'Campaign', 'CampaignMember', 'CardPaymentMethod', 'Case', 'CollaborationGroup', 'CollaborationGroupRecord', 'CommSubscription', 'CommSubscriptionChannelType', 'CommSubscriptionConsent', 'CommSubscriptionTiming', 'ConsumptionRate', 'ConsumptionSchedule', 'Contact', 'ContactPointAddress', 'ContactPointConsent', 'ContactPointEmail', 'ContactPointPhone', 'ContactPointTypeConsent', 'ContactRequest', 'ContentVersion', 'Contract', 'ContractGroupPlan', 'ContractGroupPlanGroupClass', 'ContractLineItem', 'Customer', 'DataUseLegalBasis', 'DataUsePurpose', 'DigitalWallet', 'DuplicateRecordItem', 'DuplicateRecordSet', 'EngagementChannelType', 'Entitlement', 'EntitlementContact', 'Error_Handler__c', 'Event', 'Expense', 'ExpenseReport', 'ExpenseReportEntry', 'ExpressionFilter', 'ExpressionFilterCriteria', 'FinanceTransaction', 'FlowRecordRelation', 'Form_Fields__c', 'Form_Page__c', 'Form_Submission__c', 'Form__c', 'GroupCensus', 'GroupCensusMember', 'GroupCensusMemberPlan', 'GroupClass', 'GroupClassContribution', 'Idea', 'Image', 'Individual', 'InsuranceContract', 'JobProfile', 'Lead', 'LegalEntity', 'ListEmail', 'ListEmailIndividualRecipient', 'ListEmailRecipientSource', 'Location', 'LocationGroup', 'LocationGroupAssignment', 'Macro', 'MacroInstruction', 'MaintenanceAsset', 'MaintenancePlan', 'MaintenanceWorkRule', 'Notification__c', 'Opportunity', 'Order', 'OrgMetric', 'OrgMetricScanResult','OrgMetricScanSummary','PartyConsent','Payment','PaymentAuthAdjustment','PaymentAuthorization','PaymentGateway','PaymentGatewayLog','PaymentGroup','PaymentLineInvoice','Pricebook2','ProcessException','Product2','ProductConsumed','ProductConsumptionSchedule','ProductItem','ProductRequest','ProductRequestLineItem','ProductRequired','ProductServiceCampaign','ProductServiceCampaignItem','ProductTransfer','ProductWarrantyTerm','ProfileSkill','ProfileSkillEndorsement','ProfileSkillUser','PromptAction','PromptError','QuickText','Recommendation','RecommendationResponse','RecordAction','Refund','RefundLinePayment','ResourceAbsence','ReturnOrder','ReturnOrderLineItem','SchedulingConstraint','Scorecard','ScorecardAssociation','ScorecardMetric','SearchPromotionRule','Seller','SerializedProduct','ServiceAppointment','ServiceContract','ServiceCrew','ServiceCrewMember','ServiceResource','ServiceResourcePreference','ServiceTerritory','ServiceTerritoryLocation','SetupAssistantStep','Shift','ShiftTemplate','Shipment','ShipmentItem','Solution','Task','Thankyou_Page__c','TimeSheet','TimeSheetEntry','TravelMode','UnitOfMeasure','UserEmailPreferredPerson','WarrantyTerm','WorkAccess','WorkBadge','WorkBadgeDefinition','WorkOrder','WorkOrderLineItem','WorkPlan','WorkPlanSelectionRule','WorkPlanTemplate','WorkPlanTemplateEntry','WorkStep','WorkStepTemplate','WorkThanks','WorkType','WorkTypeGroup','WorkTypeGroupMember'};
-            List<String> obj1 = nform.Mapped_Objects__c.split(',');
+            // Set<String> objectset = new Set<String>{'Account', 'Address', 'AlternativePaymentMethod', 'Announcement', 'AppAnalyticsQueryRequest', 'AppointmentTopicTimeSlot', 'ApptBundleAggrDurDnscale', 'ApptBundleAggrPolicy', 'ApptBundleConfig', 'ApptBundlePolicy', 'ApptBundlePolicySvcTerr', 'ApptBundlePropagatePolicy', 'ApptBundleRestrictPolicy', 'ApptBundleSortPolicy', 'Asset', 'AssetDowntimePeriod', 'AssetRelationship', 'AssetWarranty', 'AssociatedLocation', 'AttributeDefinition', 'AuthorizationForm', 'AuthorizationFormConsent', 'AuthorizationFormDataUse', 'AuthorizationFormText', 'BusinessBrand', 'CalendarView', 'Campaign', 'CampaignMember', 'CardPaymentMethod', 'Case', 'CollaborationGroup', 'CollaborationGroupRecord', 'CommSubscription', 'CommSubscriptionChannelType', 'CommSubscriptionConsent', 'CommSubscriptionTiming', 'ConsumptionRate', 'ConsumptionSchedule', 'Contact', 'ContactPointAddress', 'ContactPointConsent', 'ContactPointEmail', 'ContactPointPhone', 'ContactPointTypeConsent', 'ContactRequest', 'ContentVersion', 'Contract', 'ContractGroupPlan', 'ContractGroupPlanGroupClass', 'ContractLineItem', 'Customer', 'DataUseLegalBasis', 'DataUsePurpose', 'DigitalWallet', 'DuplicateRecordItem', 'DuplicateRecordSet', 'EngagementChannelType', 'Entitlement', 'EntitlementContact', 'Error_Handler__c', 'Event', 'Expense', 'ExpenseReport', 'ExpenseReportEntry', 'ExpressionFilter', 'ExpressionFilterCriteria', 'FinanceTransaction', 'FlowRecordRelation', 'Form_Fields__c', 'Form_Page__c', 'Form_Submission__c', 'Form__c', 'GroupCensus', 'GroupCensusMember', 'GroupCensusMemberPlan', 'GroupClass', 'GroupClassContribution', 'Idea', 'Image', 'Individual', 'InsuranceContract', 'JobProfile', 'Lead', 'LegalEntity', 'ListEmail', 'ListEmailIndividualRecipient', 'ListEmailRecipientSource', 'Location', 'LocationGroup', 'LocationGroupAssignment', 'Macro', 'MacroInstruction', 'MaintenanceAsset', 'MaintenancePlan', 'MaintenanceWorkRule', 'Notification__c', 'Opportunity', 'Order', 'OrgMetric', 'OrgMetricScanResult','OrgMetricScanSummary','PartyConsent','Payment','PaymentAuthAdjustment','PaymentAuthorization','PaymentGateway','PaymentGatewayLog','PaymentGroup','PaymentLineInvoice','Pricebook2','ProcessException','Product2','ProductConsumed','ProductConsumptionSchedule','ProductItem','ProductRequest','ProductRequestLineItem','ProductRequired','ProductServiceCampaign','ProductServiceCampaignItem','ProductTransfer','ProductWarrantyTerm','ProfileSkill','ProfileSkillEndorsement','ProfileSkillUser','PromptAction','PromptError','QuickText','Recommendation','RecommendationResponse','RecordAction','Refund','RefundLinePayment','ResourceAbsence','ReturnOrder','ReturnOrderLineItem','SchedulingConstraint','Scorecard','ScorecardAssociation','ScorecardMetric','SearchPromotionRule','Seller','SerializedProduct','ServiceAppointment','ServiceContract','ServiceCrew','ServiceCrewMember','ServiceResource','ServiceResourcePreference','ServiceTerritory','ServiceTerritoryLocation','SetupAssistantStep','Shift','ShiftTemplate','Shipment','ShipmentItem','Solution','Task','Thankyou_Page__c','TimeSheet','TimeSheetEntry','TravelMode','UnitOfMeasure','UserEmailPreferredPerson','WarrantyTerm','WorkAccess','WorkBadge','WorkBadgeDefinition','WorkOrder','WorkOrderLineItem','WorkPlan','WorkPlanSelectionRule','WorkPlanTemplate','WorkPlanTemplateEntry','WorkStep','WorkStepTemplate','WorkThanks','WorkType','WorkTypeGroup','WorkTypeGroupMember'};
+            // List<String> obj1 = nform.Mapped_Objects__c.split(',');
             String result = nform.Mapped_Objects__c;
             Integer n =0;
-            for (String a : obj1) {
-                String str = '';
-                if (objectset.contains(a)) {
-                    str = 'standard:'+a.toLowerCase();
-                } 
-                else {
-                    if (n==0) {
-                        str = 'standard:custom3';
-                        n++;
-                    }
-                    else if(n==1){
-                        str = 'standard:custom10';
-                        n++;
-                    }
-                    else{
-                        str = 'standard:custom11';
-                        n++;
-                    }
-                }
-                result = result+','+str;
-            }
+            // for (String a : obj1) {
+            //     String str = '';
+            //     if (objectset.contains(a)) {
+            //         str = 'standard:'+a.toLowerCase();
+            //     } 
+            //     else {
+            //         if (n==0) {
+            //             str = 'standard:custom3';
+            //             n++;
+            //         }
+            //         else if(n==1){
+            //             str = 'standard:custom10';
+            //             n++;
+            //         }
+            //         else{
+            //             str = 'standard:custom11';
+            //             n++;
+            //         }
+            //     }
+            //     result = result+','+str;
+            // }
             return result;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

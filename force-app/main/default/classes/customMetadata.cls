@@ -20,7 +20,7 @@ public without sharing class customMetadata {
         try {
             List<Progress_Indicator__mdt> l_Types = new List<Progress_Indicator__mdt>();
              
-            l_Types = [SELECT DeveloperName,Label,sr__c FROM Progress_Indicator__mdt]; // Can include multiple fields, 
+            l_Types = [SELECT DeveloperName,Label,sr__c FROM Progress_Indicator__mdt ORDER BY sr__c ASC]; // Can include multiple fields, 
             System.debug(l_Types);
             
             // You can also use any standard or custom object
@@ -38,7 +38,7 @@ public without sharing class customMetadata {
         try {
             List<Captcha_Type__mdt> Captcha_Types = new List<Captcha_Type__mdt>();
              
-            Captcha_Types = [SELECT DeveloperName,Label,sr__c FROM Captcha_Type__mdt]; // Can include multiple fields, 
+            Captcha_Types = [SELECT DeveloperName,Label,sr__c FROM Captcha_Type__mdt ORDER BY sr__c ASC]; // Can include multiple fields, 
             System.debug(Captcha_Types);
             
             // You can also use any standard or custom object
