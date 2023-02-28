@@ -92,7 +92,7 @@
 
         <template if:true={activesidebar}>
             <div class="child3">
-                <c-fields-section-component formid={ParentMessage} oncallpasstoparent={passToParent}
+                <c-fields-section-component class="childref" formid={ParentMessage} oncallpasstoparent={passToParent}
                     onstopspinner={stopspinner}></c-fields-section-component>
             </div>
         </template>
@@ -204,16 +204,16 @@
 
                                     <template for:each={page.FieldData} for:item="field">
 
-                                         <div id={field.Id} class="field" draggable="true"
-                                            data-order-id={field.Field_Order__c} data-page-record={field.Form_Page__c}
-                                            data-record={field.Id} data-ref="inner" ondragstart={onDragStart}
-                                            data-record-count={fieldcount} onclick={handleid} key={field.Id}
-                                            data-field-name={field.Name} data-field-id={field.Id}>
-                                            <c-quickformfieldcomponent formid={ParentMessage} t-view={field.Name}
-                                                compview="Full" disable-field="true" field-attribute=""
-                                                field-attribute-value="" field-id={field.Id}
-                                                page-id={page.ParentMessage} data-field-id={field.Id}
-                                                onstartsppiner={stopspinner}></c-quickformfieldcomponent>
+                                        <div id={field.Id} class="field" draggable="true"
+                                        data-order-id={field.Field_Order__c} data-page-record={field.Form_Page__c}
+                                        data-record={field.Id} data-ref="inner" ondragstart={onDragStart}
+                                        data-record-count={fieldcount} onclick={openfieldvalidation} key={field.Id}
+                                        data-field-name={field.Name} data-field-id={field.Id}>
+                                        <c-quickformfieldcomponent formid={ParentMessage} t-view={field.Name}
+                                            compview="Full" disable-field="true" field-attribute=""
+                                            field-attribute-value="" field-id={field.Id}
+                                            page-id={page.ParentMessage} data-field-id={field.Id}
+                                            onstartsppiner={stopspinner}></c-quickformfieldcomponent>
 
                                         </div>
                                         <!-- <div id={field.ParentMessage} class="field" draggable="true"
@@ -289,7 +289,7 @@
 
             <!-- <template if:true={fieldvalidationdiv}> -->
             <div class="fieldvalidationdiv">
-                <c-field-validation onclosevalidation={closevalidation}></c-field-validation>
+                <c-field-validation onupdatefields={afterfielddelete} onclosevalidation={closevalidation}></c-field-validation>
             </div>
             <!-- </template> -->
 

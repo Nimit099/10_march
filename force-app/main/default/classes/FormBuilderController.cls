@@ -785,13 +785,13 @@ public with sharing class FormBuilderController {
                 field.Form_Page__c = Form_Page_Id;
                 field.Field_Order__c = Position+1;
                 if( Name.split(',')[0].replace('QF','') == 'RADIOBUTTON'|| Name.split(',')[0].replace('QF','') == 'CHECKBOX'){
-                    field.Field_Validations__c = 'isLabel:true,isRequired:false,Label:'+ Name.split(',')[0].replace('QF','')+ ',Salutation:1';
+                    field.Field_Validations__c = 'isLabel:true?$`~isRequired:false?$`~Label:'+ Name.split(',')[0].replace('QF','')+ '?$`~Salutation:1';
                 }
                 else if(Name.split(',')[0].replace('QF','') == 'SCALERATING'){
-                    field.Field_Validations__c = 'isLabel:true,isRequired:false,Label:'+ Name.split(',')[0].replace('QF','')+ ',Salutation:Very Poor,Salutation:Poor,Salutation:Good,Salutation:Very Good,Salutation:Excellent';
+                    field.Field_Validations__c = 'isLabel:true?$`~isRequired:false?$`~Label:'+ Name.split(',')[0].replace('QF','')+ '?$`~Salutation:Very Poor?$`~Salutation:Poor?$`~Salutation:Good?$`~Salutation:Very Good?$`~Salutation:Excellent';
                 }
                 else{
-                field.Field_Validations__c = 'isLabel:true,isRequired:false,Label:'+ Name.split(',')[0].replace('QF','');
+                field.Field_Validations__c = 'isLabel:true?$`~isRequired:false?$`~Label:'+ Name.split(',')[0].replace('QF','');
                 }
             
                 insert field;
@@ -866,31 +866,31 @@ public with sharing class FormBuilderController {
     public static String ObjName(String id){
         try {
             Form__c nform = [SELECT Id, Mapped_Objects__c FROM Form__c WHERE Id = :id];
-            // Set<String> objectset = new Set<String>{'Account', 'Address', 'AlternativePaymentMethod', 'Announcement', 'AppAnalyticsQueryRequest', 'AppointmentTopicTimeSlot', 'ApptBundleAggrDurDnscale', 'ApptBundleAggrPolicy', 'ApptBundleConfig', 'ApptBundlePolicy', 'ApptBundlePolicySvcTerr', 'ApptBundlePropagatePolicy', 'ApptBundleRestrictPolicy', 'ApptBundleSortPolicy', 'Asset', 'AssetDowntimePeriod', 'AssetRelationship', 'AssetWarranty', 'AssociatedLocation', 'AttributeDefinition', 'AuthorizationForm', 'AuthorizationFormConsent', 'AuthorizationFormDataUse', 'AuthorizationFormText', 'BusinessBrand', 'CalendarView', 'Campaign', 'CampaignMember', 'CardPaymentMethod', 'Case', 'CollaborationGroup', 'CollaborationGroupRecord', 'CommSubscription', 'CommSubscriptionChannelType', 'CommSubscriptionConsent', 'CommSubscriptionTiming', 'ConsumptionRate', 'ConsumptionSchedule', 'Contact', 'ContactPointAddress', 'ContactPointConsent', 'ContactPointEmail', 'ContactPointPhone', 'ContactPointTypeConsent', 'ContactRequest', 'ContentVersion', 'Contract', 'ContractGroupPlan', 'ContractGroupPlanGroupClass', 'ContractLineItem', 'Customer', 'DataUseLegalBasis', 'DataUsePurpose', 'DigitalWallet', 'DuplicateRecordItem', 'DuplicateRecordSet', 'EngagementChannelType', 'Entitlement', 'EntitlementContact', 'Error_Handler__c', 'Event', 'Expense', 'ExpenseReport', 'ExpenseReportEntry', 'ExpressionFilter', 'ExpressionFilterCriteria', 'FinanceTransaction', 'FlowRecordRelation', 'Form_Fields__c', 'Form_Page__c', 'Form_Submission__c', 'Form__c', 'GroupCensus', 'GroupCensusMember', 'GroupCensusMemberPlan', 'GroupClass', 'GroupClassContribution', 'Idea', 'Image', 'Individual', 'InsuranceContract', 'JobProfile', 'Lead', 'LegalEntity', 'ListEmail', 'ListEmailIndividualRecipient', 'ListEmailRecipientSource', 'Location', 'LocationGroup', 'LocationGroupAssignment', 'Macro', 'MacroInstruction', 'MaintenanceAsset', 'MaintenancePlan', 'MaintenanceWorkRule', 'Notification__c', 'Opportunity', 'Order', 'OrgMetric', 'OrgMetricScanResult','OrgMetricScanSummary','PartyConsent','Payment','PaymentAuthAdjustment','PaymentAuthorization','PaymentGateway','PaymentGatewayLog','PaymentGroup','PaymentLineInvoice','Pricebook2','ProcessException','Product2','ProductConsumed','ProductConsumptionSchedule','ProductItem','ProductRequest','ProductRequestLineItem','ProductRequired','ProductServiceCampaign','ProductServiceCampaignItem','ProductTransfer','ProductWarrantyTerm','ProfileSkill','ProfileSkillEndorsement','ProfileSkillUser','PromptAction','PromptError','QuickText','Recommendation','RecommendationResponse','RecordAction','Refund','RefundLinePayment','ResourceAbsence','ReturnOrder','ReturnOrderLineItem','SchedulingConstraint','Scorecard','ScorecardAssociation','ScorecardMetric','SearchPromotionRule','Seller','SerializedProduct','ServiceAppointment','ServiceContract','ServiceCrew','ServiceCrewMember','ServiceResource','ServiceResourcePreference','ServiceTerritory','ServiceTerritoryLocation','SetupAssistantStep','Shift','ShiftTemplate','Shipment','ShipmentItem','Solution','Task','Thankyou_Page__c','TimeSheet','TimeSheetEntry','TravelMode','UnitOfMeasure','UserEmailPreferredPerson','WarrantyTerm','WorkAccess','WorkBadge','WorkBadgeDefinition','WorkOrder','WorkOrderLineItem','WorkPlan','WorkPlanSelectionRule','WorkPlanTemplate','WorkPlanTemplateEntry','WorkStep','WorkStepTemplate','WorkThanks','WorkType','WorkTypeGroup','WorkTypeGroupMember'};
-            // List<String> obj1 = nform.Mapped_Objects__c.split(',');
+            Set<String> objectset = new Set<String>{'Account', 'Address', 'AlternativePaymentMethod', 'Announcement', 'AppAnalyticsQueryRequest', 'AppointmentTopicTimeSlot', 'ApptBundleAggrDurDnscale', 'ApptBundleAggrPolicy', 'ApptBundleConfig', 'ApptBundlePolicy', 'ApptBundlePolicySvcTerr', 'ApptBundlePropagatePolicy', 'ApptBundleRestrictPolicy', 'ApptBundleSortPolicy', 'Asset', 'AssetDowntimePeriod', 'AssetRelationship', 'AssetWarranty', 'AssociatedLocation', 'AttributeDefinition', 'AuthorizationForm', 'AuthorizationFormConsent', 'AuthorizationFormDataUse', 'AuthorizationFormText', 'BusinessBrand', 'CalendarView', 'Campaign', 'CampaignMember', 'CardPaymentMethod', 'Case', 'CollaborationGroup', 'CollaborationGroupRecord', 'CommSubscription', 'CommSubscriptionChannelType', 'CommSubscriptionConsent', 'CommSubscriptionTiming', 'ConsumptionRate', 'ConsumptionSchedule', 'Contact', 'ContactPointAddress', 'ContactPointConsent', 'ContactPointEmail', 'ContactPointPhone', 'ContactPointTypeConsent', 'ContactRequest', 'ContentVersion', 'Contract', 'ContractGroupPlan', 'ContractGroupPlanGroupClass', 'ContractLineItem', 'Customer', 'DataUseLegalBasis', 'DataUsePurpose', 'DigitalWallet', 'DuplicateRecordItem', 'DuplicateRecordSet', 'EngagementChannelType', 'Entitlement', 'EntitlementContact', 'Error_Handler__c', 'Event', 'Expense', 'ExpenseReport', 'ExpenseReportEntry', 'ExpressionFilter', 'ExpressionFilterCriteria', 'FinanceTransaction', 'FlowRecordRelation','GroupCensus', 'GroupCensusMember', 'GroupCensusMemberPlan', 'GroupClass', 'GroupClassContribution', 'Idea', 'Image', 'Individual', 'InsuranceContract', 'JobProfile', 'Lead', 'LegalEntity', 'ListEmail', 'ListEmailIndividualRecipient', 'ListEmailRecipientSource', 'Location', 'LocationGroup', 'LocationGroupAssignment', 'Macro', 'MacroInstruction', 'MaintenanceAsset', 'MaintenancePlan', 'MaintenanceWorkRule', 'Opportunity', 'Order', 'OrgMetric', 'OrgMetricScanResult','OrgMetricScanSummary','PartyConsent','Payment','PaymentAuthAdjustment','PaymentAuthorization','PaymentGateway','PaymentGatewayLog','PaymentGroup','PaymentLineInvoice','Pricebook2','ProcessException','Product2','ProductConsumed','ProductConsumptionSchedule','ProductItem','ProductRequest','ProductRequestLineItem','ProductRequired','ProductServiceCampaign','ProductServiceCampaignItem','ProductTransfer','ProductWarrantyTerm','ProfileSkill','ProfileSkillEndorsement','ProfileSkillUser','PromptAction','PromptError','QuickText','Recommendation','RecommendationResponse','RecordAction','Refund','RefundLinePayment','ResourceAbsence','ReturnOrder','ReturnOrderLineItem','SchedulingConstraint','Scorecard','ScorecardAssociation','ScorecardMetric','SearchPromotionRule','Seller','SerializedProduct','ServiceAppointment','ServiceContract','ServiceCrew','ServiceCrewMember','ServiceResource','ServiceResourcePreference','ServiceTerritory','ServiceTerritoryLocation','SetupAssistantStep','Shift','ShiftTemplate','Shipment','ShipmentItem','Solution','Task','TimeSheet','TimeSheetEntry','TravelMode','UnitOfMeasure','UserEmailPreferredPerson','WarrantyTerm','WorkAccess','WorkBadge','WorkBadgeDefinition','WorkOrder','WorkOrderLineItem','WorkPlan','WorkPlanSelectionRule','WorkPlanTemplate','WorkPlanTemplateEntry','WorkStep','WorkStepTemplate','WorkThanks','WorkType','WorkTypeGroup','WorkTypeGroupMember'};
+            List<String> obj1 = nform.Mapped_Objects__c.split(',');
             String result = nform.Mapped_Objects__c;
             Integer n =0;
-            // for (String a : obj1) {
-            //     String str = '';
-            //     if (objectset.contains(a)) {
-            //         str = 'standard:'+a.toLowerCase();
-            //     } 
-            //     else {
-            //         if (n==0) {
-            //             str = 'standard:custom3';
-            //             n++;
-            //         }
-            //         else if(n==1){
-            //             str = 'standard:custom10';
-            //             n++;
-            //         }
-            //         else{
-            //             str = 'standard:custom11';
-            //             n++;
-            //         }
-            //     }
-            //     result = result+','+str;
-            // }
+            for (String a : obj1) {
+                String str = '';
+                if (objectset.contains(a)) {
+                    str = 'standard:'+a.toLowerCase();
+                } 
+                else {
+                    if (n==0) {
+                        str = 'custom:custom3';
+                        n++;
+                    }
+                    else if(n==1){
+                        str = 'custom:custom10';
+                        n++;
+                    }
+                    else{
+                        str = 'custom:custom11';
+                        n++;
+                    }
+                }
+                result = result+','+str;
+            }
             return result;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -943,7 +943,7 @@ public with sharing class FormBuilderController {
                                 field.Form__c =  FormDetail.Id;
                                 field.Form_Page__c = page_Id.Id;
                                 field.Field_Order__c = Position+1;
-                                // field.Field_Validations__c = 'isLabel:true,isRequired:true,Label:'+ fieldName.split(',')[0];
+                                field.Field_Validations__c = 'isLabel:true?$`~isRequired:true?$`~Label:'+ fieldName.split(',')[0];
                                 Fields.add(field);
                             }
                             
@@ -956,7 +956,7 @@ public with sharing class FormBuilderController {
             }
             // List<Form_Fields__c> fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c, Field_Validations__c FROM Form_Fields__c];
             // return fieldList;
-            List<Form_Fields__c> fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c FROM Form_Fields__c WHERE Form__c =: id ORDER BY Field_Order__c ASC];
+            List<Form_Fields__c> fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c,Field_Validations__c FROM Form_Fields__c WHERE Form__c =: id ORDER BY Field_Order__c ASC];
             return fieldList;
           
         } catch (Exception e) {
