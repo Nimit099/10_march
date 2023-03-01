@@ -123,6 +123,8 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
     @track isReorderingDrag = false;
     @track startFielId = '';
 
+    @track hovercssproperty;
+
     connectedCallback() {
 
         this.spinnerDataTable = true;
@@ -158,6 +160,16 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                 var allDiv = this.template.querySelector('.tab-2');
                 allDiv.style = 'background-color: #8EBFF0;padding: 12%;border-radius: 50%;';
             });
+        
+        getHoverCSS({ id: this.formid })
+        .then(result => {
+            console.log(result);
+            console.log('HoverCSS->> ' + result);
+            this.hovercssproperty = result;
+        }).catch(error => {
+            console.log({ error });
+        })
+        
         this.activesidebar = true;
 
     }
@@ -552,7 +564,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             console.log('*** startFielId ==>' + this.startFielId);
             console.log('*** SenddataObj ==>' + JSON.stringify(SenddataObj));
             console.log('event.target.dataset JSON==>', JSON.stringify(event.target.dataset));
-            console.log('event.target.dataset ==>' , event.target.dataset);
+            console.log('event.target.dataset ==>', event.target.dataset);
             console.log('evenet ==>', event.target);
             console.log('On drag start-->');
 
@@ -562,7 +574,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             //     console.log('in else condition');
             //     event.dataTransfer.setData('text/plain', JSON.stringify(SenddataObj));
             // }
-            
+
             event.dataTransfer.setData('text/plain', JSON.stringify(event.target.dataset));
 
         } catch (error) {
@@ -584,9 +596,9 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
 
             reOrderField({ dropFieldId: dropFieldId, currentFieldId: this.startFielId })
                 .then((result) => {
-                    console.log("*** result from apex class ==>" , result);
+                    console.log("*** result from apex class ==>", result);
                     this.setPageField(result);
-                    
+
                 })
                 .catch((error) => {
                     console.log('*** Error From reOrderField ==>');
@@ -594,7 +606,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                     // this.spinnerDataTable = false;
                 });
             // this.spinnerDataTable = false;
-            
+
         } else {
             var dropzone = this.template.querySelectorAll('.example-dropzone');
             for (let i = 0; i < dropzone.length; i++) {
@@ -693,7 +705,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
 
                 console.log('both methods are called and finish');
             }
-            
+
         }
     }
 
@@ -781,100 +793,106 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
 
 
     setPageField(fieldList) {
-        console.log('in set PageField');
-        let outerlist = [];
-        let isIndexZero = false;
-        let islast = false;
-        let isnotlast = false;
-        for (let i = 0; i < this.PageList.length; i++) {
-            let innerlist = [];
-            if (i == 0) {
-                isIndexZero = true;
-            } else if (i == this.PageList.length - 1) {
-                islast = true;
-            } else if (i != this.PageList.length - 1) {
-                isnotlast = true;
-            }
-            for (let j = 0; j < fieldList.length; j++) {
-                if (this.PageList[i].Id == fieldList[j].Form_Page__c) {
-                    console.log('inside inner loop');
-                    let fieldofObj = fieldList[j].Name.split(',');
-                    let fieldtype = fieldofObj[1];
-                    // console.log(fieldtype + 'fieldtpys');
-                    // console.log('in setpage field----->' + fieldofObj);
-                    if (fieldofObj.length == 2) {
-                        console.log(fieldofObj.length);
-                        if (fieldofObj[1] != 'Extra' && fieldofObj[1] != undefined && fieldofObj[1] != 'undefined') {
-                            console.log(fieldofObj[0]);
-                            this.removeObjFields.push(fieldofObj[0]);
-                        }
-                    }
-
-                    // let isdisabledcheck;
-                    // let isRequiredcheck;
-                    // let labelcheck;
-                    // let helptextcheck;
-                    // let placeholdercheck;
-                    // let readonlycheck;
-                    // let prefixcheck;
-                    // let prefixvalue;
-                    // let labelvalue;
-                    // let helptext;
-                    // let placeholdervalue;
-                    // let salutationvalue = [];
-
-                    // if (fieldList[j].Field_Validations__c) {
-                    //     fieldList[j].Field_Validations__c = fieldList[j].Field_Validations__c.split('?$`~');
-                    //     for (let i = 0; i < fieldList[j].Field_Validations__c.length; i++) {
-                    //         fieldList[j].Field_Validations__c[i] = fieldList[j].Field_Validations__c[i].split(':');
-                    //         let labels = fieldList[j].Field_Validations__c[i][0];
-                    //         let value = fieldList[j].Field_Validations__c[i][1];
-
-                    //         if (labels == 'isRequired') {
-                    //             isRequiredcheck = JSON.parse(value);
-                    //         } else if (labels == 'isDisabled') {
-                    //             isdisabledcheck = JSON.parse(value);
-                    //         } else if (labels == 'isLabel') {
-                    //             labelcheck = JSON.parse(value);
-                    //         } else if (labels == 'isHelpText') {
-                    //             helptextcheck = JSON.parse(value);
-                    //         } else if (labels == 'isPlaceholder') {
-                    //             placeholdercheck = JSON.parse(value);
-                    //         } else if (labels == 'isReadonly') {
-                    //             readonlycheck = JSON.parse(value);
-                    //         } else if (labels == 'isPrefix') {
-                    //             prefixcheck = JSON.parse(value);
-                    //         } else if (labels == 'Prefix') {
-                    //             prefixvalue = value;
-                    //         } else if (labels == 'Label') {
-                    //             labelvalue = value;
-                    //         } else if (labels == 'HelpText') {
-                    //             helptext = value;
-                    //         } else if (labels == 'Placeholder') {
-                    //             placeholdervalue = value;
-                    //         } else if (labels == 'Salutation') {
-                    //             salutationvalue.push(value);
-                    //         }
-                    //     }
-                    //     fieldList[j].Field_Validations__c = ({
-                    //         isRequired: isRequiredcheck, isDisabled: isdisabledcheck, isLabel: labelcheck, isHelptext: helptextcheck, isPlaceholder: placeholdercheck,
-                    //         isReadonly: readonlycheck, isPrefix: prefixcheck, Prefix: prefixvalue, Label: labelvalue, HelpText: helptext, Placeholder: placeholdervalue, Salutation: salutationvalue, fieldtype: fieldtype
-                    //     });
-                    // }
-                    innerlist.push(fieldList[j]);
+        try {
+            console.log('in set PageField');
+            let outerlist = [];
+            let isIndexZero = false;
+            let islast = false;
+            let isnotlast = false;
+            for (let i = 0; i < this.PageList.length; i++) {
+                let innerlist = [];
+                if (i == 0) {
+                    isIndexZero = true;
+                } else if (i == this.PageList.length - 1) {
+                    islast = true;
+                } else if (i != this.PageList.length - 1) {
+                    isnotlast = true;
                 }
-            }
+                for (let j = 0; j < fieldList.length; j++) {
+                    if (this.PageList[i].Id == fieldList[j].Form_Page__c) {
+                        console.log('inside inner loop');
+                        let fieldofObj = fieldList[j].Name.split(',');
+                        let fieldtype = fieldofObj[1];
+                        console.log(fieldtype + 'fieldtpys');
+                        console.log('in setpage field----->' + fieldofObj);
+                        if (fieldofObj.length == 2) {
+                            console.log(fieldofObj.length);
+                            if (fieldofObj[1] != 'Extra' && fieldofObj[1] != undefined && fieldofObj[1] != 'undefined') {
+                                console.log(fieldofObj[0]);
+                                this.removeObjFields.push(fieldofObj[0]);
+                            }
+                        }
 
-            let temp = { pageName: this.PageList[i].Name, pageId: this.PageList[i].Id, isIndexZero: isIndexZero, isIndexLast: islast, isIndexIsNotLast: isnotlast, FieldData: innerlist };
-            isIndexZero = false;
-            islast = false;
-            isnotlast = false;
-            outerlist.push(temp);
+                        let isdisabledcheck;
+                        let isRequiredcheck;
+                        let labelcheck;
+                        let helptextcheck;
+                        let placeholdercheck;
+                        let readonlycheck;
+                        let prefixcheck;
+                        let prefixvalue;
+                        let labelvalue;
+                        let helptext;
+                        let placeholdervalue;
+                        let salutationvalue = [];
+
+                        if (fieldList[j].Field_Validations__c) {
+                            fieldList[j].Field_Validations__c = fieldList[j].Field_Validations__c.split('?$`~');
+                            for (let i = 0; i < fieldList[j].Field_Validations__c.length; i++) {
+                                fieldList[j].Field_Validations__c[i] = fieldList[j].Field_Validations__c[i].split(':');
+                                let labels = fieldList[j].Field_Validations__c[i][0];
+                                let value = fieldList[j].Field_Validations__c[i][1];
+
+                                if (labels == 'isRequired') {
+                                    isRequiredcheck = JSON.parse(value);
+                                } else if (labels == 'isDisabled') {
+                                    isdisabledcheck = JSON.parse(value);
+                                } else if (labels == 'isLabel') {
+                                    labelcheck = JSON.parse(value);
+                                } else if (labels == 'isHelpText') {
+                                    helptextcheck = JSON.parse(value);
+                                } else if (labels == 'isPlaceholder') {
+                                    placeholdercheck = JSON.parse(value);
+                                } else if (labels == 'isReadonly') {
+                                    readonlycheck = JSON.parse(value);
+                                } else if (labels == 'isPrefix') {
+                                    prefixcheck = JSON.parse(value);
+                                } else if (labels == 'Prefix') {
+                                    prefixvalue = value;
+                                } else if (labels == 'Label') {
+                                    labelvalue = value;
+                                } else if (labels == 'HelpText') {
+                                    helptext = value;
+                                } else if (labels == 'Placeholder') {
+                                    placeholdervalue = value;
+                                } else if (labels == 'Salutation') {
+                                    salutationvalue.push(value);
+                                }
+                            }
+                            fieldList[j].Field_Validations__c = ({
+                                isRequired: isRequiredcheck, isDisabled: isdisabledcheck, isLabel: labelcheck, isHelptext: helptextcheck, isPlaceholder: placeholdercheck,
+                                isReadonly: readonlycheck, isPrefix: prefixcheck, Prefix: prefixvalue, Label: labelvalue, HelpText: helptext, Placeholder: placeholdervalue, Salutation: salutationvalue, fieldtype: fieldtype
+                            });
+                        }
+                        innerlist.push(fieldList[j]);
+                    }
+                }
+
+                let temp = { pageName: this.PageList[i].Name, pageId: this.PageList[i].Id, isIndexZero: isIndexZero, isIndexLast: islast, isIndexIsNotLast: isnotlast, FieldData: innerlist };
+                isIndexZero = false;
+                islast = false;
+                isnotlast = false;
+                outerlist.push(temp);
+            }
+            this.MainList = outerlist;
+            // console.log('***Main List ==>', JSON.stringify(outerlist));
+            console.log('***Main List ==>', JSON.stringify(this.MainList));
+            console.log('before renderedCallback');
+        } catch (error) {
+            console.log("In the catch block ==> Method :** handleAddPage ** || LWC:** formBuilder ** ==>", { error });
+            console.log('above error ==>' + error);
         }
-        this.MainList = outerlist;
-        // console.log('***Main List ==>', JSON.stringify(outerlist));
-        console.log('***Main List ==>', JSON.stringify(this.MainList));
-        console.log('before renderedCallback');
+
     }
 
     tempararyfun() {
@@ -990,20 +1008,16 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
 
 
     handleAddPage() {
-        console.log('total pages--------->' + this.PageList.length);
-        console.log('handle add page............');
-        this.isModalOpen1 = true;
-        // createPage({totalPages:this.PageList.length, formId:this.ParentMessage}).then(result=>{
-        //     this.FieldList = result.fieldList;
-        //     console.log('inside the result in page break-->');
-        //     console.log(result);
-        //     this.PageList = result.pageList;
-        //     this.setPageField(result.fieldList);
-        //     this.showToast('Form Page create Successfully','success');
-        // }).catch(err=>{
-        //     console.log({err});
-        // })
+        try {
+            console.log('total pages--------->' + this.PageList.length);
+            console.log('handle add page............');
+            this.isModalOpen1 = true;
+        } catch (error) {
+            console.log("In the catch block ==> Method :** handleAddPage ** || LWC:** formBuilder ** ==>", { error });
+            console.log('above error ==>' + error);
+        }
     }
+
     pageeeee
     @track pagetitle;
     @track pagenumber;
@@ -1098,18 +1112,22 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
     }
 
     handleValidation1() {
-        let nameCmp1 = this.template.querySelector(".nameCls1");
-        if (!nameCmp1.value || nameCmp1.value.trim().length == 0) {
-            console.log('test for form titel');
-            nameCmp1.setCustomValidity("Page Title is required");
-        } else {
-            nameCmp1.setCustomValidity(""); // clear previous value
-            // this.formdetails = false;
-            // this.objectselection = true;
-            this.handlecreatePage();
+        try {
+            let nameCmp1 = this.template.querySelector(".nameCls1");
+            if (!nameCmp1.value || nameCmp1.value.trim().length == 0) {
+                console.log('test for form titel');
+                nameCmp1.setCustomValidity("Page Title is required");
+            } else {
+                nameCmp1.setCustomValidity(""); // clear previous value
+                // this.formdetails = false;
+                // this.objectselection = true;
+                this.handlecreatePage();
+            }
+            nameCmp1.reportValidity();
+        } catch (error) {
+            console.log("In the catch block ==> Method :** handleValidation1 ** || LWC:** formBuilder ** ==>", { error });
+            console.log('above error ==>' + error);
         }
-        nameCmp1.reportValidity();
-
     }
 
     handleValidation2() {
@@ -1127,25 +1145,31 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
     }
 
     handlecreatePage() {
-        console.log('total pages--------->' + this.PageList.length);
-        createPage({ pageNumber: this.pagenumber, totalPages: this.PageList.length, formId: this.ParentMessage, pagename: this.pagetitle }).then(result => {
-            this.FieldList = result.fieldList;
-            console.log('inside the result in page break-->');
-            console.log(result);
-            this.PageList = result.pageList;
-            this.setPageField(result.fieldList);
-            // this.showToast('Form Page create Successfully','success');
-            let toast_error_msg = 'Form Page create Successfully';
-            this.error_toast = true;
-            this.template.querySelector('c-toast-component').showToast('success', toast_error_msg, 3000);
-        }).catch(err => {
-            console.log({ err });
-            let toast_error_msg = 'Error while creating page, Please try again later';
-            this.error_toast = true;
-            this.template.querySelector('c-toast-component').showToast('error', toast_error_msg, 3000);
-        })
-        this.isModalOpen1 = false;
-        this.handleModalClose();
+        try {
+            console.log('total pages--------->' + this.PageList.length);
+            createPage({ pageNumber: this.pagenumber, totalPages: this.PageList.length, formId: this.ParentMessage, pagename: this.pagetitle }).then(result => {
+                this.FieldList = result.fieldList;
+                console.log('inside the result in page break-->');
+                console.log(result);
+                this.PageList = result.pageList;
+                this.setPageField(result.fieldList);
+                // this.showToast('Form Page create Successfully','success');
+                let toast_error_msg = 'Form Page create Successfully';
+                this.error_toast = true;
+                this.template.querySelector('c-toast-component').showToast('success', toast_error_msg, 3000);
+            }).catch(err => {
+                console.log({ err });
+                let toast_error_msg = 'Error while creating page, Please try again later';
+                this.error_toast = true;
+                this.template.querySelector('c-toast-component').showToast('error', toast_error_msg, 3000);
+            })
+            this.isModalOpen1 = false;
+            this.handleModalClose();
+
+        } catch (error) {
+            console.log("In the catch block ==> Method :** handlecreatePage ** || LWC:** formBuilder ** ==>", { error });
+            console.log('above error ==>' + error);
+        }
     }
 
     handleModalClose() {
@@ -1379,37 +1403,51 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
     }
 
     openfieldvalidation(event) {
-
         this.fieldId = event.currentTarget.dataset.id;
         this.fieldName = event.currentTarget.dataset.fieldName;
         this.activesidebar = false;
         this.activeDesignsidebar = false
         this.fieldvalidationdiv = true;
         this.template.querySelector('.fieldvalidationdiv').style = "display:block;";
+        var array = this.template.querySelectorAll('.field');
+        for (let index = 0; index < array.length; index++) {
+            const element = array[index];
+            if (event.currentTarget.dataset.id == element.dataset.id) {
+                element.style = "background-color:rgba(210,201,201,0.4); border-radius:4px";
+            } else {
+                element.style = "background-color:none;";
+            }
+        }
         this.template.querySelector('c-field-validation').openvalidation(this.tab, this.fieldId, this.fieldName);
 
         // this.template.querySelector('c-field-validation').openvalidation(this.tab,this.fieldId,fieldName);
     }
-    
+
     closevalidation(event) {
         this.tab = event.detail;
         this.activeDesignsidebar = false;
         this.activeNotification = false;
         this.activethankyou = false;
         this.template.querySelector('.fieldvalidationdiv').style = "display:none;";
+        this.activesidebar = true;
+        var array = this.template.querySelectorAll('.field');
+        for (let index = 0; index < array.length; index++) {
+            const element = array[index];
+            element.style = "background-color:none;";
+        }
         this.connectedCallback();
     }
 
-    afterfielddelete(event){
-        console.log('after delete event --> '+event.detail);
+    afterfielddelete(event) {
+        console.log('after delete event --> ' + event.detail);
         var name = event.detail;
         const temp = this.template.querySelectorAll('.childref');
-        console.log('length temp --> '+temp.length);
-        console.log('queryselector childcomponent --> '+this.template.querySelectorAll('.childref'));
+        console.log('length temp --> ' + temp.length);
+        console.log('queryselector childcomponent --> ' + this.template.querySelectorAll('.childref'));
         for (let i = 0; i < temp.length; i++) {
             const element = temp[i];
-            console.log('element :- '+element);
-            element.AddField(name);  
+            console.log('element :- ' + element);
+            element.AddField(name);
         }
     }
 }

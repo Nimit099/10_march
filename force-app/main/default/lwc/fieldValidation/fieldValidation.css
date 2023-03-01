@@ -48,9 +48,9 @@ label.slds-checkbox_toggle.slds-grid>* {
     margin: 11px 10px 11px 10px;
 }
 
- .slds-input {
+ /* .slds-input {
     background-color: #f0f0f0;
-}
+} */
 
  .slds-form-element__label {
     font-weight: 500;
