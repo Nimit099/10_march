@@ -9,6 +9,7 @@ import EmojiRating2 from '@salesforce/resourceUrl/EmojiRating2';
 import EmojiRating3 from '@salesforce/resourceUrl/EmojiRating3';
 import EmojiRating4 from '@salesforce/resourceUrl/EmojiRating4';
 import getScaleRating from '@salesforce/apex/FormBuilderController.getScaleRating';
+
 export default class Quickformfieldcomponent extends LightningElement {
 
     // icons
