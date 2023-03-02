@@ -123,33 +123,33 @@ export default class Quickformfieldcomponent extends LightningElement {
 
     }
 
-    // @api FieldCSSUpdate(CSSString) {
-    //     try {
-    //         console.log('FieldCSS->> ' + CSSString);
-    //         console.log(this.template.querySelectorAll('.slds-input'));
-    //         let array = this.template.querySelectorAll('.slds-input');
-    //         console.log(array.length);
-    //         let str = '';
-    //         if (CSSString == undefined || CSSString == null || CSSString == '') {
-    //             str = this.getFieldCSS1;
-    //         } else {
-    //             str = CSSString;
-    //         }
-    //         let Arr = str.split(';color:');
-    //         let Arr2 = Arr[1].split(';');
-    //         let pcolor = Arr2[0];
-    //         for (let i = 0; i < array.length; i++) {
-    //             const element = array[i];
-    //             element.style = str;
-    //             element.style.setProperty("--c", pcolor);
-    //         }
-    //         this.template.querySelector('select').style = str;
-    //     } catch (error) {
-    //         console.log("In the catch block ==> Method :** FieldCSSUpdate ** || LWC:** quickformfieldcomponent ** ==>", { error });
-    //         console.log('above error ==>' + error);
-    //     }
+    @api FieldCSSUpdate(CSSString) {
+        try {
+            console.log('FieldCSS->> ' + CSSString);
+            console.log(this.template.querySelectorAll('.slds-input'));
+            let array = this.template.querySelectorAll('.slds-input');
+            console.log(array.length);
+            let str = '';
+            if (CSSString == undefined || CSSString == null || CSSString == '') {
+                str = this.getFieldCSS1;
+            } else {
+                str = CSSString;
+            }
+            let Arr = str.split(';color:');
+            let Arr2 = Arr[1].split(';');
+            let pcolor = Arr2[0];
+            for (let i = 0; i < array.length; i++) {
+                const element = array[i];
+                element.style = str;
+                element.style.setProperty("--c", pcolor);
+            }
+            this.template.querySelector('select').style = str;
+        } catch (error) {
+            console.log("In the catch block ==> Method :** FieldCSSUpdate ** || LWC:** quickformfieldcomponent ** ==>", { error });
+            console.log('above error ==>' + error);
+        }
 
-    // }
+    }
 
     @api LabelCSSUpdate(CSSString) {
         getLabelCSS({ id: this.formid })

@@ -186,8 +186,9 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             }).catch(error => {
                 console.log({ error });
             })
-
-        this.activesidebar = true;
+            if(this.tab == 'tab-2'){
+                this.activesidebar = true;
+            }
 
     }
 
@@ -1487,18 +1488,17 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
         this.activeNotification = false;
         this.activethankyou = false;
         this.fieldvalidationdiv = false;
-        this.template.querySelector('.fieldvalidationdiv').style = "display:none;";
-        this.activesidebar = true;
-        var array = this.template.querySelectorAll('.field');
-        for (let index = 0; index < array.length; index++) {
-            const element = array[index];
-            element.style = "background-color:none;";
-        }
         this.reloadform();
         if (this.tab == 'tab-2') {
             this.activesidebar = true;
         } else if (this.tab == 'tab-3') {
             this.activeDesignsidebar = true;
+        }
+        this.template.querySelector('.fieldvalidationdiv').style = "display:none;";
+        var array = this.template.querySelectorAll('.field');
+        for (let index = 0; index < array.length; index++) {
+            const element = array[index];
+            element.style = "background-color:none;";
         }
     }
 
@@ -1546,7 +1546,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             }
         })
     }
-    
+
     deleteno() {
         this.deletepopup = false;
         this.error_toast = false;
