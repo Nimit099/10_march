@@ -623,12 +623,17 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             // this.spinnerDataTable = true;
             // event.dataTransfer.getData('text/plain', JSON.stringify(event.target.dataset));
             var dropFieldId = event.target.dataset.fieldId;
+            var dropPageId = event.target.dataset.pageRecord;
+
+            // Checking variable is undefined or not if undifined that it will be replaced with empty string.
+            dropFieldId = typeof dropFieldId === 'undefined' ? '' : dropFieldId;
 
             console.log('*** dropFieldId ==>', dropFieldId);
             console.log('*** on drop event.target ==>', event.target);
             console.log('*** dropFieldId JSON==>', JSON.stringify(dropFieldId));
+            console.log('*** dropPageId ==>', dropPageId);
 
-            reOrderField({ dropFieldId: dropFieldId, currentFieldId: this.startFielId })
+            reOrderField({ dropFieldId: dropFieldId, currentFieldId: this.startFielId, dropPageId: dropPageId })
                 .then((result) => {
                     console.log("*** result from apex class ==>", result);
                     this.setPageField(result);
@@ -733,7 +738,12 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
 
             var FieldElement = document.querySelectorAll('.field');
             if (isPageBreak) {
-                await this.makePageBreak(FieldName, PageRecordId, position, oldfieldId);
+                var dropFieldId = event.target.dataset.fieldId;
+                // Checking variable is undefined or not if undifined that it will be replaced with empty string.
+                dropFieldId = typeof dropFieldId === 'undefined' ? '' : dropFieldId;
+                console.log('*** dropField From PageBreak ====>' + dropFieldId);
+
+                await this.makePageBreak(FieldName, PageRecordId, position, dropFieldId);
             } else {
                 await this.SaveFields(FieldName, PageRecordId, position, OldFieldSend, pageIdOfField, fieldLabelOfRemovedFeild);
 
@@ -743,12 +753,14 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
         }
     }
 
-    async makePageBreak(FieldName, pageId, position, oldfieldId) {
+    async makePageBreak(FieldName, pageId, position, dropFieldId) {
+        try {
         console.log('inside the page break---');
         console.log("field id -->" + FieldName);
         console.log("pageId-->" + pageId);
         console.log('postion-->' + position);
-        addPageBreak({ FormId: this.ParentMessage, Name: FieldName, Position: position, Form_Page_Id: pageId, TargetedFeild: oldfieldId })
+            console.log('dropFieldId-->' + dropFieldId);
+            addPageBreak({ FormId: this.ParentMessage, Name: FieldName, Position: position, Form_Page_Id: pageId, dropFieldId: dropFieldId })
             .then(result => {
                 this.FieldList = result.fieldList;
                 console.log('inside the result in page break-->');
@@ -760,6 +772,11 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                 console.log('inside the error in page break');
                 console.log({ err });
             })
+        } catch (error) {
+            console.log("In the catch block ==> Method :** makePageBreak ** || LWC:** formBuilder ** ==>", { error });
+            console.log('above error ==>' + error);
+        }
+
     }
 
 
@@ -928,7 +945,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             console.log('***Main List ==>', JSON.stringify(this.MainList));
             console.log('before renderedCallback');
         } catch (error) {
-            console.log("In the catch block ==> Method :** handleAddPage ** || LWC:** formBuilder ** ==>", { error });
+            console.log("In the catch block ==> Method :** setPageField ** || LWC:** formBuilder ** ==>", { error });
             console.log('above error ==>' + error);
         }
 
@@ -1466,6 +1483,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
     closevalidation(event) {
         this.spinnerDataTable = true;
         this.tab = event.detail;
+        this.activeDesignsidebar = false;
         this.activeNotification = false;
         this.activethankyou = false;
         this.fieldvalidationdiv = false;
@@ -1479,12 +1497,11 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
         this.reloadform();
         if (this.tab == 'tab-2') {
             this.activesidebar = true;
-        }
-        else if (this.tab == 'tab-3') {
+        } else if (this.tab == 'tab-3') {
             this.activeDesignsidebar = true;
         }
     }
-    
+
     afterfielddelete(event) {
         console.log('after delete event --> ' + event.detail);
         var name = event.detail;
@@ -1501,11 +1518,13 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
     bin = iconsZip + '/Iconfolder/bin.png';
     deletepopup = false;
     pageIds;
+
     handleDeleteAction(event) {
         this.pageIds = event.currentTarget.dataset.record
         this.deletepopup = true;
         // this.spinnerdelete = true;
     }
+
     deleteyes() {
         this.deletepopup = false;
         // this.spinnerDataTable = true;
@@ -1520,54 +1539,14 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                 let toast_error_msg = 'Error while deleting the page, Please try again later';
                 this.error_toast = true;
                 this.template.querySelector('c-toast-component').showToast('error', toast_error_msg, 3000);
-            }
-            else {
+            } else {
                 let toast_error_msg = 'Page is successfully deleted';
                 this.error_toast = true;
                 this.template.querySelector('c-toast-component').showToast('success', toast_error_msg, 3000);
             }
         })
-        // try {
-        //   deleteform({id : this.formId, searchkey : this.searchkey}).then(result => {
-        //     console.log(this.formId);
-        //     this.PaginationList = result;
-        //     this.count -= 1;
-        //     if (this.count === 0) {
-        //       this.bNoRecordsFound = false;
-        //     }
-        //     this.spinnerdelete = false;              
-        //     this.spinnerDataTable = false;
-        //     let toast_error_msg = 'Form is successfully deleted';
-        //     this.error_toast = true;
-        //     this.template.querySelector('c-toast-component').showToast('success',toast_error_msg,3000);
-        //   });
-
-        // } 
-        // catch (error) {
-        //   console.error(error);
-        //   this.spinnerDataTable = false;
-        //   let toast_error_msg = 'Error while deleting the form, Please try again later';
-        //   this.error_toast = true;
-        //   this.template.querySelector('c-toast-component').showToast('error',toast_error_msg,3000);
-        // }
     }
-    //   deletePage(event){
-    //     console.log('deleting---------------->' + event.currentTarget.dataset.record);
-    //   deletePage({FormId:this.ParentMessage,PageId:event.currentTarget.dataset.record}).then(result=>{
-    //     this.FieldList = result.fieldList;
-    //     console.log('inside the result in page break-->');
-    //     console.log(result);
-    //     var pagelength = result.pageList.length==this.PageList.length;
-    //     this.PageList = result.pageList;
-    //     this.setPageField(result.fieldList);
-    //     if(pagelength){
-    //         this.showToast('sorry page can not deleted','fail')
-    //     }
-    //     else{
-    //      this.showToast('page Delete successfully');}
-    //   })
-    // }
-
+    
     deleteno() {
         this.deletepopup = false;
         this.error_toast = false;
