@@ -10,6 +10,7 @@ import { LightningElement, track, api } from 'lwc';
 import formdetails from '@salesforce/apex/previewFormcmp.formdetails';
 import formfielddetails from '@salesforce/apex/previewFormcmp.formfielddetails';
 import formpagedetails from '@salesforce/apex/previewFormcmp.formpagedetails';
+import processDecryption from '@salesforce/apex/EncryptDecryptController.processDecryption';
 
 import BackButton from '@salesforce/resourceUrl/BackButton';
 
@@ -61,12 +62,25 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
-        this.FormData();
+        this.spinnerDataTable = true;
+        var pageURL = window.location.href;
+        console.log('pageURL ---> ',pageURL);
+        if(pageURL.includes("?access_key=")) {
+            var accessKey = pageURL.split("access_key=")[1];
+            console.log('accessKey ---> ',accessKey);
+            processDecryption({encryptedData : accessKey})
+            .then(result => {
+                console.log('result ---> ',result);
+                this.formid = result;
+                this.FormData();
+            });
+        }else {
+            this.FormData();
+        }
     }
 
     FormData() {
         try {
-            this.spinnerDataTable = true;
             formdetails({ id: this.formid })
                 .then(result => {
                     this.Progressbarvalue = result.Progress_Indicator__c;

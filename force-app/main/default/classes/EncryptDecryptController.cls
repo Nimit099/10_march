@@ -16,6 +16,7 @@ public class EncryptDecryptController {
         return encryptedData;
     }
 
+    @AuraEnabled
     public static String processDecryption(String encryptedData) {
         String decryptedData = '';
         try{

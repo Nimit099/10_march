@@ -53,6 +53,8 @@ export default class Quickformfieldcomponent extends LightningElement {
     @api placeholder;
     @api fieldtype;
     @api termsAndConditionValue;
+    @track focused;
+    @track fieldcss;
 
     connectedCallback() {
         getScaleRating()
@@ -70,34 +72,36 @@ export default class Quickformfieldcomponent extends LightningElement {
     renderedCallback() {
         console.log('quickformfield rendered callback!');
         console.log('formid --> ' + this.formid);
-        getFieldCSS({ id: this.formid })
-            .then(result => {
-                console.log(result);
-                this.getFieldCSS1 = result;
-                console.log('FieldCSS->> ' + this.getFieldCSS1);
-                console.log(this.template.querySelectorAll('.slds-input'));
-                console.log(this.template.querySelectorAll('.areatext'));
-                let array = this.template.querySelectorAll('.slds-input');
-                console.log(array.length);
-                let str = this.getFieldCSS1;
-                let Arr = str.split(';color:');
-                let Arr2 = Arr[1].split(';');
-                let pcolor = Arr2[0];
-                for (let i = 0; i < array.length; i++) {
-                    const element = array[i];
-                    element.style = str;
-                    element.style.setProperty("--c", pcolor);
-                }
-                this.template.querySelector('select').style = str;
-            }).catch(error => {
-                console.log('quickformfield --> ' + { error });
-            })
+        // getFieldCSS({ id: this.formid })
+        //     .then(result => {
+        //         console.log(result);
+        //         this.getFieldCSS1 = result;
+        //         this.fieldcss = result;
+        //         console.log('renderedCallback fieldcss --> '+this.fieldcss);
+        //         console.log('FieldCSS->> ' + this.getFieldCSS1);
+        //         console.log(this.template.querySelectorAll('.slds-input'));
+        //         console.log(this.template.querySelectorAll('.areatext'));
+        //         let array = this.template.querySelectorAll('.slds-input');
+        //         console.log(array.length);
+        //         let str = this.getFieldCSS1;
+        //         let Arr = str.split(';color:');
+        //         let Arr2 = Arr[1].split(';');
+        //         let pcolor = Arr2[0];
+        //         for (let i = 0; i < array.length; i++) {
+        //             const element = array[i];
+        //             element.style = str;
+        //             element.style.setProperty("--c", pcolor);
+        //         }
+        //         this.template.querySelector('select').style = str;
+        //     }).catch(error => {
+        //         console.log('quickformfield --> ' + { error });
+        //     })
 
         getLabelCSS({ id: this.formid })
             .then(result => {
                 console.log(result);
                 this.getLabelCSS1 = result;
-                console.log('FieldCSS->> ' + this.getLabelCSS1);
+                console.log('rendered LabelCSS->> ' + this.getLabelCSS1);
                 console.log(this.template.querySelectorAll('.flabel'));
                 let array = this.template.querySelectorAll('.flabel');
                 console.log(array.length);
@@ -124,17 +128,24 @@ export default class Quickformfieldcomponent extends LightningElement {
     }
 
     @api FieldCSSUpdate(CSSString) {
+        console.log('FieldCSSUpdate FieldCSS->> checking ' + CSSString);
         try {
-            console.log('FieldCSS->> ' + CSSString);
+            // this.fieldcss = CSSString;
             console.log(this.template.querySelectorAll('.slds-input'));
             let array = this.template.querySelectorAll('.slds-input');
             console.log(array.length);
             let str = '';
             if (CSSString == undefined || CSSString == null || CSSString == '') {
+                console.log('FieldCSSUpdate inside IF');
                 str = this.getFieldCSS1;
             } else {
+                console.log('FieldCSSUpdate inside ELSE');
                 str = CSSString;
+                console.log(str);
+                this.fieldcss = CSSString;
+                console.log('FieldCSSUpdate fieldcss --> '+this.fieldcss);
             }
+            console.log('str ===> ',JSON.stringify(str));
             let Arr = str.split(';color:');
             let Arr2 = Arr[1].split(';');
             let pcolor = Arr2[0];
@@ -143,7 +154,7 @@ export default class Quickformfieldcomponent extends LightningElement {
                 element.style = str;
                 element.style.setProperty("--c", pcolor);
             }
-            this.template.querySelector('select').style = str;
+            // this.template.querySelector('select').style = str;
         } catch (error) {
             console.log("In the catch block ==> Method :** FieldCSSUpdate ** || LWC:** quickformfieldcomponent ** ==>", { error });
             console.log('above error ==>' + error);
@@ -156,7 +167,7 @@ export default class Quickformfieldcomponent extends LightningElement {
             .then(result => {
                 console.log(result);
                 this.getLabelCSS1 = result;
-                console.log('FieldCSS->> ' + this.getLabelCSS1);
+                console.log('LabelCSS->> ' + this.getLabelCSS1);
                 console.log(this.template.querySelectorAll('.flabel'));
                 let array = this.template.querySelectorAll('.flabel');
                 console.log(array.length);
@@ -190,8 +201,17 @@ export default class Quickformfieldcomponent extends LightningElement {
         console.log('onhover hovercssproperty --> '+this.hovercssproperty);
         let str = this.hovercssproperty;
         console.log('onhover str --> '+str);
+        console.log('target id -->>>> '+event.target.dataset.id);
         if (this.onfocus) {
-            this.handlefocus(event)
+            if (event.target.dataset.id == undefined || event.target.dataset.id == null) {
+                this.handlefocus(event)
+            } else {
+                if (event.target.dataset.id == this.focused){
+                    this.handlefocus(event)
+                } else {
+                    event.target.style = str;
+                }
+            }
         } else {
             event.target.style = str;
         }
@@ -201,7 +221,10 @@ export default class Quickformfieldcomponent extends LightningElement {
     handlefocus(event) {
         console.log('handlefocus ***');
         console.log('this.onfocus --> ', this.onfocus);
-        console.log('FieldCSS->> ' + this.focuscssproperty);
+        console.log('focus FieldCSS->> ' + this.focuscssproperty);
+        if (event.target.dataset.id != undefined && event.target.dataset.id != null) {
+            this.focused = event.target.dataset.id;
+        }
         let str = this.focuscssproperty;
         event.target.style = str;
         this.onfocus = true;
@@ -212,11 +235,32 @@ export default class Quickformfieldcomponent extends LightningElement {
         console.log('Blur On Field');
         console.log(event);
         console.log('this.onfocus --> ', this.onfocus);
-        if (this.onfocus) {
+        
+        if(this.onfocus && (event.target.dataset.id == undefined || event.target.dataset.id == null)) {
             this.handlefocus(event);
-        } else {
-            this.FieldCSSUpdate(this.getFieldCSS1)
+        }else if(this.onfocus && (event.target.dataset.id == this.focused)) {
+            this.handlefocus(event);
+        }else {
+            console.log('handleblur fieldcss --> '+this.fieldccs);
+            event.target.style = this.fieldcss;
         }
+
+
+        // if (this.onfocus) {
+        //     if (event.target.dataset.id == undefined || event.target.dataset.id == null) {
+        //         this.handlefocus(event)
+        //     } else {
+        //         if (event.target.dataset.id == this.focused){
+        //             this.handlefocus(event)
+        //         } else {
+        //             console.log('handleblur fieldcss --> '+this.fieldccs);
+        //             event.target.style = this.fieldcss;
+        //         }
+        //     }
+        // } else {
+        //     console.log('handleblur fieldcss --> '+this.fieldccs);
+        //     event.target.style = this.fieldcss;
+        // }
     }
 
     handleblur1(event) {
@@ -224,7 +268,8 @@ export default class Quickformfieldcomponent extends LightningElement {
         console.log(event);
         console.log('this.onfocus --> ', this.onfocus);
         this.onfocus = false;
-        this.FieldCSSUpdate(this.getFieldCSS1)
+        console.log('handleblur1 fieldcss --> '+this.fieldccs);
+        this.FieldCSSUpdate(this.fieldcss)
     }
 
     get CheckBoxOp() {

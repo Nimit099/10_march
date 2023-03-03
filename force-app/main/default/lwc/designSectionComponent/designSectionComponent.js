@@ -100,6 +100,7 @@ export default class DesignSectionComponent extends LightningElement {
     @track buttonfontsize;
     @track btnWidth;
     @track btnHeight;
+    @track btnGap;
     @track btnHorizontalPadding;
     @track btnVerticalPadding;
 
@@ -631,6 +632,12 @@ export default class DesignSectionComponent extends LightningElement {
                     this.btnHeight = '200';
                 }
 
+                this.btnGap = (((str.split('gap:'))[1].split(';'))[0]).slice(0, -2);
+                if (this.btnGap == null || this.btnGap == undefined) {
+                    this.btnGap = '200';
+                }
+
+
                 // this.btnHorizontalPadding = (((str.split('padding-left:'))[1].split(';'))[0]).slice(0,-2);
                 // if (this.btnHorizontalPadding == null || this.btnHorizontalPadding == undefined) {
                 //   this.btnHorizontalPadding = 12;
@@ -1093,7 +1100,7 @@ export default class DesignSectionComponent extends LightningElement {
             } else if (Name == 'padding2') {
                 str = 'padding-bottom:' + value + ';padding-top' + value + ';';
             } else {
-                if (Name == 'font-size:' || Name == 'border-width:' || Name == 'border-radius:' || Name == 'width:' || Name == 'height:' || Name == 'padding1' || Name == 'padding2') {
+                if (Name == 'font-size:' || Name == 'border-width:' || Name == 'border-radius:' || Name == 'width:' || Name == 'height:' || Name == 'gap:' || Name == 'padding1' || Name == 'padding2') {
                     value += 'px';
                 }
                 console.log('Name->' + Name);

@@ -1,4 +1,4 @@
-public with sharing class previewFormcmp {
+public without sharing class previewFormcmp {
 
     @AuraEnabled
     public static Form__c formdetails(Id id){

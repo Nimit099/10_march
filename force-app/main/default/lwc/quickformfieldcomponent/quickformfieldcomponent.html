@@ -261,7 +261,7 @@
                                     <abbr class="slds-required" title="required">* </abbr>
                                 </label>
                             </template>
-                            <label class="slds-form-element__label">
+                            <label class="slds-form-element__label flabel">
                                 {labelvalue}
                             </label>
                             <template if:true={helptextcheck}>
@@ -327,11 +327,12 @@
                     <div class="fullname" id={PageId}>
                         <div class="slds-form-element__control fullnamewidth">
                             <div class="slds-select_container">
-                                <select class="slds-input slds-select" id="select-01" onchange={salutationValue}
+                                <select onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                                onblur={handleblur1} class="slds-input slds-select" data-id="select-01" onchange={salutationValue}
                                     disabled={isdisabled}>
-                                    <option value=""> --None-- </option>
+                                    <option class="slds-input" value=""> --None-- </option>
                                     <template for:each={salutationvalue} for:item="value">
-                                        <option value={value} key={value}>{value}</option>
+                                        <option class="slds-input" value={value} key={value}>{value}</option>
                                     </template>
 
                                 </select>
@@ -340,12 +341,12 @@
                         <!-- <lightning-select onchange={salutationValue}>
                         </lightning-select> -->
                         <div class="slds-form-element__control fullnamewidth">
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                            <input data-id="First Name" onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                             onblur={handleblur1} placeholder="First Name" onclick={OnFieldClick} class="slds-input"
                                 disabled={isdisabled} />
                         </div>
                         <div class="slds-form-element__control fullnamewidth">
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                            <input data-id="Last Name" onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                             onblur={handleblur1} placeholder="Last Name" onclick={OnFieldClick} class="slds-input"
                                 disabled={isdisabled} />
                         </div>
@@ -408,31 +409,31 @@
                         <div class="slds-form-element">
                             <div class="areatext slds-form-element__control">
                                 <textarea onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} disabled={isdisabled} id="street-address" class="slds-input"
+                                onblur={handleblur1} disabled={isdisabled} data-id="street-address" class="slds-input"
                                     placeholder="Street"></textarea>
                             </div>
                         </div>
                         <div class="slds-form-element flex">
                             <div class="slds-form-element__control leftfield">
                                 <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} disabled={isdisabled} type="text" id="city" class="slds-input"
+                                onblur={handleblur1} disabled={isdisabled} type="text" data-id="city" class="slds-input"
                                     placeholder="City" />
                             </div>
                             <div class="slds-form-element__control rightfield">
                                 <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} disabled={isdisabled} type="text" id="state" class="slds-input"
+                                onblur={handleblur1} disabled={isdisabled} type="text" data-id="state" class="slds-input"
                                     placeholder="State" />
                             </div>
                         </div>
                         <div class="slds-form-element flex">
                             <div class="slds-form-element__control leftfield">
                                 <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} disabled={isdisabled} type="text" id="zip-code" class="slds-input"
+                                onblur={handleblur1} disabled={isdisabled} type="text" data-id="zip-code" class="slds-input"
                                     placeholder="Zip Code" />
                             </div>
                             <div class="slds-form-element__control rightfield">
                                 <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} disabled={isdisabled} type="text" id="country" class="slds-input"
+                                onblur={handleblur1} disabled={isdisabled} type="text" data-id="country" class="slds-input"
                                     placeholder="Country" />
                             </div>
                         </div>

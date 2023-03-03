@@ -252,13 +252,14 @@
                                         </div> -->
                                     </template>
                                 </div>
-                                <div class="footer" style="gap:20px;">
+                                <div class="footer">
 
                                     <template if:true={page.isIndexZero}>
 
                                         <!-- <button class="nextbutton " variant="brand" value="Next" title="Next"
                                             onclick={onaddpage1}>Submit</button> -->
                                         <template if:false={isIndexLast}>
+                                            <div></div>
                                             <button data-name="next" variant="brand" title="Next" onclick={onaddpage1}
                                                 class="btn1">Next</button>
                                         </template>

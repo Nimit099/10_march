@@ -219,6 +219,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                     const element = arr[i];
                     element.style = str;
                 }
+                this.template.querySelector('footer').style = 'gap:' + ((str.split(';gap:')[1]).split(';')[0]);
             }).catch(error => {
                 console.log('Error in getButtonCSS ==>' + error);
                 console.log({ error });
@@ -237,6 +238,34 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                     element.style = str;
                 }
                 // this.spinnerDataTable = false;
+            }).catch(error => {
+                console.log('Error in getPageCSS ==>' + error);
+                console.log({ error });
+                // this.spinnerDataTable = false;
+            })
+
+        getFieldCSS({ id:this.ParentMessage })
+        .then(result => {
+            this.fieldcss = event.detail;
+            console.log('After handlenewCSS');
+            console.log('FieldCSS->> ' + this.fieldcss);
+            console.log(this.template.querySelectorAll('c-quickformfieldcomponent'));
+            let array = this.template.querySelectorAll('c-quickformfieldcomponent');
+            console.log(array.length);
+            let str = '';
+            if (this.fieldcss == undefined || this.fieldcss == null || this.fieldcss == '') {
+                str = this.getFieldCSS1;
+            } else {
+                str = this.fieldcss;
+            }
+            let Arr = str.split(';color:');
+            let Arr2 = Arr[1].split(';');
+            let pcolor = Arr2[0];
+            for (let i = 0; i < array.length; i++) {
+                const element = array[i];
+                element.FieldCSSUpdate(str);
+                // element.style.setProperty("--c", pcolor);
+            }
             }).catch(error => {
                 console.log('Error in getPageCSS ==>' + error);
                 console.log({ error });
@@ -380,6 +409,8 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             console.log(i + '--' + { element });
             element.style = str;
         }
+        console.log();
+        this.template.querySelector('footer').style = 'gap:' + ((str.split(';gap:')[1]).split(';')[0]);
     }
 
     handlenewCSS(event) {
@@ -387,8 +418,8 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             this.fieldcss = event.detail;
             console.log('After handlenewCSS');
             console.log('FieldCSS->> ' + this.fieldcss);
-            console.log(this.template.querySelectorAll('.slds-input'));
-            let array = this.template.querySelectorAll('.slds-input');
+            console.log(this.template.querySelectorAll('c-quickformfieldcomponent'));
+            let array = this.template.querySelectorAll('c-quickformfieldcomponent');
             console.log(array.length);
             let str = '';
             if (this.fieldcss == undefined || this.fieldcss == null || this.fieldcss == '') {
@@ -401,10 +432,10 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             let pcolor = Arr2[0];
             for (let i = 0; i < array.length; i++) {
                 const element = array[i];
-                element.style = str;
-                element.style.setProperty("--c", pcolor);
+                element.FieldCSSUpdate(str);
+                // element.style.setProperty("--c", pcolor);
             }
-            this.template.querySelector('select').style = str;
+            // this.template.querySelector('select').style = str;
         } catch (error) {
             console.log("In the catch block ==> Method :** FieldCSSUpdate ** || LWC:** quickformfieldcomponent ** ==>", { error });
             console.log('above error ==>' + error);

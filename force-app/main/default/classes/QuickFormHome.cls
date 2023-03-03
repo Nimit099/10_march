@@ -34,7 +34,7 @@ public with sharing class QuickFormHome {
 
     public static List<Form__c> getFormRecords() {
         try {
-            List<Form__c> forms = [SELECT Id,Name,Total_Submissions__c, Status__c FROM Form__c];
+            List<Form__c> forms = [SELECT Id,Name,Total_Submissions__c, Status__c FROM Form__c ORDER BY LastModifiedDate DESC];
             return forms;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

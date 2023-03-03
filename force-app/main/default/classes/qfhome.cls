@@ -20,7 +20,7 @@ public with sharing class qfhome {
     @AuraEnabled
     public static Map<Integer,List<Form__c>> records(){
         try {
-            List<Form__c> forms = [SELECT Id,Name,Total_Submissions__c, Status__c FROM Form__c];
+            List<Form__c> forms = [SELECT Id,Name,Total_Submissions__c, Status__c FROM Form__c ORDER BY LastModifiedDate DESC];
             Integer count = [SELECT Count() FROM Form__c];
             Map<Integer,List<Form__c>> data = new Map<Integer,List<Form__c>>();
             data.put(count,forms);
@@ -140,7 +140,7 @@ public with sharing class qfhome {
     public static Void sendemail(String name, String email, String subject, String body){
         try {
             List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
-            List<String> address = new List<String>{'smit11685@gmail.com'};
+            List<String> address = new List<String>{'smit11685@gmail.com','prakash.m@mvclouds.com'};
                 
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             System.debug('mail :'+ mail);
