@@ -12,6 +12,8 @@ public without sharing class EncryptDecryptController {
             encryptedData = EncodingUtil.base64Encode(encryptedBlob);
         }catch(Exception e) {
             System.debug('Error --> '+e);
+            error_handler.insert_errordata(e,'EncryptDecryptController','processEncryption');
+
         }
         return encryptedData;
     }
@@ -27,6 +29,8 @@ public without sharing class EncryptDecryptController {
             decryptedData = decryptedBlob.toString();
         }catch(Exception e) {
             System.debug('Error --> '+e);
+            error_handler.insert_errordata(e,'EncryptDecryptController','processDecryption');
+
         }
         return decryptedData;
     }

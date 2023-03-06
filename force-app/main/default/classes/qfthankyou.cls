@@ -24,7 +24,8 @@ public without sharing class qfthankyou {
                 }
                 return null;
             } catch (Exception e) {
-                
+                // error_handler.insert_errordata(e,'qfthankyou','getthankyoupage');
+                System.debug(e.getMessage());
                 return null;            
             }
         }
@@ -55,6 +56,7 @@ public without sharing class qfthankyou {
             return null;
         } catch (Exception e) {
             System.debug(e.getMessage());
+            error_handler.insert_errordata(e,'qfthankyou','insertrecord');
             return null;
         }
        }
@@ -73,6 +75,7 @@ public without sharing class qfthankyou {
                 return null;
             }
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'qfthankyou','getrecordslist');
             return null;
         }
        }

@@ -7,6 +7,7 @@ public without sharing class previewFormcmp {
         Page_CSS__c,Form_Styling__c, All_Field_Hover__c, All_Field_Focus__c,All_Field_Styling__c,Label_CSS__c,FormBgID__c,PageBgID__c  FROM Form__c WHERE Id =: id];
         return nform;
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'previewFormcmp','formdetails');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -23,6 +24,7 @@ public without sharing class previewFormcmp {
 
             return str;
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'previewFormcmp','formdetails');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -33,6 +35,7 @@ public without sharing class previewFormcmp {
         List<Form_Fields__c> fieldList=[SELECT Id,Name,Form__c,Form_Page__c,Field_Order__c,Field_Validations__c FROM Form_Fields__c WHERE Form__c =: id ORDER BY Field_Order__c ASC];
         return fieldList;
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'previewFormcmp','formfielddetails');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -43,6 +46,7 @@ public without sharing class previewFormcmp {
             List<Form_Page__c> pageList = [SELECT Id, Name, Page_Number__c FROM Form_Page__c WHERE Form__c=:id ORDER BY Page_Number__c ASC];
             return pageList;
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'previewFormcmp','formpagedetails');
             throw new AuraHandledException(e.getMessage());
         }
     }

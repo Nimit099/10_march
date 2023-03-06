@@ -19,6 +19,8 @@ public without sharing class notificationInsertData {
            insert acc;
 
         } catch (Exception e) {
+            error_handler.insert_errordata(e,'notificationInsertData','create');
+            System.debug(e.getMessage());
             System.debug('error --> '+e);
         }
     }
@@ -45,6 +47,8 @@ public without sharing class notificationInsertData {
 
         }
         catch (Exception e) {
+            error_handler.insert_errordata(e,'notificationInsertData','updated');
+            System.debug(e.getMessage());
             System.debug('error --> '+e);
             return null;
         }
@@ -63,8 +67,16 @@ public without sharing class notificationInsertData {
     }
     @AuraEnabled
     public static List<Notification__c> getContactList(String form_id){
+
+        try{
         return[
             SELECT Attachment__c, CC_Recipients__c, Email_Body__c, To_Recipients__c,ID,Subject__c,BCC_Recipients__c FROM Notification__c WHERE Form__c =: form_id
         ];
+        }
+        catch(Exception e){
+            // error_handler.insert_errordata(e,'notificationInsertData','getContactList');
+            // System.debug(e.getMessage());
+            return null;
+        }
     }
 }

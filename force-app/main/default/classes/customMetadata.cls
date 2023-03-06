@@ -28,6 +28,8 @@ public without sharing class customMetadata {
              
             return l_Types;
         } catch (Exception e) {
+            // error_handler.insert_errordata(e ,'customMetadata','f_get_Type');
+            // System.debug(e.getMessage());
             System.debug('Exception: '+e.getMessage());
             return null;
         }
@@ -46,6 +48,8 @@ public without sharing class customMetadata {
              
             return Captcha_Types;
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'customMetadata','Get_Captcha_Types');
+            // System.debug(e.getMessage());
             System.debug('Exception: '+e.getMessage());
             return null;
         }
@@ -84,7 +88,10 @@ public without sharing class customMetadata {
                 update formRec;
             }
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'customMetadata','siteUrl');
+            // System.debug(e.getMessage());
             System.debug('An exception occurred: ' + e.getMessage());
+            return null;
         }
         return publishedURL;
     }

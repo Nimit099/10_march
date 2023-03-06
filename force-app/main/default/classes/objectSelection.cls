@@ -99,10 +99,10 @@ public without sharing class objectSelection {
     public static String saveMapped_object(String Mapped_Objects, String FormTitle, String FormDesc,String ProgressIndicator,String CaptchaType){
         try {
             String Styles = 'width:100%;padding-top:0%;padding-bottom:0%;padding-left:0%;padding-right:0%;background-color:#FFFFFF;background-size:auto;background-position:top center;background-repeat:Repeat;background-attachment:Fixed;';
-            String PageStyle = 'padding-top:0%;padding-bottom:0%;background-color:#FFFFFF;background-size:auto;background-position:top center;background-repeat:Repeat;background-attachment:Fixed;border-color:#000000;border-style:solid;border-width:1px;border-radius:0px;';
+            String PageStyle = 'padding-top:0%;padding-bottom:0%;background-color:#FFFFFF;background-size:auto;background-position:top center;background-repeat:Repeat;background-attachment:Fixed;border-color:#000000;border-style:Solid;border-width:1px;border-radius:0px;';
             String FieldStyle = 'background-color:#FFFFFF;border-color:#000000;border-style:Solid;border-width:1px;border-radius:5px;font-family:Arial;font-weight:Normal;color:#242424;font-size:12px;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;line-height:1.5;';
-            String HoverStyle = 'background-color:#FFFFFF;border-color:#000000;border-style:Solid;border-width:1px;border-radius:5px;font-family:Arial;font-weight:Normal;color:#242424;font-size:12px;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;line-height:1.5;';
-            String FocusStyle = 'background-color:#FFFFFF;border-color:#000000;border-style:Solid;border-width:1px;border-radius:5px;font-family:Arial;font-weight:Normal;color:#242424;font-size:12px;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;line-height:1.5;';
+            String HoverStyle = 'background-color:#FFFFFF;border-color:#000000;border-style:Solid;border-width:1px;border-radius:5px;font-family:Arial;font-weight:Normal;color:#000000;font-size:12px;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;line-height:1.5;';
+            String FocusStyle = 'background-color:#FFFFFF;border-color:#000000;border-style:Solid;border-width:1px;border-radius:5px;font-family:Arial;font-weight:Normal;color:#000000;font-size:12px;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;line-height:1.5;';
             String LabelStyle = 'justify-content:Left;font-family:Arial;font-weight:Normal;font-style:Normal;font-size:12px;line-height:1.5;color:#000000;margin-top:0px;margin-bottom:0px;';   
             String ButtonStyle = ' background-color: #6699CC;border-color:#FFFFFF; height: 35px; width: 120px; font-size: 16px; border-width:0px; border-style:Solid; border-radius: 28px; font-family:Arial;font-weight:Normal;color:#FFFFFF;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;';
             Form__c form = new Form__c(Name = FormTitle, Mapped_Objects__c = Mapped_Objects, Captcha_Type__c = CaptchaType, Form_Description__c = FormDesc, Progress_Indicator__c = ProgressIndicator, Form_Styling__c = Styles, All_Field_Styling__c = FieldStyle, Page_CSS__c = PageStyle, All_Field_Focus__c = FocusStyle, All_Field_Hover__c = HoverStyle, Button_CSS__c = ButtonStyle, Button_Position__c = 'justify-content:Center;gap:0px;');
@@ -126,6 +126,8 @@ public without sharing class objectSelection {
             insert thankyoupage;
             return form.Id;
         } catch (Exception e) {
+            error_handler.insert_errordata(e,'objectSelection','saveMapped_object');
+            System.debug(e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }

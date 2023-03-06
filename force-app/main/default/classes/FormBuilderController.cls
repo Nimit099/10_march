@@ -5,6 +5,7 @@ public without sharing class FormBuilderController{
             List<BaseField_mdt__mdt> basefield = BaseField_mdt__mdt.getAll().values();
             return basefield;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','GetFieldsMetaData');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -26,6 +27,7 @@ public without sharing class FormBuilderController{
             sw.FormDirectionProp = Form_Direction__mdt.getAll().values();
             return sw;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','GetStyles');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -33,6 +35,7 @@ public without sharing class FormBuilderController{
     //Method to get Field's Data
     @Auraenabled
     public static List<List<String>> getFields(String id){
+        try {
         List<String> types = new List<String>();
         Form__c FormDetail = [SELECT Id, Mapped_Objects__c
                               FROM Form__c
@@ -78,6 +81,11 @@ public without sharing class FormBuilderController{
         System.debug(allFields);
 
         return allFields;
+            
+        } catch (Exception e) {
+            // error_handler.insert_errordata(e,'FormBuilderController','getfields');
+            return null;
+        }
     }
 
     @AuraEnabled
@@ -135,6 +143,7 @@ public without sharing class FormBuilderController{
             update nform;
             return nform.Form_Styling__c + ',' + URL;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','UploadFormImage');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -193,6 +202,7 @@ public without sharing class FormBuilderController{
             update nform;
             return nform.Page_CSS__c + ',' + URL;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','UploadPageImage');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -223,6 +233,7 @@ public without sharing class FormBuilderController{
             update nform;
             return nform.Form_Styling__c;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','RemoveFormImage');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -253,6 +264,7 @@ public without sharing class FormBuilderController{
             update nform;
             return nform.Page_CSS__c;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','RemovePageImage');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -296,6 +308,7 @@ public without sharing class FormBuilderController{
             update nform;
             result = nform.Button_CSS__c;
         } catch (Exception e){
+            error_handler.insert_errordata(e,'FormBuilderController','StoreBtnStyles');
             result = e.getMessage();
         }
         return result;
@@ -311,6 +324,7 @@ public without sharing class FormBuilderController{
             update nform;
             return nform.Button_Position__c;
         } catch (Exception e){
+            error_handler.insert_errordata(e,'FormBuilderController','StoreBtnposition');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -356,6 +370,7 @@ public without sharing class FormBuilderController{
             // nform.All_Field_Styling__c = Value;
             result = nform.Label_CSS__c;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','StoreLabelStyles');
             result = e.getMessage();
         }
         return result;
@@ -400,6 +415,7 @@ public without sharing class FormBuilderController{
             update nform;
             result = nform.Form_Styling__c;
         } catch (Exception e){
+            error_handler.insert_errordata(e,'FormBuilderController','StoreFormStyles');
             result = e.getMessage();
         }
         return result;
@@ -445,6 +461,7 @@ public without sharing class FormBuilderController{
             // nform.Page_CSS__c = Value;
             result = nform.Page_CSS__c;
         } catch (Exception e){
+            error_handler.insert_errordata(e,'FormBuilderController','StorePageStyles');
             result = e.getMessage();
         }
         return result;
@@ -489,6 +506,7 @@ public without sharing class FormBuilderController{
             update nform;
             result = nform.All_Field_Styling__c;
         } catch (Exception e){
+            error_handler.insert_errordata(e,'FormBuilderController','StoreStyles');
             result = e.getMessage();
         }
         return result;
@@ -503,6 +521,7 @@ public without sharing class FormBuilderController{
             String str = '/sfc/servlet.shepherd/version/download/' + nform.FormBgID__c + ',' + '/sfc/servlet.shepherd/version/download/' + nform.PageBgID__c;
             return str;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','getBGImages');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -548,6 +567,7 @@ public without sharing class FormBuilderController{
             // nform.All_Field_Styling__c = Value;
             result = nform.All_Field_Hover__c;
         } catch (Exception e){
+            error_handler.insert_errordata(e,'FormBuilderController','StoreHoverStyles');
             result = e.getMessage();
         }
         return result;
@@ -594,6 +614,7 @@ public without sharing class FormBuilderController{
             // nform.All_Field_Styling__c = Value;
             result = nform.All_Field_Focus__c;
         } catch (Exception e){
+            error_handler.insert_errordata(e,'FormBuilderController','StoreFocusStyles');
             result = e.getMessage();
         }
         return result;
@@ -609,6 +630,7 @@ public without sharing class FormBuilderController{
             System.debug('CSS->>>' + nform.Form_Styling__c);
             return nform.Form_Styling__c;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','getFormCSS');
             String errorM = '';
             errorM = 'Method getFormCSS ==> ' + 'Apex Form Id ==>' + id + '--Error Line Number ==>' + e.getLineNumber() + ' Error Message ==>' + e.getMessage();
             return errorM;
@@ -625,6 +647,7 @@ public without sharing class FormBuilderController{
             System.debug('CSS->>>' + nform.Page_CSS__c);
             return nform.Page_CSS__c;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','getPageCSS');
             String errorM = '';
             errorM = 'Method getPageCSS ==> ' + 'Apex Form Id ==>' + id + '--Error Line Number ==>' + e.getLineNumber() + ' Error Message ==>' + e.getMessage();
             return errorM;
@@ -641,6 +664,7 @@ public without sharing class FormBuilderController{
             System.debug('CSS->>>' + nform.All_Field_Styling__c);
             return nform.All_Field_Styling__c;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','getFieldCSS');
             //throw new AuraHandledException(e.getMessage());
             String errorM = '';
             errorM = 'Apex Form Id ==>' + id + '--Error Line Number ==>' + e.getLineNumber() + ' Error Message ==>' + e.getMessage();
@@ -650,32 +674,47 @@ public without sharing class FormBuilderController{
 
     @AuraEnabled
     public static string getHoverCSS(String id){
+        try {
         Form__c nform = [SELECT Id, All_Field_Hover__c
                          FROM Form__c
                          WHERE Id = :id];
         System.debug(nform);
         System.debug('CSS->>>' + nform.All_Field_Hover__c);
         return nform.All_Field_Hover__c;
+        } catch (Exception e) {
+            // error_handler.insert_errordata(e,'FormBuilderController','getHoverCSS');
+            return null;
+        }
     }
 
     @AuraEnabled
     public static string getFocusCSS(String id){
+        try {
         Form__c nform = [SELECT Id, All_Field_Focus__c
                          FROM Form__c
                          WHERE Id = :id];
         System.debug(nform);
         System.debug('CSS->>>' + nform.All_Field_Focus__c);
         return nform.All_Field_Focus__c;
+        } catch (Exception e) {
+            // error_handler.insert_errordata(e,'FormBuilderController','getFocusCSS');
+            return null;
+        }
     }
 
     @AuraEnabled
     public static string getLabelCSS(String id){
+        try {
         Form__c nform = [SELECT Id, Label_CSS__c
                          FROM Form__c
                          WHERE Id = :id];
         System.debug(nform);
         System.debug('CSS->>>' + nform.Label_CSS__c);
         return nform.Label_CSS__c;
+        } catch (Exception e) {
+            // error_handler.insert_errordata(e,'FormBuilderController','getLabelCSS');
+            return null;
+        }
     }
 
     @AuraEnabled
@@ -688,6 +727,7 @@ public without sharing class FormBuilderController{
             System.debug('CSS->>>' + nform.Button_CSS__c + nform.Button_Position__c);
             return nform.Button_CSS__c + nform.Button_Position__c;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','getButtonCSS');
             String errorM = '';
             errorM = 'Method getButtonCSS ==> ' + 'Apex Form Id ==>' + id + '--Error Line Number ==>' + e.getLineNumber() + ' Error Message ==>' + e.getMessage();
             return errorM;
@@ -702,6 +742,7 @@ public without sharing class FormBuilderController{
         System.debug('all styles :---> '+ nform);
         return nform;
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'FormBuilderController','formdetails');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -714,6 +755,7 @@ public without sharing class FormBuilderController{
                              WHERE Id = :id];
             return nform.Progress_Indicator__c;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','getprogressbar');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -726,6 +768,7 @@ public without sharing class FormBuilderController{
                              WHERE Id = :id];
             return nform.Captcha_Type__c;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','getcaptcha');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -739,6 +782,7 @@ public without sharing class FormBuilderController{
                                            ORDER BY Page_Number__c ASC];
             return pageList;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','GetFormPage');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -784,6 +828,7 @@ public without sharing class FormBuilderController{
         try{
             return Scale_Rating__mdt.getAll().values();
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','getScaleRating');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -952,6 +997,7 @@ public without sharing class FormBuilderController{
             return fieldList;
 
         } catch (Exception e){
+            error_handler.insert_errordata(e,'FormBuilderController','CreateFieldRecord');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1034,6 +1080,7 @@ public without sharing class FormBuilderController{
 
         } catch (Exception e){
             System.debug('Exception-->>' + e.getMessage() + '-->Line--' + e.getLineNumber() + '-->Stack-->' + e.getStackTraceString());
+            error_handler.insert_errordata(e,'FormBuilderController','addPageBreak');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1077,6 +1124,7 @@ public without sharing class FormBuilderController{
             }
             return result;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','ObjName');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1179,6 +1227,7 @@ public without sharing class FormBuilderController{
         } catch (Exception e){
             System.debug('Error Line Number ==>' + e.getLineNumber() + ' Error Message ==>' + e.getMessage());
             System.debug('Error ==>' + e);
+            // error_handler.insert_errordata(e,'FormBuilderController','getFieldsRecords');
             return null;
         }
     }
@@ -1255,6 +1304,7 @@ public without sharing class FormBuilderController{
         } catch (Exception e){
             System.debug('Error Line Number ==>' + e.getLineNumber() + ' Error Message ==>' + e.getMessage());
             System.debug('Error ==>' + e);
+                                    // error_handler.insert_errordata(e,'FormBuilderController','reOrderField');
             return null;
         }
     }
@@ -1291,6 +1341,7 @@ public without sharing class FormBuilderController{
                            ORDER BY Page_Number__c ASC];
             return pw;
         } catch (Exception e){
+                        // error_handler.insert_errordata(e,'FormBuilderController','createPage');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1352,6 +1403,7 @@ public without sharing class FormBuilderController{
                            ORDER BY Page_Number__c ASC];
             return pw;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','updatePage');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1375,6 +1427,7 @@ public without sharing class FormBuilderController{
                            ORDER BY Page_Number__c ASC];
             return pw;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','renameform');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1389,6 +1442,7 @@ public without sharing class FormBuilderController{
             update renameform;
             return rename;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','renameMainform');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1433,6 +1487,7 @@ public without sharing class FormBuilderController{
                            ORDER BY Page_Number__c ASC];
             return pw;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','deletePage');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1480,6 +1535,7 @@ public without sharing class FormBuilderController{
             update editForm;
             return 'saved successfully';
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','editFormSubmit');
             throw new AuraHandledException(e.getMessage());
         }
     }

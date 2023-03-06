@@ -4,7 +4,7 @@
     margin: auto 5% auto 0%;
     padding: 3%;
     /* background-color: #FFFFFF; */
-    /* border-radius: 0px; */
+    border-radius: 28px;
     overflow: hidden;
 }
 .tab-menu ul{
@@ -21,7 +21,7 @@
     color: rgb(0, 0, 0);
     font-style: normal;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 15px;
    
 }
 .tab-menu ul li a.active-tab{
@@ -55,14 +55,16 @@ lightning-combobox {
     position: absolute;
     height: 100%;
     width: 100%;
-    top: 0%;
-    /* border-radius: 0px; */
+    border-radius: 28px;
 }
  .sizebox{
-    margin:auto; 
+    /* margin:auto;  */
     width:100%; 
+    /* margin-top:30px; */
     height: 100% !important;
     background-color: white;
+    /* border-radius: 28px !important; */
+    border-radius: 15px !important;
 }
  .gridbox{
     height: 100% !important;  
@@ -168,18 +170,25 @@ lightning-combobox {
     margin: 1% 0;
 }
  .s-wrap1 .s-item-4 {
-    background-image: url("/resource/img1");
+    /* background-image: url("/resource/img1"); */
+    background-image: url("/resource/UserConfig1");
+    /* height: 80%; */
+    /* width: 20%; */
 }
 
  .s-wrap1 .s-item-5 {
-    background-image: url("/resource/img2");
+    /* background-image: url("/resource/img2"); */
+    background-image: url("/resource/UserConfig2");
 }
 
  .s-wrap1 .s-item-6 {
-    background-image: url("/resource/img3");
+    /* background-image: url("/resource/img3"); */
+    background-image: url("/resource/UserConfig3");
+    /* background-image: url({$Resource.img3 + '/image3.png'}); */
 }
 .s-wrap1 .s-item-7 {
-    background-image: url("/resource/img4");
+    /* background-image: url("/resource/img4"); */
+    background-image: url("/resource/UserConfig4");
 }
 
  .s-type-11 .s-control1 {
@@ -451,7 +460,7 @@ lightning-combobox {
   .resourcediv{
     border-left: 1px solid gray; 
     background-color: #3E77AE;
-    border-radius: 15px; 
+    border-radius: 28px; 
     margin-top: 20px; 
     margin-bottom: 20px; 
     right: 20px; 
@@ -871,15 +880,14 @@ lightning-combobox {
         position: absolute;
         height: 100%;
         width: 100%;
-        top: 0%;
     }
      .sizebox{
-        margin:auto; 
-        width:85% !important; 
-        margin-top:14px !important;
-        height: 95% !important;
+        /* margin:auto;  */
+        width:100% !important; 
+        /* margin-top:14px !important; */
+        height: 100% !important;
         background-color: white;
-        border-radius: 28px !important;
+        border-radius: 15px !important;
     }
      .slds-modal__container {
         margin: 0 auto;
@@ -1055,7 +1063,10 @@ lightning-combobox {
         position: absolute;
         height: 100%;
         width: 100%;
-        top: 0%;
+    }
+    .tab{
+        padding-top: 10px;
+        /* display: none; */
     }
      .s-wrap11 .s-content11 {
         margin: 0;
@@ -1070,7 +1081,7 @@ lightning-combobox {
         transition: transform 1s;
     }
      .sizebox{
-        margin:auto ; 
+        /* margin:auto ;  */
         width:100%; 
         /* margin-top:15px; */
         /* margin-top:0px; */
@@ -1079,7 +1090,7 @@ lightning-combobox {
         background-color: white;
         overflow: hidden !important;
         overflow-y: hidden !important;
-        /* border-radius: 28px !important; */
+        border-radius: 15px !important;
     }
      .slds-modal__container {
         margin: 0 auto;
@@ -1095,13 +1106,19 @@ lightning-combobox {
         padding-top: 10px !important;
     }
      .s-wrap1 {
-        height: 26rem !important;
+        /* height: 26rem !important; */
+        height: 35rem !important;
         width: 100% !important;
-        margin-right: 3% !important;
-        margin-bottom: 5% !important;
+        /* margin-right: 3% !important; */
+        /* margin-bottom: 5% !important; */
         position: relative;
         overflow: hidden;
     }
+    /* .s-wrap1 .s-item-4 {
+        background-image: url("/resource/img1");
+        height: 80%;
+        width: 20%;
+    } */
      .s-wrap1 .s-item1 {
         display: inline-block;
         width: 20% !important;
@@ -1269,6 +1286,27 @@ lightning-combobox {
     }
 
 }
+
+@media all and (min-width : 1920px){
+
+    .UserConfigDetails{
+        /* margin-top: 5px; */
+    }
+
+    .UserConfigDetails p{
+        margin-top: 25px;
+        font-size: 18px;
+    }
+
+    /* .UserConfigDetails b{
+        font-size: 20px;
+    } */
+
+    .h1class{
+        font-size: 22px;
+    }
+}
+
  body {
     background: #ecf0f1;
   }

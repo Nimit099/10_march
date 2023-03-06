@@ -54,7 +54,9 @@ export default class Quickformfieldcomponent extends LightningElement {
     @api termsAndConditionValue = '';
     @track focused = '';
     @api fieldcss = '';
+    @api labelcss = '';
     @track updatedfieldcss = this.fieldcss;
+    @track updatedlabelcss = this.labelcss;
 
     connectedCallback() {
         getScaleRating()

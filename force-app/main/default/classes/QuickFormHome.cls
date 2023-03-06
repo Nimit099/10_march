@@ -34,9 +34,11 @@ public without sharing class QuickFormHome {
 
     public static List<Form__c> getFormRecords() {
         try {
-            List<Form__c> forms = [SELECT Id,Name,Total_Submissions__c, Status__c FROM Form__c ORDER BY LastModifiedDate DESC];
+            List<Form__c> forms = [SELECT Id,Name,Total_Submissions__c, Status__c FROM Form__c  ORDER BY LastModifiedDate DESC];
             return forms;
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'QuickFormHome','getFormRecords');
+            System.debug(e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -69,6 +71,8 @@ public without sharing class QuickFormHome {
         try {
           return [SELECT Id, Name, Status__c, Total_Submissions__c FROM Form__c WHERE Name LIKE:'%'+searchkey+'%'];
         } catch (Exception e) {
+            // error_handler.insert_errordata(e,'QuickFormHome','searchForms');
+            System.debug(e.getMessage());
           throw new AuraHandledException(e.getMessage());
         }
     }
@@ -115,6 +119,8 @@ public without sharing class QuickFormHome {
             return forms;
 
         } catch (Exception e) {
+            error_handler.insert_errordata(e,'QuickFormHome','getFormsByStatus');
+            System.debug(e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -152,6 +158,8 @@ public without sharing class QuickFormHome {
             return forms;
 
         } catch (Exception e) {
+            error_handler.insert_errordata(e,'QuickFormHome','deleteFormRecord');
+            System.debug(e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -181,6 +189,8 @@ public without sharing class QuickFormHome {
             return forms;
                 
         } catch (Exception e) {
+            error_handler.insert_errordata(e,'QuickFormHome','renameFormRecord');
+            System.debug(e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }
