@@ -17,7 +17,7 @@
     //Create Lightning Component
     $Lightning.use("c:preview_form_test_app", function() {
         $Lightning.createComponent("c:previewFormCmp", 
-                                   {"formid" : contactId}, //Pass Parameter
+                                   {}, //Pass Parameter
                                    "LightningContainer", function(cmp) {
                                        console.log()
                                        console.log('Component created Successfully');

@@ -9,7 +9,7 @@
 // =================================== 
 
 
-public with sharing class qfhome {
+public without sharing class qfhome {
 
 // <!-- ===================================
 // # MV Clouds Private Limited

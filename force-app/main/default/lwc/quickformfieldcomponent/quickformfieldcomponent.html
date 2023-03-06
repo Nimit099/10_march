@@ -285,17 +285,19 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label class="slds-form-element__label ">
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                     </template>
                     <!-- <lightning-input class={fieldId} ></lightning-input> -->
                     <div class="slds-form-element__control">

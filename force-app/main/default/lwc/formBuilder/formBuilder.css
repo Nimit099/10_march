@@ -2299,3 +2299,10 @@ img {
 .btn1{
     padding-left: 0%;
 }
+
+.btn2{
+    padding-left: 0%;
+    color: rgba(0, 0, 0, 0) !important;
+    background-color: rgba(0, 0, 0, 0)!important;
+    border-color:  rgba(0, 0, 0, 0) !important;
+}

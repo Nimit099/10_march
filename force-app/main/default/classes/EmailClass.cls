@@ -1,4 +1,4 @@
-public with sharing class EmailClass {
+public without sharing class EmailClass {
 
     @AuraEnabled
     public static List<SObject> search(String searchString) {

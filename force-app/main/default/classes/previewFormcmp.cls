@@ -3,9 +3,25 @@ public without sharing class previewFormcmp {
     @AuraEnabled
     public static Form__c formdetails(Id id){
         try{
-        Form__c nform = [SELECT Id,Progress_Indicator__c,Captcha_Type__c,Button_CSS__c,Button_Position__c,
-        Page_CSS__c,Form_Styling__c  FROM Form__c WHERE Id =: id];
+        Form__c nform = [SELECT Id,Name,Progress_Indicator__c,Captcha_Type__c,Button_CSS__c,Button_Position__c,
+        Page_CSS__c,Form_Styling__c, All_Field_Hover__c, All_Field_Focus__c,All_Field_Styling__c,Label_CSS__c,FormBgID__c,PageBgID__c  FROM Form__c WHERE Id =: id];
         return nform;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static String bgimages(Id id, String data){
+        try{
+            String result = '';
+            ContentVersion cv = [SELECT Id,VersionData FROM ContentVersion WHERE Id =: id];
+            result += 'url("data:image/png;base64,'+ EncodingUtil.base64Encode(cv.VersionData);
+            String str = data.split('background-image:')[0];
+            str += 'background-image:'+result+'");'; 
+            System.debug('base64 data image --> '+ str);
+
+            return str;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

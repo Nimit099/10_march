@@ -1,4 +1,4 @@
-public with sharing class fieldvalidation {
+public without sharing class fieldvalidation {
     public fieldvalidation() {
 
     }

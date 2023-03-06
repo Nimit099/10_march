@@ -116,7 +116,7 @@
         </template>
 
         <template if:true={activepreview}>
-            <c-preview-form-cmp formid={ParentMessage} activepreview={activepreview}></c-preview-form-cmp>
+            <c-preview-form-cmp formid={ParentMessage}></c-preview-form-cmp>
         </template>
 
         <template if:true={activeqf_publish}>
@@ -224,8 +224,8 @@
                                                 placeholder={field.Field_Validations__c.Placeholder}
                                                 fieldtype={field.Field_Validations__c.fieldtype}
                                                 terms-and-condition-value={field.Field_Validations__c.Richtext}
-                                                hovercssproperty={hovercss}
-                                                focuscssproperty={focuscss}></c-quickformfieldcomponent>
+                                                hovercssproperty={hovercss} focuscssproperty={focuscss}
+                                                fieldcss={fcss}></c-quickformfieldcomponent>
 
                                         </div>
                                         <!-- <div id={field.ParentMessage} class="field" draggable="true"
@@ -259,7 +259,7 @@
                                         <!-- <button class="nextbutton " variant="brand" value="Next" title="Next"
                                             onclick={onaddpage1}>Submit</button> -->
                                         <template if:false={isIndexLast}>
-                                            <div></div>
+                                            <div style="display:none"></div>
                                             <button data-name="next" variant="brand" title="Next" onclick={onaddpage1}
                                                 class="btn1">Next</button>
                                         </template>

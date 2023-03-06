@@ -1,4 +1,14 @@
 <template>
+    <template if:true={spinnerdatatable}>
+        <div data-id="spinnerId" class="slds-spinner_container" style="overflow: hidden;">
+            <div class="spinner-main-div">
+                <div class="loader--ripple">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </template>
     <div class="main">
         <div class="slds-size_1-of-2 sizebox">
             <div class="slds-grid gridbox">
@@ -36,7 +46,8 @@
                                         By Following the <b>Steps 1</b> your organisation can create new salesforce
                                         site.<br/>
                                     </p> <br/>
-                                    <p>
+
+                                    <!-- <p>
                                         <b>Step 2: Use of Visualforce Component </b>
                                     </p>
                                     <div>
@@ -46,7 +57,29 @@
                                             <span class="spanclass"><b>Note:</b> You can add visualforce component into existing visualforce
                                             page or you can create a new visualforce page and add this component.</span>
                                         </p>
+                                    </div><br /> -->
+
+                                    <p>
+                                        <b>Step 2: Choose the Salesforce Site</b>
+                                    </p>
+                                    <div>
+                                        <p class="slds-m-top_small slds-m-left_large">
+                                            Salesforce Sites enables you to create public websites and applications that are directly integrated with your 
+                                            Salesforce organization-without requiring users to log in with a username and password. You can publicly expose 
+                                            any information stored in your organization through a branded URL of your choice.
+                                        </p>
+                                        <div class="slds-col slds-size_3-of-12 siteDropdown">
+                                            <lightning-combobox name="ProgressIndicator" value={selectedSite}
+                                                variant="label-hidden" placeholder="Select Site"
+                                                options={sites} onchange={handleSiteChange} class="slds-is-open dropdown">
+                                            </lightning-combobox>
+                                        </div>     
+                                        <div class="save_btn">  
+                                            <button class="qf-standard-button" value="Save" name="Save"
+                                                onclick={handleSave}>Save</button>
+                                        </div>   
                                     </div><br />
+
                                     <p>
                                         <b>Step 3: Haven't Added Visualforce Page? - </b>
                                         <a onclick={openCreateEditModel}>Add Visualforce Page To Site

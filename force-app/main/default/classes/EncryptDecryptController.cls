@@ -1,4 +1,4 @@
-public class EncryptDecryptController {
+public without sharing class EncryptDecryptController {
 
     private Blob cryptoKey = blob.valueOf('QuickForm//Application//MVClouds');
 

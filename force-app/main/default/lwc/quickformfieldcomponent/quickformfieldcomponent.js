@@ -19,48 +19,50 @@ export default class Quickformfieldcomponent extends LightningElement {
     emojiRating4 = EmojiRating4;
     emojiRating5 = EmojiRating5;
 
-    @api compview;
-    @api tView;
-    @api disableField;
-    @api fieldAttribute;
-    @api fieldAttributeValue;
-    @api fieldId;
-    @api formid;
+    @api compview = '';
+    @api tView = '';
+    @api disableField = '';
+    @api fieldAttribute = '';
+    @api fieldAttributeValue = '';
+    @api fieldId = '';
+    @api formid = '';
     @track scaleRating = [];
     @track isFieldDesabled = false;
 
     @track FieldShown = true;
     @track LabelShown = true;
     // @api isReqired;
-    @api isReqired;
+    @api isReqired = '';
     @track fieldHelpText = 'please fill the help text';
     @track fieldValidations = '';
-    FieldLabel;
-    FieldType;
-    count;
+    FieldLabel = '';
+    FieldType = '';
+    count = '';
     @track Address = 'Address';
     @track onfocus = false;
-    @api getFieldCSS1;
-    @api getLabelCSS1;
-    @api hovercssproperty;
-    @api focuscssproperty;
-    @api labelvalue;
-    @api labelcheck;
-    @api salutationvalue;
-    @api helptextcheck;
-    @api helptextvalue;
-    @api isdisabled;
-    @api placeholder;
-    @api fieldtype;
-    @api termsAndConditionValue;
-    @track focused;
-    @track fieldcss;
+    @api getLabelCSS1 = '';
+    @api hovercssproperty = '';
+    @api focuscssproperty ='';
+    @api labelvalue = '';
+    @api labelcheck = '';
+    @api salutationvalue = '';
+    @api helptextcheck = '';
+    @api helptextvalue = '';
+    @api isdisabled = '';
+    @api placeholder = '';
+    @api fieldtype = '';
+    @api termsAndConditionValue = '';
+    @track focused = '';
+    @api fieldcss = '';
+    @track updatedfieldcss = this.fieldcss;
 
     connectedCallback() {
         getScaleRating()
             .then(result => {
-                this.scaleRating = result;
-                console.log(result);
+                if(result != undefined) {
+                    this.scaleRating = result;
+                    console.log(result);
+                }
             }).catch(err => {
                 console.log(err);
             })
@@ -71,7 +73,51 @@ export default class Quickformfieldcomponent extends LightningElement {
 
     renderedCallback() {
         console.log('quickformfield rendered callback!');
-        console.log('formid --> ' + this.formid);
+        if (this.formid != undefined){
+            console.log('formid --> ' + this.formid);
+        }
+
+
+        try {
+            if( this.fieldcss != undefined){   
+                console.log('fieldcss rendered callback -->> '+ this.fieldcss);
+                let array = this.template.querySelectorAll('.slds-input');
+                let str = this.fieldcss;
+                this.updatedfieldcss = str;
+                console.log(this.fieldcss + 'split');
+                if (str != undefined){
+                    let Arr = str.split(';color:');
+                    let Arr2 = Arr[1].split(';');
+                    console.log('OUTPUT ARR2: ',JSON.stringify(Arr2));
+                    let pcolor = Arr2[0];
+                    for (let i = 0; i < array.length; i++) {
+                        const element = array[i];
+                        element.style = str;
+                        element.style.setProperty("--c", pcolor);
+                    }
+                }
+   
+                array = this.template.querySelectorAll('.flabel');
+                if (this.labelcss != undefined){
+                    str = this.labelcss;
+                    for (let i = 0; i < array.length; i++) {
+                        const element = array[i];
+                        element.style = 'display:flex;' + str;
+                    }
+                    let array2 = this.template.querySelectorAll('.slds-popover--tooltip ');
+                    let str2 = ((this.labelcss.split('margin-top:'))[1].split(';'))[0];
+                    console.log('OUTPUT STR2: ',str2);
+                    for (let j = 0; j < array2.length; j++) {
+                        const element = array2[j];
+                        element.style = 'margin:top:' + str2;
+                    }
+                }
+            }
+        } catch (error) {
+            console.log('fielderror' + error);
+        }        
+
+
         // getFieldCSS({ id: this.formid })
         //     .then(result => {
         //         console.log(result);
@@ -100,25 +146,27 @@ export default class Quickformfieldcomponent extends LightningElement {
         getLabelCSS({ id: this.formid })
             .then(result => {
                 console.log(result);
-                this.getLabelCSS1 = result;
-                console.log('rendered LabelCSS->> ' + this.getLabelCSS1);
-                console.log(this.template.querySelectorAll('.flabel'));
-                let array = this.template.querySelectorAll('.flabel');
-                console.log(array.length);
-                let str = this.getLabelCSS1;
-                for (let i = 0; i < array.length; i++) {
-                    const element = array[i];
-                    element.style = 'display:flex;' + str;
+                if (result != undefined){
+                    this.getLabelCSS1 = result;
+                    console.log('rendered LabelCSS->> ' + this.getLabelCSS1);
+                    console.log(this.template.querySelectorAll('.flabel'));
+                    let array = this.template.querySelectorAll('.flabel');
+                    console.log(array.length);
+                    let str = this.getLabelCSS1;
+                    for (let i = 0; i < array.length; i++) {
+                        const element = array[i];
+                        element.style = 'display:flex;' + str;
+                    }
+                    let array2 = this.template.querySelectorAll('.slds-popover--tooltip ');
+                    console.log(array2.length);
+                    let str2 = ((this.getLabelCSS1.split('margin-top:'))[1].split(';'))[0];
+                    for (let j = 0; j < array2.length; j++) {
+                        const element = array2[j];
+                        element.style = 'margin:top:' + str2;
+                    }
+                    const event1 = CustomEvent('startsppiner');
+                    this.dispatchEvent(event1);
                 }
-                let array2 = this.template.querySelectorAll('.slds-popover--tooltip ');
-                console.log(array2.length);
-                let str2 = ((this.getLabelCSS1.split('margin-top:'))[1].split(';'))[0];
-                for (let j = 0; j < array2.length; j++) {
-                    const element = array2[j];
-                    element.style = 'margin:top:' + str2;
-                }
-                const event1 = CustomEvent('startsppiner');
-                this.dispatchEvent(event1);
             }).catch(error => {
                 console.log({ error });
                 const event1 = CustomEvent('startsppiner');
@@ -128,60 +176,68 @@ export default class Quickformfieldcomponent extends LightningElement {
     }
 
     @api FieldCSSUpdate(CSSString) {
-        console.log('FieldCSSUpdate FieldCSS->> checking ' + CSSString);
-        try {
-            // this.fieldcss = CSSString;
-            console.log(this.template.querySelectorAll('.slds-input'));
-            let array = this.template.querySelectorAll('.slds-input');
-            console.log(array.length);
-            let str = '';
-            if (CSSString == undefined || CSSString == null || CSSString == '') {
-                console.log('FieldCSSUpdate inside IF');
-                str = this.getFieldCSS1;
-            } else {
-                console.log('FieldCSSUpdate inside ELSE');
-                str = CSSString;
-                console.log(str);
-                this.fieldcss = CSSString;
-                console.log('FieldCSSUpdate fieldcss --> '+this.fieldcss);
+        if (CSSString != undefined ){
+            console.log('FieldCSSUpdate FieldCSS->> checking ' + CSSString);
+            try {
+                this.updatedfieldcss = CSSString;
+                console.log(this.template.querySelectorAll('.slds-input'));
+                let array = this.template.querySelectorAll('.slds-input');
+                console.log(array.length);
+                let str = '';
+                if (CSSString == undefined || CSSString == null || CSSString == '') {
+                    console.log('FieldCSSUpdate inside IF');
+                    if (this.fieldcss != undefined){
+                        str = this.fieldcss;
+                    }
+                } else {
+                    console.log('FieldCSSUpdate inside ELSE');
+                    str = CSSString;
+                }
+                console.log('str ===> ',JSON.stringify(str));
+                if (str != undefined){
+                    let Arr = str.split(';color:');
+                    let Arr2 = Arr[1].split(';');
+                    let pcolor = Arr2[0];
+                    if (pcolor != undefined || pcolor != null){
+                        for (let i = 0; i < array.length; i++) {
+                            const element = array[i];
+                            element.style = str;
+                        element.style.setProperty("--c", pcolor);
+                        }
+                    }
+                }
+                // this.template.querySelector('select').style = str;
+            } catch (error) {
+                console.log("In the catch block ==> Method :** FieldCSSUpdate ** || LWC:** quickformfieldcomponent ** ==>", { error });
+                console.log('above error ==>' + error);
             }
-            console.log('str ===> ',JSON.stringify(str));
-            let Arr = str.split(';color:');
-            let Arr2 = Arr[1].split(';');
-            let pcolor = Arr2[0];
-            for (let i = 0; i < array.length; i++) {
-                const element = array[i];
-                element.style = str;
-                element.style.setProperty("--c", pcolor);
-            }
-            // this.template.querySelector('select').style = str;
-        } catch (error) {
-            console.log("In the catch block ==> Method :** FieldCSSUpdate ** || LWC:** quickformfieldcomponent ** ==>", { error });
-            console.log('above error ==>' + error);
         }
-
     }
 
     @api LabelCSSUpdate(CSSString) {
         getLabelCSS({ id: this.formid })
             .then(result => {
                 console.log(result);
-                this.getLabelCSS1 = result;
-                console.log('LabelCSS->> ' + this.getLabelCSS1);
-                console.log(this.template.querySelectorAll('.flabel'));
-                let array = this.template.querySelectorAll('.flabel');
-                console.log(array.length);
-                let str = this.getLabelCSS1;
-                for (let i = 0; i < array.length; i++) {
-                    const element = array[i];
-                    element.style = 'display:flex;' + str;
-                }
-                let array2 = this.template.querySelectorAll('.slds-popover--tooltip');
-                console.log(array2.length);
-                let str2 = ((this.getLabelCSS1.split('margin-top:'))[1].split(';'))[0];
-                for (let j = 0; j < array2.length; j++) {
-                    const element = array2[j];
-                    element.style = 'margin:top:' + str2;
+                if (result != undefined){
+                    this.getLabelCSS1 = result;
+                    console.log('LabelCSS->> ' + this.getLabelCSS1);
+                    console.log(this.template.querySelectorAll('.flabel'));
+                    let array = this.template.querySelectorAll('.flabel');
+                    console.log(array.length);
+                    let str = this.getLabelCSS1;
+                    for (let i = 0; i < array.length; i++) {
+                        const element = array[i];
+                        element.style = 'display:flex;' + str;
+                    }
+                    let array2 = this.template.querySelectorAll('.slds-popover--tooltip');
+                    console.log(array2.length);
+                    let str2 = ((this.getLabelCSS1.split('margin-top:'))[1].split(';'))[0];
+                    if (str2 != undefined){
+                        for (let j = 0; j < array2.length; j++) {
+                            const element = array2[j];
+                            element.style = 'margin:top:' + str2;
+                        }
+                    }
                 }
             }).catch(error => {
                 console.log({ error });
@@ -189,15 +245,18 @@ export default class Quickformfieldcomponent extends LightningElement {
     }
 
     @api handleeffect(type, property) {
-        if (type == 'hover') {
-            this.hovercssproperty = property;
-        }
-        else if (type == 'focus') {
-            this.focuscssproperty = property;
+        if (type !=  null && type != undefined && property != null && property != undefined){
+            if (type == 'hover') {
+                this.hovercssproperty = property;
+            }
+            else if (type == 'focus') {
+                this.focuscssproperty = property;
+            }
         }
     }
 
     handlehover(event) {
+        if (this.hovercssproperty != undefined){
         console.log('onhover hovercssproperty --> '+this.hovercssproperty);
         let str = this.hovercssproperty;
         console.log('onhover str --> '+str);
@@ -212,55 +271,48 @@ export default class Quickformfieldcomponent extends LightningElement {
                     event.target.style = str;
                 }
             }
-        } else {
-            event.target.style = str;
+            } else {
+                event.target.style = str;
+            }
         }
-
     }
 
     handlefocus(event) {
-        console.log('handlefocus ***');
-        console.log('this.onfocus --> ', this.onfocus);
-        console.log('focus FieldCSS->> ' + this.focuscssproperty);
-        if (event.target.dataset.id != undefined && event.target.dataset.id != null) {
-            this.focused = event.target.dataset.id;
+            if (this.focuscssproperty != undefined){
+            console.log('handlefocus ***');
+            console.log('this.onfocus --> ', this.onfocus);
+            console.log('focus FieldCSS->> ' + this.focuscssproperty);
+            if (event.target.dataset.id != undefined && event.target.dataset.id != null) {
+                this.focused = event.target.dataset.id;
+            }
+            let str = this.focuscssproperty;
+            event.target.style = str;
+            this.onfocus = true;
+            console.log('this.onfocus --> ', this.onfocus);
         }
-        let str = this.focuscssproperty;
-        event.target.style = str;
-        this.onfocus = true;
-        console.log('this.onfocus --> ', this.onfocus);
     }
 
     handleblur(event) {
         console.log('Blur On Field');
         console.log(event);
-        console.log('this.onfocus --> ', this.onfocus);
-        
-        if(this.onfocus && (event.target.dataset.id == undefined || event.target.dataset.id == null)) {
-            this.handlefocus(event);
-        }else if(this.onfocus && (event.target.dataset.id == this.focused)) {
-            this.handlefocus(event);
-        }else {
-            console.log('handleblur fieldcss --> '+this.fieldccs);
-            event.target.style = this.fieldcss;
+        if (this.onfocus != undefined){
+            console.log('this.onfocus --> ', this.onfocus);
+            if (this.onfocus) {
+                if (event.target.dataset.id == undefined || event.target.dataset.id == null) {
+                    this.handlefocus(event)
+                } else {
+                    if (event.target.dataset.id == this.focused){
+                        this.handlefocus(event)
+                    } else {
+                        console.log('handleblur fieldcss --> '+this.fieldccs);
+                        event.target.style = this.fieldcss;
+                    }
+                }
+            } else {
+                console.log('handleblur fieldcss --> '+this.fieldccs);
+                event.target.style = this.fieldcss;
+            }
         }
-
-
-        // if (this.onfocus) {
-        //     if (event.target.dataset.id == undefined || event.target.dataset.id == null) {
-        //         this.handlefocus(event)
-        //     } else {
-        //         if (event.target.dataset.id == this.focused){
-        //             this.handlefocus(event)
-        //         } else {
-        //             console.log('handleblur fieldcss --> '+this.fieldccs);
-        //             event.target.style = this.fieldcss;
-        //         }
-        //     }
-        // } else {
-        //     console.log('handleblur fieldcss --> '+this.fieldccs);
-        //     event.target.style = this.fieldcss;
-        // }
     }
 
     handleblur1(event) {
@@ -268,8 +320,13 @@ export default class Quickformfieldcomponent extends LightningElement {
         console.log(event);
         console.log('this.onfocus --> ', this.onfocus);
         this.onfocus = false;
-        console.log('handleblur1 fieldcss --> '+this.fieldccs);
-        this.FieldCSSUpdate(this.fieldcss)
+        console.log('handleblur1 updatedfieldcss --> '+this.updatedfieldcss);
+        if (this.fieldcss != undefined){
+            event.target.style = this.fieldcss
+        }
+        if (this.updatedfieldcss != undefined){
+            this.FieldCSSUpdate(this.updatedfieldcss)
+        }
     }
 
     get CheckBoxOp() {
@@ -278,29 +335,8 @@ export default class Quickformfieldcomponent extends LightningElement {
             { label: 'second', value: 'option2' },
         ];
     }
-    get hasType() {
-
-        if (this.tView.includes(',')) {
-            let tempararyList = this.tView.split(',');
-            this.FieldLabel = tempararyList[0];
-            this.FieldType = tempararyList[1];
-            if (tempararyList.length == 3) {
-                this.count = parseInt(tempararyList[2]);
-            }
-            this.tView = this.FieldLabel;
-
-            if (this.FieldType != undefined && this.FieldType != 'undefined' && this.FieldType != 'Extra') {
-                if (this.FieldType == 'QFADDRESS') {
-                    this.tView = this.FieldType;
-                    this.Address = this.FieldLabel;
-                    return false;
-                }
-                return true;
-            }
-        }
-        return false;
-
-    }
+    
+   
     @track placeHolder = 'New Field';
     get isFieldCompView() {
         return this.compview == 'Field';
@@ -395,6 +431,7 @@ export default class Quickformfieldcomponent extends LightningElement {
     OnFieldClick(event) {
 
     }
+
     signInit(event) {
         var canvas, ctx, flag = false,
             prevX = 0,
@@ -500,15 +537,17 @@ export default class Quickformfieldcomponent extends LightningElement {
         try {
             var emojiValue = event.target.value;
             var emojiName = event.target.name;
-            console.log('emoji Name ==>', emojiName);
-            console.log("rating ==>", emojiValue);
+            if (emojiName != undefined && emojiValue != undefined){
+                console.log('emoji Name ==>', emojiName);
+                console.log("rating ==>", emojiValue);
 
-            var emojiSelectedEle = this.template.querySelectorAll('.emoji-ratingfield-Selected');
-            emojiSelectedEle.forEach(element => {
-                element.classList.remove('emoji-ratingfield-Selected');
-            });
-            var emojiEle = this.template.querySelector('label[title="' + emojiName + '"]');
-            emojiEle.classList.add('emoji-ratingfield-Selected');
+                var emojiSelectedEle = this.template.querySelectorAll('.emoji-ratingfield-Selected');
+                emojiSelectedEle.forEach(element => {
+                    element.classList.remove('emoji-ratingfield-Selected');
+                });
+                var emojiEle = this.template.querySelector('label[title="' + emojiName + '"]');
+                emojiEle.classList.add('emoji-ratingfield-Selected');
+            }
         } catch (error) {
             console.log('In the catch part of emojiRatingValue ==>', { error });
         }

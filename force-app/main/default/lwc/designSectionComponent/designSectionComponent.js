@@ -8,17 +8,18 @@ import UploadFormImage from '@salesforce/apex/FormBuilderController.UploadFormIm
 import UploadPageImage from '@salesforce/apex/FormBuilderController.UploadPageImage';
 import StoreHoverStyles from '@salesforce/apex/FormBuilderController.StoreHoverStyles';
 import StoreFocusStyles from '@salesforce/apex/FormBuilderController.StoreFocusStyles';
-import getFieldCSS from '@salesforce/apex/FormBuilderController.getFieldCSS';
-import getFormCSS from '@salesforce/apex/FormBuilderController.getFormCSS';
-import getPageCSS from '@salesforce/apex/FormBuilderController.getPageCSS';
-import getLabelCSS from '@salesforce/apex/FormBuilderController.getLabelCSS';
+// import getFieldCSS from '@salesforce/apex/FormBuilderController.getFieldCSS';
+// import getFormCSS from '@salesforce/apex/FormBuilderController.getFormCSS';
+// import getPageCSS from '@salesforce/apex/FormBuilderController.getPageCSS';
+// import getLabelCSS from '@salesforce/apex/FormBuilderController.getLabelCSS';
 import RemoveFormImage from '@salesforce/apex/FormBuilderController.RemoveFormImage';
 import RemovePageImage from '@salesforce/apex/FormBuilderController.RemovePageImage';
 import StoreBtnStyles from '@salesforce/apex/FormBuilderController.StoreBtnStyles';
 import StoreBtnposition from '@salesforce/apex/FormBuilderController.StoreBtnposition';
-import getFocusCSS from '@salesforce/apex/FormBuilderController.getFocusCSS';
-import getHoverCSS from '@salesforce/apex/FormBuilderController.getHoverCSS';
-import getButtonCSS from '@salesforce/apex/FormBuilderController.getButtonCSS';
+// import getFocusCSS from '@salesforce/apex/FormBuilderController.getFocusCSS';
+// import getHoverCSS from '@salesforce/apex/FormBuilderController.getHoverCSS';
+// import getButtonCSS from '@salesforce/apex/FormBuilderController.getButtonCSS';
+import formdetails from '@salesforce/apex/FormBuilderController.formdetails';
 import getBGImages from '@salesforce/apex/FormBuilderController.getBGImages';
 import imagecross from '@salesforce/resourceUrl/imagecross';
 import plus from '@salesforce/resourceUrl/plusimage';
@@ -34,6 +35,15 @@ export default class DesignSectionComponent extends LightningElement {
     @track pageimageurl;
     @track pageimage = false;
     @track spinnerdatatable = true;
+
+    @track formproperties;
+    @track pageproperties;
+    @track labelproperties;
+    @track hoverproperties;
+    @track focusproperties;
+    @track buttonproperties;
+    @track fieldproperties;
+
     cross = imagecross;
     plus = plus;
 
@@ -240,7 +250,7 @@ export default class DesignSectionComponent extends LightningElement {
         const cssevent3 = new CustomEvent("getbuttoncss", {
             detail: Array[0]
         });
-        console.log('Event:-- ' + cssevent2);
+        console.log('Event:-- ' + cssevent3);
         this.dispatchEvent(cssevent2);
         //get Styles Metadata
         GetStyles({
@@ -279,22 +289,36 @@ export default class DesignSectionComponent extends LightningElement {
             }).catch(error => {
                 console.log(error);
             })
-        this.FormCSS();
-        this.LabelCSS();
-        this.PageCSS();
-        this.FieldCSS();
-        this.ButtonCSS();
-        this.HoverCSS();
-        this.FocusCSS();
+
+        formdetails ({ id:this.recordid })
+        .then(result => {
+            this.formproperties = result.Form_Styling__c;
+            this.pageproperties = result.Page_CSS__c;
+            this.buttonproperties = result.Button_CSS__c;
+            this.buttonproperties = this.buttonproperties.concat(result.Button_Position__c);
+            this.labelproperties = result.Label_CSS__c;
+            this.fieldproperties = result.All_Field_Styling__c;
+            this.hoverproperties = result.All_Field_Hover__c;
+            this.focusproperties = result.All_Field_Focus__c;
+            this.FormCSS();
+            this.PageCSS();
+            this.LabelCSS();
+            this.FieldCSS();
+            this.ButtonCSS();
+            this.HoverCSS();
+            this.FocusCSS();
+        })
+        
+        
     }
 
     FormCSS() {
-        getFormCSS({
-            id: this.recordid
-        })
-            .then(result => {
-                console.log('getfieldCSS formwidth' + result);
-                let str = result;
+        // getFormCSS({
+        //     id: this.recordid
+        // })
+            // .then(result => {
+                console.log('formproperties formwidth' + this.formproperties);
+                let str = this.formproperties;
 
                 this.formWidth = (((str.split('width:'))[1].split(';'))[0]).slice(0, -1);
                 if (this.formWidth == null || this.formWidth == undefined) {
@@ -346,18 +370,18 @@ export default class DesignSectionComponent extends LightningElement {
                     this.formbackgroundPagefixposition = 'Fixed';
                 }
 
-            }).catch(error => {
-                console.log(error);
-            })
+            // }).catch(error => {
+            //     console.log(error);
+            // })
     }
 
     PageCSS() {
-        getPageCSS({
-            id: this.recordid
-        })
-            .then(result => {
-                console.log('pagecss --> ' + result);
-                let str = result;
+        // getPageCSS({
+        //     id: this.recordid
+        // })
+        //     .then(result => {
+                console.log('pagecss --> ' + this.pageproperties);
+                let str = this.pageproperties;
 
                 this.toppadding = (((str.split('padding-top:'))[1].split(';'))[0]).slice(0, -1);
                 if (this.toppadding == null || this.toppadding == undefined) {
@@ -414,19 +438,19 @@ export default class DesignSectionComponent extends LightningElement {
                     this.backgroundPagefixposition = 'Fixed';
                 }
 
-            }).catch(error => {
-                console.log(error);
-            })
+            // }).catch(error => {
+            //     console.log(error);
+            // })
     }
 
     LabelCSS() {
-        getLabelCSS({
-            id: this.recordid
-        })
-            .then(result => {
-                console.log('labelcss --> ' + result);
-                console.log('getfieldCSS formwidth' + result);
-                let str = result;
+        // getLabelCSS({
+        //     id: this.recordid
+        // })
+        //     .then(result => {
+                console.log('labelcss --> ' + this.labelproperties);
+                // console.log('getfieldCSS formwidth' + result);
+                let str = this.labelproperties;
 
                 this.labeltopmargin = (((str.split('margin-top:'))[1].split(';'))[0]).slice(0, -2);
                 if (this.labeltopmargin == null || this.labeltopmargin == undefined) {
@@ -473,18 +497,18 @@ export default class DesignSectionComponent extends LightningElement {
                     this.labelineheight = '1';
                 }
 
-            }).catch(error => {
-                console.log(error);
-            })
+            // }).catch(error => {
+            //     console.log(error);
+            // })
     }
 
     FieldCSS() {
-        getFieldCSS({
-            id: this.recordid
-        })
-            .then(result => {
-                console.log('fieldcss --> ' + result);
-                let str = result;
+        // getFieldCSS({
+        //     id: this.recordid
+        // })
+        //     .then(result => {
+                console.log('fieldcss --> ' + this.fieldproperties);
+                let str = this.fieldproperties;
 
                 this.bgInput = (((str.split('background-color:'))[1].split(';'))[0]);
                 if (this.bgInput == null || this.bgInput == undefined) {
@@ -516,7 +540,7 @@ export default class DesignSectionComponent extends LightningElement {
                     this.inputfontfamily = 'Arial';
                 }
 
-                this.inputfontweight = (((str.split('font-weight:'))[1].split(';'))[0]).slice(0, -1);
+                this.inputfontweight = (((str.split('font-weight:'))[1].split(';'))[0]);
                 if (this.inputfontweight == null || this.inputfontweight == undefined) {
                     this.inputfontweight = 'Normal';
                 }
@@ -552,18 +576,18 @@ export default class DesignSectionComponent extends LightningElement {
                     this.inputlineheight = '1';
                 }
 
-            }).catch(error => {
-                console.log(error);
-            })
+            // }).catch(error => {
+            //     console.log(error);
+            // })
     }
 
     ButtonCSS() {
-        getButtonCSS({
-            id: this.recordid
-        })
-            .then(result => {
-                console.log('buttoncss --> ' + result);
-                let str = result;
+        // getButtonCSS({
+        //     id: this.recordid
+        // })
+        //     .then(result => {
+                console.log('buttoncss --> ' + this.buttonproperties);
+                let str = this.buttonproperties;
 
                 this.btnJustify = (((str.split('justify-content:'))[1].split(';'))[0]);
                 if (this.btnJustify == null || this.btnJustify == undefined) {
@@ -649,17 +673,17 @@ export default class DesignSectionComponent extends LightningElement {
                 // }
 
 
-            }).catch(error => {
-                console.log(error);
-            })
+            // }).catch(error => {
+            //     console.log(error);
+            // })
     }
 
     HoverCSS() {
-        getHoverCSS({
-            id: this.recordid
-        })
-            .then(result => {
-                let str = result;
+        // getHoverCSS({
+        //     id: this.recordid
+        // })
+        //     .then(result => {
+                let str = this.hoverproperties;
 
                 this.fieldhoverbg = (((str.split('background-color:'))[1].split(';'))[0]);
                 if (this.fieldhoverbg == null || this.fieldhoverbg == undefined) {
@@ -676,21 +700,21 @@ export default class DesignSectionComponent extends LightningElement {
                     this.fieldhovercolor = '#000000';
                 }
 
-                this.hoverlabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
-                if (this.hoverlabelcolor == null || this.hoverlabelcolor == undefined) {
-                    this.hoverlabelcolor = '#000000';
-                }
-            }).catch(error => {
-                console.log(error);
-            })
+                // this.hoverlabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
+                // if (this.hoverlabelcolor == null || this.hoverlabelcolor == undefined) {
+                //     this.hoverlabelcolor = '#000000';
+                // }
+            // }).catch(error => {
+            //     console.log(error);
+            // })
     }
 
     FocusCSS() {
-        getFocusCSS({
-            id: this.recordid
-        })
-            .then(result => {
-                let str = result;
+        // getFocusCSS({
+        //     id: this.recordid
+        // })
+        //     .then(result => {
+                let str = this.focusproperties;
 
                 this.fieldfocusbg = (((str.split('background-color:'))[1].split(';'))[0]);
                 if (this.fieldfocusbg == null || this.fieldfocusbg == undefined) {
@@ -707,13 +731,13 @@ export default class DesignSectionComponent extends LightningElement {
                     this.fieldfocuscolor = '#000000';
                 }
 
-                this.focuslabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
-                if (this.focuslabelcolor == null || this.focuslabelcolor == undefined) {
-                    this.focuslabelcolor = '#000000';
-                }
-            }).catch(error => {
-                console.log(error);
-            })
+                // this.focuslabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
+                // if (this.focuslabelcolor == null || this.focuslabelcolor == undefined) {
+                //     this.focuslabelcolor = '#000000';
+                // }
+            // }).catch(error => {
+            //     console.log(error);
+            // })
     }
 
 
@@ -1077,7 +1101,10 @@ export default class DesignSectionComponent extends LightningElement {
         let Name = event.target.dataset.name;
         let value = event.target.value;
         let str = '';
-        if (Name == 'justify-content:') {
+        if (Name == 'justify-content:' || Name == 'gap:') {
+            if (Name == 'gap:'){
+                value = value + 'px';
+            }
             str = Name + value + ';';
             StoreBtnposition({
                 Value: str,
@@ -1100,7 +1127,7 @@ export default class DesignSectionComponent extends LightningElement {
             } else if (Name == 'padding2') {
                 str = 'padding-bottom:' + value + ';padding-top' + value + ';';
             } else {
-                if (Name == 'font-size:' || Name == 'border-width:' || Name == 'border-radius:' || Name == 'width:' || Name == 'height:' || Name == 'gap:' || Name == 'padding1' || Name == 'padding2') {
+                if (Name == 'font-size:' || Name == 'border-width:' || Name == 'border-radius:' || Name == 'width:' || Name == 'height:' || Name == 'padding1' || Name == 'padding2') {
                     value += 'px';
                 }
                 console.log('Name->' + Name);

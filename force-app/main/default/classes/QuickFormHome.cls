@@ -9,7 +9,7 @@
 // =================================== 
 
 //   Edited as per sheet(qf_home.cls - 1)
-public with sharing class QuickFormHome {
+public without sharing class QuickFormHome {
 
 // <!-- ===================================
 // # MV Clouds Private Limited

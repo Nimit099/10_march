@@ -1,4 +1,4 @@
-public with sharing class FormBuilderController{
+public without sharing class FormBuilderController{
     @AuraEnabled
     public static List<BaseField_mdt__mdt> GetFieldsMetaData(){
         try{
@@ -691,6 +691,18 @@ public with sharing class FormBuilderController{
             String errorM = '';
             errorM = 'Method getButtonCSS ==> ' + 'Apex Form Id ==>' + id + '--Error Line Number ==>' + e.getLineNumber() + ' Error Message ==>' + e.getMessage();
             return errorM;
+        }
+    }
+
+    @AuraEnabled
+    public static Form__c formdetails(Id id){
+        try{
+        Form__c nform = [SELECT Id,Name,Progress_Indicator__c,Captcha_Type__c,Button_CSS__c,Button_Position__c,
+        Page_CSS__c,Form_Styling__c, All_Field_Hover__c, All_Field_Focus__c,All_Field_Styling__c,Label_CSS__c,FormBgID__c,PageBgID__c  FROM Form__c WHERE Id =: id];
+        System.debug('all styles :---> '+ nform);
+        return nform;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
     }
 
@@ -1425,16 +1437,16 @@ public with sharing class FormBuilderController{
         }
     }
 
-    @AuraEnabled
-    public static Form__c formDetails(Id id){
-        try{
-            return [SELECT Id, Captcha_Type__c, Progress_Indicator__c, Name
-                    FROM Form__c
-                    where Id = :id];
-        } catch (Exception e){
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
+    // @AuraEnabled
+    // public static Form__c formDetails(Id id){
+    //     try{
+    //         return [SELECT Id, Captcha_Type__c, Progress_Indicator__c, Name
+    //                 FROM Form__c
+    //                 where Id = :id];
+    //     } catch (Exception e){
+    //         throw new AuraHandledException(e.getMessage());
+    //     }
+    // }
 
     @AuraEnabled
     public static Form_Page__c pageDetails(Id FormId, Id PageId){

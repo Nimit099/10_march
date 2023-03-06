@@ -19,55 +19,65 @@ export default class ProgressIndicator extends LightningElement {
 
     @api
     calculation(progressbar, pageindex, totalpages){
-        this.progress = progressbar;
-        this.currentpage = pageindex;
-        this.totalpage = totalpages;
-        this.tesmethod(this.progress);
+        if (progressbar != undefined && pageindex != undefined &&  totalpages != undefined){
+            this.progress = progressbar;
+            this.currentpage = pageindex;
+            this.totalpage = totalpages;
+            this.tesmethod(this.progress);
+        }
     }
     
     @api tesmethod(strString){
-        this.getprogreshbar = strString;
-        console.log('this.getprogreshbar>>',this.getprogreshbar);
-        if(this.getprogreshbar=='Select'){
-            this.Progress_Bar = false;
-            this.Custom_Steps = false;
-            this.Standard_Steps = false;
-            this.Page_Count = false;
-        }
-        if(this.getprogreshbar=='Progress_Bar'){
-            this.Progress_Bar = true;
-            this.Custom_Steps = false;
-            this.Standard_Steps = false;
-            this.Page_Count = false;
-            this.progress_bar_value = Math.round(( (this.currentpage) / this.totalpage) * 100);
-        }
-        if(this.getprogreshbar=='Custom_Steps'){
-            this.Progress_Bar = false;
-            this.Custom_Steps = true;
-            this.Standard_Steps = false;
-            this.Page_Count = false;
-            if(this.pages.length == 0){
-                for(let i = 1; i<= this.totalpage; i++){
-                    this.pages.push({label : 'Page'+ i , value : i});
+        if( strString != undefined ){
+                this.getprogreshbar = strString;
+            console.log('this.getprogreshbar>>',this.getprogreshbar);
+            if(this.getprogreshbar=='Select'){
+                this.Progress_Bar = false;
+                this.Custom_Steps = false;
+                this.Standard_Steps = false;
+                this.Page_Count = false;
+            }
+            if(this.getprogreshbar=='Progress_Bar'){
+                this.Progress_Bar = true;
+                this.Custom_Steps = false;
+                this.Standard_Steps = false;
+                this.Page_Count = false;
+                if (this.totalpage != undefined && this.currentpage != undefined){
+                    this.progress_bar_value = Math.round(( (this.currentpage) / this.totalpage) * 100);
                 }
             }
-        }
-        if(this.getprogreshbar=='Standard_Steps'){
-            this.Progress_Bar = false;
-            this.Custom_Steps = false;
-            this.Standard_Steps = true;
-            this.Page_Count = false;
-            if(this.pages.length == 0){
-                for(let i = 1; i<= this.totalpage; i++){
-                    this.pages.push({label : 'Page'+ i , value : i});
+            if(this.getprogreshbar=='Custom_Steps'){
+                this.Progress_Bar = false;
+                this.Custom_Steps = true;
+                this.Standard_Steps = false;
+                this.Page_Count = false;
+                if(this.pages.length == 0){
+                    if (this.totalpage != undefined){
+                        for(let i = 1; i<= this.totalpage; i++){
+                            this.pages.push({label : 'Page'+ i , value : i});
+                    }
+                    }
                 }
             }
-        }
-        if(this.getprogreshbar=='Page_Count'){
-            this.Progress_Bar = false;
-            this.Custom_Steps = false;
-            this.Standard_Steps = false;
-            this.Page_Count = true;
+            if(this.getprogreshbar=='Standard_Steps'){
+                this.Progress_Bar = false;
+                this.Custom_Steps = false;
+                this.Standard_Steps = true;
+                this.Page_Count = false;
+                if(this.pages.length == 0){
+                    if (this.totalpage != undefined){
+                        for(let i = 1; i<= this.totalpage; i++){
+                            this.pages.push({label : 'Page'+ i , value : i});
+                        }
+                    }
+                }
+            }
+            if(this.getprogreshbar=='Page_Count'){
+                this.Progress_Bar = false;
+                this.Custom_Steps = false;
+                this.Standard_Steps = false;
+                this.Page_Count = true;
+            }
         }
     }
     @api test2(){

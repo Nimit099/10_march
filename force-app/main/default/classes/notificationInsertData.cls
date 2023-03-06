@@ -1,4 +1,4 @@
-public with sharing class notificationInsertData {
+public without sharing class notificationInsertData {
     @AuraEnabled
     public static void create(Notification__c acc){
         try {

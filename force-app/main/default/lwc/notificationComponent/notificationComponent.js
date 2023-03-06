@@ -545,15 +545,17 @@ isEmailValid(email) {
             this.email_msg = false;
             this.selectedValuesMap.set(value, value);
             this.selectedValues = [...this.selectedValuesMap.keys()];
+            this.template.querySelector('lightning-input.input2').value = "";
             console.log('selectedValues kvjdfbkdsvj :- ',this.selectedValues);
         }
     }
-   this.template.querySelector('lightning-input.input2').value = "";
+
 }
 
 
     handleKeyPress(event) {
-        if (event.keyCode === 13 || event.keyCode === 44 || event.keyCode === 32 ) {
+        console.log('keyCode -->> '+event.keyCode);
+        if (event.keyCode === 13 || event.keyCode === 9 || event.keyCode === 32 || event.keyCode === 44 ) {
             this.create_pill_to(event);
         }
     }
@@ -617,7 +619,8 @@ isEmailValid(email) {
 
 
     handleKeyPress_2(event) {
-        if (event.keyCode === 13 || event.keyCode === 44 || event.keyCode === 32 ) {
+        console.log('keyCode -->> '+event.keyCode);
+        if (event.keyCode === 13 || event.keyCode === 9 || event.keyCode === 32 || event.keyCode === 44 ) {
             this.create_pill_cc(event);
         }
     }
@@ -684,7 +687,8 @@ isEmailValid(email) {
     }
 
     handleKeyPress_3(event) {
-        if (event.keyCode === 13 || event.keyCode === 44 || event.keyCode === 32 ) {
+        console.log('keyCode -->> '+event.keyCode);
+        if (event.keyCode === 13 || event.keyCode === 9 || event.keyCode === 32 || event.keyCode === 44 ) {
             this.create_pill_bcc(event);
         }
     }

@@ -1,9 +1,83 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
+import getSites from '@salesforce/apex/qf_guide2_Controller.getSites';
+import getSettingData from '@salesforce/apex/qf_guide2_Controller.getSettingData';
+import saveSecureUrl from '@salesforce/apex/qf_guide2_Controller.saveSecureUrl';
 
 export default class Qf_guide2 extends LightningElement {
 
-  @track isModalOpen = false;
-  @track issiteModelopen = false;
+    @track isModalOpen = false;
+    @track issiteModelopen = false;
+    @track sites = [];
+    @track selectedSite;
+    @track selectedSiteName;
+    @track spinnerdatatable = false;
+    // @api siteId;
+
+    connectedCallback(){
+        this.spinnerdatatable = true;
+        this.getSiteDetails();
+    }
+
+    getSiteDetails() {
+      getSites()
+      .then(result => {
+          console.log("result : "+JSON.stringify(result));
+          var tempSite = [];
+          result.forEach(siteval => {
+            tempSite.push({label: siteval.MasterLabel, value: siteval.Id});
+          });
+          this.sites = tempSite;
+          console.log('this.sites ==> ',JSON.stringify(this.sites));
+          getSettingData()
+          .then(result => {
+              this.selectedSite = result;
+              this.spinnerdatatable = false;
+          })
+          .catch(error => {
+            console.log(error);
+            this.spinnerdatatable = false;
+          });
+      })
+      .catch(error => {
+          console.error(error);
+          this.spinnerdatatable = false;
+      });
+    }
+
+    // Handle the button click event
+    handleSave() {
+        this.spinnerdatatable = true;
+        console.log('enter');
+        console.log(this.selectedSite);
+        if (this.selectedSite) {
+            console.log('inside if : '+this.selectedSite);
+            saveSecureUrl({selectedSiteid : this.selectedSite})
+            .then( result => {
+                console.log("result : "+JSON.stringify(result));
+                this.spinnerdatatable = false;
+                this.template.querySelector('c-toast-component').showToast('success', 'Successfully Inserted', 3000);
+            })
+            .catch(error => {
+                console.error(error);
+                this.spinnerdatatable = false;
+                this.template.querySelector('c-toast-component').showToast('success', 'Uh oh, something went wrong', 3000);
+            });
+        }
+    }
+
+    handleSiteChange(event) {
+        this.selectedSite = event.detail.value;
+        console.log(this.selectedSite);
+        // var selectedName = '';
+        // console.log('site --->',JSON.stringify(this.sites));
+        // this.sites.forEach(data => {
+        //   if(data.value == this.selectedSite) {
+        //     selectedName = data.label;
+        //   }
+        // });
+        // this.selectedSiteName = selectedName;
+        // console.log('selectedSiteName -===> ',this.selectedSiteName);
+    }
 
     renderedCallback(){
         this.template.querySelectorAll("a").forEach(element => {
