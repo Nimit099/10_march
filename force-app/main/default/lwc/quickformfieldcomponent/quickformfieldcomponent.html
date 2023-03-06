@@ -251,7 +251,7 @@
     </template>
 
     <template if:true={fieldtype}>
-        <div onmouseenter={FieldCSSUpdate}>
+        <!-- <div onmouseenter={FieldCSSUpdate}> -->
             <template if:true={FieldShown}>
                 <label>
                     <template if:true={labelcheck}>
@@ -277,7 +277,7 @@
 
                 </label>
             </template>
-        </div>
+        <!-- </div> -->
     </template>
     <template if:false={fieldtype}>
         <!-- email -->
@@ -291,7 +291,7 @@
                                     <abbr class="slds-required" title="required">* </abbr>
                                 </label>
                             </template>
-                            <label class="slds-form-element__label ">
+                            <label >
                                 {labelvalue}
                             </label>
                             <template if:true={helptextcheck}>
@@ -314,23 +314,25 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label>
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                     </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
-                    </template>
-                    <div class="fullname" id={PageId}>
-                        <div class="slds-form-element__control fullnamewidth">
-                            <div class="slds-select_container">
-                                <select onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} class="slds-input slds-select" data-id="select-01" onchange={salutationValue}
+                        <div class="fullname" id={PageId}>
+                            <div class="slds-form-element__control fullnamewidth">
+                                <div class="slds-select_container">
+                                    <select onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                                    onblur={handleblur1} class="slds-input slds-select" data-id="select-01" onchange={salutationValue}
                                     disabled={isdisabled}>
                                     <option class="slds-input" value=""> --None-- </option>
                                     <template for:each={salutationvalue} for:item="value">
@@ -365,17 +367,19 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                     </template>
                     <div class="slds-form-element__control">
                         <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
@@ -392,19 +396,21 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
-                            </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                        <label>
-                            <template if:true={helptextcheck}>
-                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
                             </template>
-                        </label>
+                            <label >
+                                {labelvalue}
+                            </label>
+                            <label>
+                                <template if:true={helptextcheck}>
+                                    <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                                </template>
+                            </label>
+                        </div>
                     </template>
                     <!-- Custom Address Field -->
                     <div class="slds-form slds-form_stacked">
@@ -453,18 +459,20 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                     </template>
                     <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                     onblur={handleblur1} class={fieldId} placeholder={placeholder} type="text" value="" pattern={fieldValidations}
@@ -478,18 +486,20 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
-                    </template>
                     <textarea onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                     onblur={handleblur1} class={fieldId} placeholder={placeholder} value="" pattern={fieldValidations}
                         message-when-pattern-mismatch={fieldAttributeValue} onclick={OnFieldClick}
@@ -503,17 +513,19 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                DropDown {count}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            DropDown {count}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                     </template>
                     <select  onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                     onblur={handleblur1} class="dropdown-menu" value={tView} onclick={OnFieldClick}>
@@ -531,19 +543,21 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                            
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
-                    </template>
                     <div>
                         <template for:each={salutationvalue} for:item="value">
                             {value}
@@ -561,17 +575,19 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                     </template>
                     <template for:each={salutationvalue} for:item="value">
                         {value}
@@ -589,17 +605,19 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                     </template>
                     <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                     onblur={handleblur1} class={fieldId} type="file" name="file" label="Upload File" onclick={OnFieldClick}
@@ -613,18 +631,20 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
-                    </template>
                     <div class="slds-form-element__control">
                         <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                         onblur={handleblur1} class='slds-input' placeholder={placeholder} type="number" format="#,##0,000.00#"
@@ -643,17 +663,19 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                     </template>
                     <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                     onblur={handleblur1} class="slds-input" id={fieldId} placeholder={placeholder} type="number" formatter="currency" value=""
@@ -667,18 +689,20 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
-                    </template>
                     <div class="slds-form-element__control">
                         <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                         onblur={handleblur1} class='slds-input' placeholder={placeholder} type="number" value=""
@@ -693,18 +717,20 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
-                    </template>
                     <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                     onblur={handleblur1} class="slds-input" id={fieldId} placeholder={placeholder} formatter="currency" value=""
                         pattern={fieldValidations} type="date" display-date-picker="true"
@@ -718,18 +744,20 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
-                    </template>
                     <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                     onblur={handleblur1} class="slds-input" id={fieldId} placeholder={placeholder} value="" pattern={fieldValidations}
                         type="time" message-when-pattern-mismatch={fieldAttributeValue} onclick={OnFieldClick}
@@ -742,17 +770,19 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <template if:true={helptextcheck}>
-                        <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            <template if:true={helptextcheck}>
+                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                            </template>
+                        </div>
                     </template>
                     <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                     onblur={handleblur1} class="slds-input" id={fieldId} placeholder={placeholder} value="" pattern={fieldValidations}
@@ -766,18 +796,20 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <div class="starrating">
-                        <div class="rate" id={PageId}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                            <div class="starrating">
+                                <div class="rate" id={PageId}>
+                                    <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                             onblur={handleblur1} class="slds-input" type="radio" id={ratingfirst} name={ratingfirst} value="5" onclick={ratingvalue}
                                 checked={checkedRating} />
                             <label class="ratingfield" for={ratingfirst} title="5 stars">5 stars</label>
@@ -808,14 +840,16 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
+                        </div>
                     </template>
                     <div class="rateEmoji1" id={PageId}>
                         <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
@@ -853,17 +887,19 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
-                    <div class="scaleRating" id={PageId}>
-                        <table>
+                        <div class="scaleRating" id={PageId}>
+                            <table>
                             <tr>
                                 <th></th>
                                 <template for:each={salutationvalue} for:item="value">
@@ -900,14 +936,16 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
-                        </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
+                        </div>
                     </template>
                     <div id={PageId} style="display: flex;">
                         <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
@@ -925,15 +963,17 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
                     <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                     onfocusout={handleblur1} type="url" placeholder={placeholder} class="slds-input"
                         pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
@@ -947,15 +987,17 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
-                    </template>
                     <div onclick={handleid} id={PageId} onload={signInit}>
                         <div style="width: 300px;" onclick={OnFieldClick} id={PageId}>
                             <canvas class="signaturefield" style="border:2px solid #ddd;background:white;"
@@ -979,19 +1021,21 @@
             <template if:true={isFullView}>
                 <template if:true={FieldShown}>
                     <template if:true={labelcheck}>
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element__label">
-                                <abbr class="slds-required" title="required">* </abbr>
+                        <div class="flabel">
+                            <template if:true={isReqired}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                            </template>
+                            <label >
+                                {labelvalue}
                             </label>
+                        </div>
                         </template>
-                        <label class="slds-form-element__label ">
-                            {labelvalue}
-                        </label>
+                        <div class="outrichstyle" onclick={OnFieldClick}>
+                            <lightning-formatted-rich-text value='<b>hello</b>'></lightning-formatted-rich-text>
+                        </div>
                     </template>
-                    <div class="outrichstyle" onclick={OnFieldClick}>
-                        <lightning-formatted-rich-text value='<b>hello</b>'></lightning-formatted-rich-text>
-                    </div>
-                </template>
             </template>
         </template>
 
