@@ -355,11 +355,11 @@ export default class DesignSectionComponent extends LightningElement {
                 this.focusproperties = result.All_Field_Focus__c;
                 this.FormCSS();
                 this.PageCSS();
-                this.LabelCSS();
                 this.FieldCSS();
                 this.ButtonCSS();
                 this.HoverCSS();
                 this.FocusCSS();
+                this.LabelCSS();
             })
 
 
@@ -592,13 +592,15 @@ export default class DesignSectionComponent extends LightningElement {
         if (this.inputfontfamily == null || this.inputfontfamily == undefined) {
             this.inputfontfamily = 'Arial';
         }
-
+        
         this.inputfontweight = (((str.split('font-weight:'))[1].split(';'))[0]);
+        console.log('inputfontweight --> '+this.inputfontweight);
         if (this.inputfontweight == null || this.inputfontweight == undefined) {
             this.inputfontweight = 'Normal';
         }
-
+        
         this.inputfontstyle = (((str.split('font-style:'))[1].split(';'))[0]);
+        console.log('inputfontstyle --> '+this.inputfontstyle);
         if (this.inputfontstyle == null || this.inputfontstyle == undefined) {
             this.inputfontstyle = 'Normal';
         }
@@ -737,40 +739,40 @@ export default class DesignSectionComponent extends LightningElement {
         // })
         //     .then(result => {
         let str = this.hoverproperties;
-        console.log('STR hoverproperties :--> '+str);
-        
+        console.log('STR hoverproperties :--> ' + str);
+
         this.fieldhoverbg = (((str.split('background-color:'))[1].split(';'))[0]);
         if (this.fieldhoverbg == null || this.fieldhoverbg == undefined) {
             this.fieldhoverbg = '#FFFFFF';
         }
-        
+
         this.fieldhoverborderColor = (((str.split('border-color:'))[1].split(';'))[0]);
         if (this.fieldhoverborderColor == null || this.fieldhoverborderColor == undefined) {
             this.fieldhoverborderColor = '#000000';
         }
-        
+
         this.fieldhovercolor = (((str.split(';color:'))[1].split(';'))[0]);
         if (this.fieldhovercolor == null || this.fieldhovercolor == undefined) {
             this.fieldhovercolor = '#000000';
         }
-        
-        this.hoverlabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
-        if (this.hoverlabelcolor == null || this.hoverlabelcolor == undefined) {
-            this.hoverlabelcolor = '#000000';
-        }
-            // }).catch(error => {
-                //     console.log(error);
-                // })
-            }
-            
+
+        // this.hoverlabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
+        // if (this.hoverlabelcolor == null || this.hoverlabelcolor == undefined) {
+        //     this.hoverlabelcolor = '#000000';
+        // }
+        // }).catch(error => {
+        //     console.log(error);
+        // })
+    }
+
     FocusCSS() {
-                // getFocusCSS({
-                    //     id: this.recordid
-                    // })
-                    //     .then(result => {
+        // getFocusCSS({
+        //     id: this.recordid
+        // })
+        //     .then(result => {
         let str = this.focusproperties;
-        console.log('STR focusproperties :--> '+str);
-                        
+        console.log('STR focusproperties :--> ' + str);
+
         this.fieldfocusbg = (((str.split('background-color:'))[1].split(';'))[0]);
         if (this.fieldfocusbg == null || this.fieldfocusbg == undefined) {
             this.fieldfocusbg = '#FFFFFF';
@@ -786,10 +788,10 @@ export default class DesignSectionComponent extends LightningElement {
             this.fieldfocuscolor = '#000000';
         }
 
-        this.focuslabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
-        if (this.focuslabelcolor == null || this.focuslabelcolor == undefined) {
-            this.focuslabelcolor = '#000000';
-        }
+        // this.focuslabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
+        // if (this.focuslabelcolor == null || this.focuslabelcolor == undefined) {
+        //     this.focuslabelcolor = '#000000';
+        // }
         // }).catch(error => {
         //     console.log(error);
         // })
