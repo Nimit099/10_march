@@ -235,11 +235,6 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
         console.log(this.removeObjFields.length);
         this.tempararyfun();
         console.log('Renderedcallback formbuilder');
-
-        // this.template.querySelector('.myform').style = this.formcss;
-        // this.template.querySelector('.btn1').style = this.btncss;
-        // this.template.querySelector('.page').style = this.pagecss;
-
         getFormCSS({
                 id: this.ParentMessage
             })
@@ -268,7 +263,11 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                     const element = arr[i];
                     element.style = str;
                 }
-                this.template.querySelector('.footer').style = 'justify-content:' + (str.split(';justify-content:')[1]);
+                let arr2 = this.template.querySelectorAll('.footer');
+                for (let i = 0; i < arr2.length; i++) {
+                    const element = arr2[i];
+                    element.style = 'justify-content:' + (str.split(';justify-content:')[1]);;
+                }
             }).catch(error => {
                 console.log('Error in getButtonCSS ==>' + error);
                 console.log({
@@ -298,6 +297,8 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                 });
                 // this.spinnerDataTable = false;
             })
+
+
     }
 
     get isIndexZero() {
@@ -446,8 +447,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             });
             element.style = str;
         }
-        console.log();
-        this.template.querySelector('footer').style = 'gap:' + ((str.split(';gap:')[1]).split(';')[0]);
+        // this.template.querySelector('footer').style = 'gap:' + ((str.split(';gap:')[1]).split(';')[0]);
     }
 
     handlenewCSS(event) {
@@ -517,18 +517,11 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             let encodedDef = btoa(JSON.stringify(cmpDef));
             console.log('OUTPUT : ', encodedDef);
             this[NavigationMixin.Navigate]({
-                type: "standard__app",
+                type: "standard__webPage",
                 attributes: {
-                    appTarget: 'c__Quick_Form',
+                    url: "/one/one.app#" + encodedDef
                 }
             });
-            //   this[NavigationMixin.Navigate]({
-            //     type: "standard__webPage",
-            //     attributes: {
-            //       url: "/one/one.app#" + encodedDef
-            //     }
-            //   });
-
         } else if (event.currentTarget.dataset.title == 'tab-2' || event.currentTarget.dataset.title == 'tab-3') {
             console.log('in tab-2 or tab-3 code-->');
             if (event.currentTarget.dataset.title == 'tab-2') {

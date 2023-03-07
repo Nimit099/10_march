@@ -34,13 +34,13 @@ export default class Qf_publish extends LightningElement {
     floatingButton;
     formQRCode;
     @track formurl;
+    @track srcurl;
     @api currentformid;
     @track publishment_value = 'aura';
     @track text_b_color = "background-color: #b2CCE5;";
     @track img_b_color = "background-color: #ffffff;";
     @track auto_b_color = "background-color: #ffffff;";
     @track floating_b_color = "background-color: #ffffff;";
-
 
     connectedCallback() {
         this.spinner = true;
@@ -50,7 +50,9 @@ export default class Qf_publish extends LightningElement {
             })
             .then(data => {
                 this.formurl = data;
+                this.srcurl = data;
                 if (this.formurl.includes("User Configuration tab")) {
+                    this.srcurl = '';
                     this.template.querySelector('.inputBox').style.color = 'red';
                 }
                 this.spinner = false;

@@ -5,7 +5,6 @@ public without sharing class FormBuilderController{
             List<BaseField_mdt__mdt> basefield = BaseField_mdt__mdt.getAll().values();
             return basefield;
         } catch (Exception e){
-            // error_handler.insert_errordata(e,'FormBuilderController','GetFieldsMetaData');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -27,7 +26,6 @@ public without sharing class FormBuilderController{
             sw.FormDirectionProp = Form_Direction__mdt.getAll().values();
             return sw;
         } catch (Exception e){
-            // error_handler.insert_errordata(e,'FormBuilderController','GetStyles');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -35,54 +33,55 @@ public without sharing class FormBuilderController{
     //Method to get Field's Data
     @Auraenabled
     public static List<List<String>> getFields(String id){
-        try {
-        List<String> types = new List<String>();
-        Form__c FormDetail = [SELECT Id, Mapped_Objects__c
-                              FROM Form__c
-                              WHERE Id = :id
-                              LIMIT 1];
-        //List<Form_Page__c> pageList = [SELECT Id, Name, Page_Number__c FROM Form_Page__c WHERE Form__c=:Form_Id ORDER BY Page_Number__c ASC];
-        types = (FormDetail.Mapped_Objects__c).split(',');
-        System.debug(types);
-        List<List<String>> allFields = new List<List<String>>();
-        List<List<String>> allReqiredFields = new List<List<String>>();
-        List<Form_Fields__c> FieldList = new List<Form_Fields__c>();
+        try{
+            List<String> types = new List<String>();
+            Form__c FormDetail = [SELECT Id, Mapped_Objects__c
+                                  FROM Form__c
+                                  WHERE Id = :id
+                                  LIMIT 1];
+            //List<Form_Page__c> pageList = [SELECT Id, Name, Page_Number__c FROM Form_Page__c WHERE Form__c=:Form_Id ORDER BY Page_Number__c ASC];
+            types = (FormDetail.Mapped_Objects__c).split(',');
+            System.debug(types);
+            List<List<String>> allFields = new List<List<String>>();
+            List<List<String>> allReqiredFields = new List<List<String>>();
+            List<Form_Fields__c> FieldList = new List<Form_Fields__c>();
 
-        for (String type : types){
-            Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-            Schema.SObjectType leadSchema = schemaMap.get(type) ;
-            Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
-            List<String> Fields = new List<String>();
-            Set<String> compoundFields = new Set<String>();
-            Integer Position = 0;
-            for (String fieldName : fieldMap.keySet()){
-                if (fieldMap.get(fieldName).getDescribe().isUpdateable() && fieldMap.get(fieldName).getDescribe().isNillable() == true){
-                    // list of all field API name
-                    System.debug(fieldMap.get(fieldName).getDescribe().getCompoundFieldName() + '===> getfields');
-                    if (fieldMap.get(fieldName).getDescribe().getCompoundFieldName() == null){
-                        Fields.add(fieldMap.get(fieldName).getDescribe().getLabel() + './.' + fieldMap.get(fieldName).getDescribe().getType());
-                    } else{
-                        String temp = fieldMap.get(fieldName).getDescribe().getCompoundFieldName();
-                        String type1 = '';
-                        boolean hasAddress = temp.Contains('Address');
-                        if (hasAddress){
-                            type1 = 'QFADDRESS';
+            for (String type : types){
+                Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+                Schema.SObjectType leadSchema = schemaMap.get(type) ;
+                Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
+                List<String> Fields = new List<String>();
+                Set<String> compoundFields = new Set<String>();
+                Integer Position = 0;
+                for (String fieldName : fieldMap.keySet()){
+                System.debug(fieldName);
+                if (fieldMap.get(fieldName).getDescribe().getRelationshipName() != null || fieldMap.get(fieldName).getDescribe().isUpdateable() && fieldMap.get(fieldName).getDescribe().isNillable() == true){
+                        // list of all field API name
+                        System.debug(fieldMap.get(fieldName).getDescribe().getCompoundFieldName() + '===> getfields');
+                        if (fieldMap.get(fieldName).getDescribe().getCompoundFieldName() == null){
+                            Fields.add(fieldMap.get(fieldName).getDescribe().getLabel() + './.' + fieldMap.get(fieldName).getDescribe().getType());
+                        } else{
+                            String temp = fieldMap.get(fieldName).getDescribe().getCompoundFieldName();
+                            String type1 = '';
+                            boolean hasAddress = temp.Contains('Address');
+                            if (hasAddress){
+                                type1 = 'QFADDRESS';
+                            }
+                            compoundFields.add(temp + './.' + type1);
                         }
-                        compoundFields.add(temp + './.' + type1);
                     }
                 }
+                Fields.addAll(compoundFields);
+                allFields.add(Fields);
             }
-            Fields.addAll(compoundFields);
-            allFields.add(Fields);
-        }
-        // if(!FieldList.isEmpty()){
-        //     insert FieldList;
-        // }
-        System.debug(allFields);
+            // if(!FieldList.isEmpty()){
+            //     insert FieldList;
+            // }
+            System.debug(allFields);
 
-        return allFields;
-            
-        } catch (Exception e) {
+            return allFields;
+
+        } catch (Exception e){
             // error_handler.insert_errordata(e,'FormBuilderController','getfields');
             return null;
         }
@@ -308,7 +307,7 @@ public without sharing class FormBuilderController{
             update nform;
             result = nform.Button_CSS__c;
         } catch (Exception e){
-            error_handler.insert_errordata(e,'FormBuilderController','StoreBtnStyles');
+            error_handler.insert_errordata(e, 'FormBuilderController', 'StoreBtnStyles');
             result = e.getMessage();
         }
         return result;
@@ -324,7 +323,7 @@ public without sharing class FormBuilderController{
             update nform;
             return nform.Button_Position__c;
         } catch (Exception e){
-            error_handler.insert_errordata(e,'FormBuilderController','StoreBtnposition');
+            error_handler.insert_errordata(e, 'FormBuilderController', 'StoreBtnposition');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -415,7 +414,7 @@ public without sharing class FormBuilderController{
             update nform;
             result = nform.Form_Styling__c;
         } catch (Exception e){
-            error_handler.insert_errordata(e,'FormBuilderController','StoreFormStyles');
+            error_handler.insert_errordata(e, 'FormBuilderController', 'StoreFormStyles');
             result = e.getMessage();
         }
         return result;
@@ -461,7 +460,7 @@ public without sharing class FormBuilderController{
             // nform.Page_CSS__c = Value;
             result = nform.Page_CSS__c;
         } catch (Exception e){
-            error_handler.insert_errordata(e,'FormBuilderController','StorePageStyles');
+            error_handler.insert_errordata(e, 'FormBuilderController', 'StorePageStyles');
             result = e.getMessage();
         }
         return result;
@@ -506,7 +505,7 @@ public without sharing class FormBuilderController{
             update nform;
             result = nform.All_Field_Styling__c;
         } catch (Exception e){
-            error_handler.insert_errordata(e,'FormBuilderController','StoreStyles');
+            error_handler.insert_errordata(e, 'FormBuilderController', 'StoreStyles');
             result = e.getMessage();
         }
         return result;
@@ -567,7 +566,7 @@ public without sharing class FormBuilderController{
             // nform.All_Field_Styling__c = Value;
             result = nform.All_Field_Hover__c;
         } catch (Exception e){
-            error_handler.insert_errordata(e,'FormBuilderController','StoreHoverStyles');
+            error_handler.insert_errordata(e, 'FormBuilderController', 'StoreHoverStyles');
             result = e.getMessage();
         }
         return result;
@@ -614,7 +613,7 @@ public without sharing class FormBuilderController{
             // nform.All_Field_Styling__c = Value;
             result = nform.All_Field_Focus__c;
         } catch (Exception e){
-            error_handler.insert_errordata(e,'FormBuilderController','StoreFocusStyles');
+            error_handler.insert_errordata(e, 'FormBuilderController', 'StoreFocusStyles');
             result = e.getMessage();
         }
         return result;
@@ -674,14 +673,14 @@ public without sharing class FormBuilderController{
 
     @AuraEnabled
     public static string getHoverCSS(String id){
-        try {
-        Form__c nform = [SELECT Id, All_Field_Hover__c
-                         FROM Form__c
-                         WHERE Id = :id];
-        System.debug(nform);
-        System.debug('CSS->>>' + nform.All_Field_Hover__c);
-        return nform.All_Field_Hover__c;
-        } catch (Exception e) {
+        try{
+            Form__c nform = [SELECT Id, All_Field_Hover__c
+                             FROM Form__c
+                             WHERE Id = :id];
+            System.debug(nform);
+            System.debug('CSS->>>' + nform.All_Field_Hover__c);
+            return nform.All_Field_Hover__c;
+        } catch (Exception e){
             // error_handler.insert_errordata(e,'FormBuilderController','getHoverCSS');
             return null;
         }
@@ -689,14 +688,14 @@ public without sharing class FormBuilderController{
 
     @AuraEnabled
     public static string getFocusCSS(String id){
-        try {
-        Form__c nform = [SELECT Id, All_Field_Focus__c
-                         FROM Form__c
-                         WHERE Id = :id];
-        System.debug(nform);
-        System.debug('CSS->>>' + nform.All_Field_Focus__c);
-        return nform.All_Field_Focus__c;
-        } catch (Exception e) {
+        try{
+            Form__c nform = [SELECT Id, All_Field_Focus__c
+                             FROM Form__c
+                             WHERE Id = :id];
+            System.debug(nform);
+            System.debug('CSS->>>' + nform.All_Field_Focus__c);
+            return nform.All_Field_Focus__c;
+        } catch (Exception e){
             // error_handler.insert_errordata(e,'FormBuilderController','getFocusCSS');
             return null;
         }
@@ -704,14 +703,14 @@ public without sharing class FormBuilderController{
 
     @AuraEnabled
     public static string getLabelCSS(String id){
-        try {
-        Form__c nform = [SELECT Id, Label_CSS__c
-                         FROM Form__c
-                         WHERE Id = :id];
-        System.debug(nform);
-        System.debug('CSS->>>' + nform.Label_CSS__c);
-        return nform.Label_CSS__c;
-        } catch (Exception e) {
+        try{
+            Form__c nform = [SELECT Id, Label_CSS__c
+                             FROM Form__c
+                             WHERE Id = :id];
+            System.debug(nform);
+            System.debug('CSS->>>' + nform.Label_CSS__c);
+            return nform.Label_CSS__c;
+        } catch (Exception e){
             // error_handler.insert_errordata(e,'FormBuilderController','getLabelCSS');
             return null;
         }
@@ -737,11 +736,12 @@ public without sharing class FormBuilderController{
     @AuraEnabled
     public static Form__c formdetails(Id id){
         try{
-        Form__c nform = [SELECT Id,Name,Progress_Indicator__c,Captcha_Type__c,Button_CSS__c,Button_Position__c,
-        Page_CSS__c,Form_Styling__c, All_Field_Hover__c, All_Field_Focus__c,All_Field_Styling__c,Label_CSS__c,FormBgID__c,PageBgID__c  FROM Form__c WHERE Id =: id];
-        System.debug('all styles :---> '+ nform);
-        return nform;
-        } catch (Exception e) {
+            Form__c nform = [SELECT Id, Name, Progress_Indicator__c, Captcha_Type__c, Button_CSS__c, Button_Position__c, Page_CSS__c, Form_Styling__c, All_Field_Hover__c, All_Field_Focus__c, All_Field_Styling__c, Label_CSS__c, FormBgID__c, PageBgID__c
+                             FROM Form__c
+                             WHERE Id = :id];
+            System.debug('all styles :---> ' + nform);
+            return nform;
+        } catch (Exception e){
             // error_handler.insert_errordata(e,'FormBuilderController','formdetails');
             throw new AuraHandledException(e.getMessage());
         }
@@ -997,7 +997,7 @@ public without sharing class FormBuilderController{
             return fieldList;
 
         } catch (Exception e){
-            error_handler.insert_errordata(e,'FormBuilderController','CreateFieldRecord');
+            error_handler.insert_errordata(e, 'FormBuilderController', 'CreateFieldRecord');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1063,24 +1063,24 @@ public without sharing class FormBuilderController{
 
                 for (Form_Fields__c ff : newPageFields){
                     ff.Form_Page__c = newFormPage.Id;
-                    }
-                update newPageFields;
                 }
+                update newPageFields;
+            }
 
             pageWrapper pw = new pageWrapper();
             pw.fieldList = [SELECT Id, Name, Form__c, Form_Page__c, Field_Order__c, Field_Validations__c
-                              FROM Form_Fields__c
+                            FROM Form_Fields__c
                             WHERE Form__c = :FormId
-                              ORDER BY Field_Order__c ASC];
-                pw.pageList = [SELECT Id, Name, Page_Number__c
-                               FROM Form_Page__c
-                               WHERE Form__c = :FormId
-                               ORDER BY Page_Number__c ASC];
-                return pw;
+                            ORDER BY Field_Order__c ASC];
+            pw.pageList = [SELECT Id, Name, Page_Number__c
+                           FROM Form_Page__c
+                           WHERE Form__c = :FormId
+                           ORDER BY Page_Number__c ASC];
+            return pw;
 
         } catch (Exception e){
             System.debug('Exception-->>' + e.getMessage() + '-->Line--' + e.getLineNumber() + '-->Stack-->' + e.getStackTraceString());
-            error_handler.insert_errordata(e,'FormBuilderController','addPageBreak');
+            error_handler.insert_errordata(e, 'FormBuilderController', 'addPageBreak');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1174,8 +1174,8 @@ public without sharing class FormBuilderController{
                         Schema.SObjectType leadSchema = schemaMap.get(type) ;
                         Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
                         for (String fieldName : fieldMap.keySet()){
-                            if (fieldMap.get(fieldName).getDescribe().isUpdateable()){
-                                if (fieldMap.get(fieldName).getDescribe().isNillable() == false){
+
+                            if (fieldName == 'Name' || (!fieldMap.get(fieldName).getDescribe().isNillable() && !fieldMap.get(fieldName).getDescribe().isDefaultedOnCreate() && fieldMap.get(fieldName).getDescribe().isCreateable())){
                                     Position = Position + 1;
                                     System.debug('##Field API Name=' + fieldName);
                                     Form_Fields__c field = new Form_Fields__c();
@@ -1209,7 +1209,7 @@ public without sharing class FormBuilderController{
                                                              '?$`~Salutation<!@!>';
                                     Fields.add(field);
                                 }
-                            }
+
                         }
                         iteration = iteration + 1;
                     }
@@ -1304,7 +1304,7 @@ public without sharing class FormBuilderController{
         } catch (Exception e){
             System.debug('Error Line Number ==>' + e.getLineNumber() + ' Error Message ==>' + e.getMessage());
             System.debug('Error ==>' + e);
-                                    // error_handler.insert_errordata(e,'FormBuilderController','reOrderField');
+            // error_handler.insert_errordata(e,'FormBuilderController','reOrderField');
             return null;
         }
     }
@@ -1341,7 +1341,7 @@ public without sharing class FormBuilderController{
                            ORDER BY Page_Number__c ASC];
             return pw;
         } catch (Exception e){
-                        // error_handler.insert_errordata(e,'FormBuilderController','createPage');
+            // error_handler.insert_errordata(e,'FormBuilderController','createPage');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -1502,7 +1502,6 @@ public without sharing class FormBuilderController{
     //         throw new AuraHandledException(e.getMessage());
     //     }
     // }
-
     @AuraEnabled
     public static Form_Page__c pageDetails(Id FormId, Id PageId){
         try{
@@ -1535,7 +1534,68 @@ public without sharing class FormBuilderController{
             update editForm;
             return 'saved successfully';
         } catch (Exception e){
-            // error_handler.insert_errordata(e,'FormBuilderController','editFormSubmit');
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static List<SObject> getreferencevalue(Id id, String searchkey){
+        try{
+            String searchkeyword = '%' + searchkey + '%';
+            String Query;
+            Form_Fields__c MappedObject = [SELECT Id, Mapped_Obj__c, Field_Mapping__c
+                                           FROM Form_Fields__c
+                                           WHERE Id = :id];
+
+            Schema.DescribeFieldResult f = Schema.getGlobalDescribe().get(MappedObject.Mapped_Obj__c).getDescribe().fields.getMap().get(MappedObject.Field_Mapping__c).getDescribe();
+            String Objects;
+            for (Schema.SObjectType reference : f.getReferenceTo()){
+                Objects = reference.getDescribe().getName();
+            }
+            if (searchkey == null || searchkey == 'undefined' || searchkey == ''){
+                Query = 'SELECT Id, Name FROM ' + Objects + ' Limit 1000';
+            } else{
+                Query = 'SELECT Id, Name FROM ' + Objects + ' WHERE Name LIKE :searchkeyword';
+            }
+            List<sObject> ObjectRecords = Database.query(Query);
+
+            return ObjectRecords;
+        } catch (Exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static Map<String, String> getpicklistvalue(Id id){
+        try{
+
+            Form_Fields__c MappedObject = [SELECT Id, Mapped_Obj__c, Field_Mapping__c
+                                           FROM Form_Fields__c
+                                           WHERE Id = :id];
+
+            Map<String, Schema.SObjectType> gd = Schema.getGlobalDescribe();
+            Set<String> objectKeys = gd.keySet();
+            Map<String, String> picklistvalue = new Map<String, String>();
+
+            //Iterate through all objects to locate ACCOUNT Object
+
+            Schema.SObjectType systemObjectType = gd.get(MappedObject.Mapped_Obj__c);
+            Schema.DescribeSObjectResult r = systemObjectType.getDescribe();
+            Map<String, Schema.SObjectField> M = r.fields.getMap();
+            Set<String> fieldNames = M.keySet();
+            Schema.SObjectField field = M.get(MappedObject.Field_Mapping__c);
+            Schema.DescribeFieldResult fieldDesc = field.getDescribe();
+
+
+            //extract the picklist values
+            // System.debug(fieldDesc.getPicklistValues() + ' ::::::::::::::::::::::::::::::::::: ') ;
+            for (Integer i = 0; i < fieldDesc.getPicklistValues().size(); i++){
+                picklistvalue.put(fieldDesc.getPicklistValues()[i].getLabel(), fieldDesc.getPicklistValues()[i].getValue());
+            }
+
+
+            return picklistvalue;
+        } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         }
     }

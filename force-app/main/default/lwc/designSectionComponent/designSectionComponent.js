@@ -754,10 +754,10 @@ export default class DesignSectionComponent extends LightningElement {
             this.fieldhovercolor = '#000000';
         }
         
-        // this.hoverlabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
-        // if (this.hoverlabelcolor == null || this.hoverlabelcolor == undefined) {
-            //     this.hoverlabelcolor = '#000000';
-            // }
+        this.hoverlabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
+        if (this.hoverlabelcolor == null || this.hoverlabelcolor == undefined) {
+            this.hoverlabelcolor = '#000000';
+        }
             // }).catch(error => {
                 //     console.log(error);
                 // })
@@ -786,10 +786,10 @@ export default class DesignSectionComponent extends LightningElement {
             this.fieldfocuscolor = '#000000';
         }
 
-        // this.focuslabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
-        // if (this.focuslabelcolor == null || this.focuslabelcolor == undefined) {
-        //     this.focuslabelcolor = '#000000';
-        // }
+        this.focuslabelcolor = (((str.split('lcolor:'))[1].split(';'))[0]);
+        if (this.focuslabelcolor == null || this.focuslabelcolor == undefined) {
+            this.focuslabelcolor = '#000000';
+        }
         // }).catch(error => {
         //     console.log(error);
         // })

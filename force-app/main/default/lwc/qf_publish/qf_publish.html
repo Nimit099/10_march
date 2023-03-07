@@ -78,7 +78,7 @@
                         class="inputBox" />
                     <img src={copy_Icon} class="iconsImage" id="menuItems" title='copy' onclick={copyTextFieldHelper}
                         data-id="buttonId" />
-                    <span class="urlCopied" aria-hidden="true"><b>Copied</b></span>
+                    <span class="urlCopied" aria-hidden="true"><b>Copied!</b></span>
                 </div>
             </template>
 
@@ -100,19 +100,15 @@
                         <div data-id="overview"
                             class="codeCopySection slds-p-around_large slds-m-top_medium copyCodeSection_12">
                             <div class="divtag">
-                                &lt; aura:component implements="forceCommunity:availableForAllPageTypes" access="global"
-                                &gt;
-                                <br />
+                                &lt;!--  QuickForm Aura Component Code snippet starts from here --&gt;<br/>
+                                &lt;aura:component implements="forceCommunity:availableForAllPageTypes" access="global"&gt;<br/>
                                 <div class="divtag1">
-                                    &lt;iframe src={formurl} transparency="true" style="min-height:100vh;
-                                    overflow:auto;" width="100%" id="contactform123" name="contactform123"
-                                    marginwidth="0" marginheight="0" frameborder="0" &gt;
-                                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt; Your browser does not support
-                                    iframes. The contact form cannot be displayed. Please use another contact method
-                                    (phone, fax etc) &lt;/p&gt;
-                                    <br />&lt;/iframe&gt;
+                                    &lt;iframe src=&quot;{srcurl}&quot; allowTransparency=&quot;true&quot; style=&quot;min-height:100vh; overflow:auto;&quot; width=&quot;100%&quot; id=&quot;quickform001&quot; name=&quot;quickform&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; frameborder=&quot;0&quot;&gt;<br/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt; If your Browser doesn&#39;t support iFrames. Please check with the support team. &lt;/p&gt;<br/>
+                                    &lt;/iframe&gt;
                                 </div>
-                                &lt;/aura:component &gt;
+                                &lt;/aura:component&gt;<br/>
+                                &lt;!--  QuickForm Aura Component Code snippet starts from here --&gt;
                             </div>
                         </div>
 
@@ -120,7 +116,7 @@
                             <div class="bt divtag2">
                                 <input class="std-btn" type="button" value="Copy Code" onclick={copyDivToClipboard_1}
                                     name="Copy Code" />
-                                <span data-id="test" class="copiedtext1" aria-hidden="true">Copied</span>
+                                <span data-id="test" class="copiedtext1" aria-hidden="true">Copied!</span>
                             </div>
                         </div>
                     </div>
@@ -145,12 +141,10 @@
                         <div class="divtag">
                             &lt;lightning-layout-item&gt; <br />
                             <div class="Publish_lwc_Component_code">
-                                &lt;iframe src="{formurl}" transparency="true" style="min-height:100vh; overflow:auto;"
+                                &lt;iframe src="{srcurl}" transparency="true" style="min-height:100vh; overflow:auto;"
                                 width="100%" id="contactform123" name="contactform123" marginwidth="0" marginheight="0"
                                 frameborder="0" &gt;
-                                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt; Your browser does not support
-                                iframes. The contact form cannot be displayed. Please use another contact method (phone,
-                                fax etc) &lt;/p&gt;
+                                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt; &lt;/p&gt;
                                 <br />&lt;/iframe&gt;
                             </div>
                             &lt;/lightning-layout-item&gt;
@@ -161,7 +155,7 @@
                         <div class="bt divtag2">
                             <input class="std-btn" type="button" value="Copy Code" name="Copy"
                                 onclick={copyDivToClipboard_2} />
-                            <span data-id="lwccode" class="copiedtext2" aria-hidden="true">Copied</span>
+                            <span data-id="lwccode" class="copiedtext2" aria-hidden="true">Copied!</span>
                         </div>
                     </div>
                 </div>
@@ -183,11 +177,10 @@
                 <div class="copyCodeSection_3">
                     <div class=" codeCopySection iframeCode  slds-p-around_large slds-m-top_medium copyCodeSection_32">
                         <p id="copyIframe">
-                            &lt;iframe src="{formurl}" transparency="true" style="min-height:100vh; overflow:auto;"
+                            &lt;iframe src="{srcurl}" transparency="true" style="min-height:100vh; overflow:auto;"
                             width="100%" id="contactform123" name="contactform123" marginwidth="0" marginheight="0"
                             frameborder="0" &gt;
-                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt; Your browser does not support iframes.
-                            The contact form cannot be displayed. Please use another contact method (phone, fax etc)
+                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
                             &lt;/p&gt;
                             <br />&lt;/iframe&gt;
                         </p>
@@ -196,7 +189,7 @@
                         <div class="bt divtag2">
                             <input class="std-btn" type="button" value="Copy Code" onclick={copyDivToClipboard_3}
                                 name="Copy" />
-                            <span class="copiedtext3" aria-hidden="true">Copied</span>
+                            <span class="copiedtext3" aria-hidden="true">Copied!</span>
                         </div>
                     </div>
 
@@ -274,8 +267,7 @@
                                         class="close">&times;&lt;/span&gt;
                                         <br />
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
-                                        <br /> &lt;iframe frameborder= '0' scrolling ="yes" src="{formurl}" >your
-                                        browser does not support &lt;/iframe&gt; &lt;/p&gt;
+                                        <br /> &lt;iframe frameborder= '0' scrolling ="yes" src="{srcurl}"> &lt;/iframe&gt; &lt;/p&gt;
                                         <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
                                         <br /> &lt;/div&gt;
                                     </div>
@@ -452,8 +444,7 @@
                                         class="close">&times; &lt;/span&gt;
                                         <br />
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
-                                        <br /> &lt;iframe frameborder= '0' scrolling ="yes" src="{formurl}" >your
-                                        browser does not support &lt;/iframe&gt; &lt;/p&gt;
+                                        <br /> &lt;iframe frameborder= '0' scrolling ="yes" src="{srcurl}"> &lt;/iframe&gt; &lt;/p&gt;
                                         <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
                                         <br /> &lt;/div&gt;
                                     </div>
@@ -618,8 +609,7 @@
                                         class="close">&times;&lt;/span&gt;
                                         <br />
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
-                                        <br /> &lt;iframe frameborder= '0' scrolling ="yes" src="{formurl}" >your
-                                        browser does not support &lt;/iframe&gt; &lt;/p&gt;
+                                        <br /> &lt;iframe frameborder= '0' scrolling ="yes" src="{srcurl}"> &lt;/iframe&gt; &lt;/p&gt;
                                         <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
                                         <br /> &lt;/div&gt;
                                     </div>
@@ -786,8 +776,7 @@
                                         class="close">&times; &lt;/span&gt;
                                         <br />
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
-                                        <br /> &lt;iframe frameborder= '0' scrolling ="yes" src="{formurl}" >your
-                                        browser does not support &lt;/iframe&gt; &lt;/p&gt;
+                                        <br /> &lt;iframe frameborder= '0' scrolling ="yes" src="{srcurl}"> &lt;/iframe&gt; &lt;/p&gt;
                                         <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
                                         <br /> &lt;/div&gt;
                                     </div>
