@@ -9,33 +9,18 @@ import {
 } from 'lightning/platformShowToastEvent';
 import GetFormPage from '@salesforce/apex/FormBuilderController.GetFormPage';
 import iconzip from '@salesforce/resourceUrl/NavigationBar'
-// import HomeIcon from '@salesforce/resourceUrl/leftbar_home';
-// import FieldIcon from '@salesforce/resourceUrl/leftbar_fieldmapping';
-// import DesignIcon from '@salesforce/resourceUrl/leftbar_design';
-// import notificationIcon from '@salesforce/resourceUrl/leftbar_notification';
-// import ThankyouIcon from '@salesforce/resourceUrl/leftbar_thankyou';
-// import object from '@salesforce/resourceUrl/leftbar_objectmapping';
-// import PreviewIcon from '@salesforce/resourceUrl/leftbar_preview';
-// import PublishIcon from '@salesforce/resourceUrl/leftbar_publish';
 import getFieldsRecords from '@salesforce/apex/FormBuilderController.getFieldsRecords';
 import CreateFieldRecord from '@salesforce/apex/FormBuilderController.CreateFieldRecord';
 import createPage from '@salesforce/apex/FormBuilderController.createPage';
 import renameform from '@salesforce/apex/FormBuilderController.renameform';
-import renameMainform from '@salesforce/apex/FormBuilderController.renameMainform'
 import addPageBreak from '@salesforce/apex/FormBuilderController.addPageBreak';
 import Add_icon from '@salesforce/resourceUrl/Add_icon';
 import Edit_page_icon from '@salesforce/resourceUrl/Edit_page_icon';
 import Edit_icon from '@salesforce/resourceUrl/Edit_icon';
 import Delete_icon from '@salesforce/resourceUrl/Delete_icon';
-import getFormCSS from '@salesforce/apex/FormBuilderController.getFormCSS';
-import getPageCSS from '@salesforce/apex/FormBuilderController.getPageCSS';
-import getButtonCSS from '@salesforce/apex/FormBuilderController.getButtonCSS';
-import getFieldCSS from '@salesforce/apex/FormBuilderController.getFieldCSS';
-import getLabelCSS from '@salesforce/apex/FormBuilderController.getLabelCSS';
-import getHoverCSS from '@salesforce/apex/FormBuilderController.getHoverCSS';
-import getFocusCSS from '@salesforce/apex/FormBuilderController.getFocusCSS';
-import StoreFormStyles from '@salesforce/apex/FormBuilderController.StoreFormStyles';
-import StoreStyles from '@salesforce/apex/FormBuilderController.StoreStyles';
+// import getFormCSS from '@salesforce/apex/FormBuilderController.getFormCSS';
+// import getPageCSS from '@salesforce/apex/FormBuilderController.getPageCSS';
+// import getButtonCSS from '@salesforce/apex/FormBuilderController.getButtonCSS';
 import right from '@salesforce/resourceUrl/right';
 import cross from '@salesforce/resourceUrl/cross';
 import dropHere from '@salesforce/resourceUrl/dropHere'
@@ -49,7 +34,7 @@ import Objects_Type from "@salesforce/apex/customMetadata.f_Get_Types";
 import getCaptchatype from '@salesforce/apex/customMetadata.getCaptchatype'; //import get getCaptchatype method from custom Metadata apex class
 import Objects_Type_2 from "@salesforce/apex/customMetadata.Get_Captcha_Types";
 import getProgressindicator from '@salesforce/apex/customMetadata.getProgressindicator'; //import get getProgressindicator method from custom Metadata apex class
-// import formDetails from '@salesforce/apex/FormBuilderController.formDetails';
+
 import pageDetails from '@salesforce/apex/FormBuilderController.pageDetails';
 import updatePage from '@salesforce/apex/FormBuilderController.updatePage';
 import editFormSubmit from '@salesforce/apex/FormBuilderController.editFormSubmit';
@@ -63,15 +48,6 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
 
     @track spinnerDataTable = false;
 
-    //     icons        // 
-    // @track homeIcon = HomeIcon;
-    // designIcon = DesignIcon;
-    // thankyouicon = ThankyouIcon;
-    // publishIcon = PublishIcon;
-    // object =object;
-    // fieldicon = FieldIcon;
-    // notificationicon = notificationIcon;
-    // previewIcon = PreviewIcon;
     @api homeIcon = iconzip + '/home.png';
     fieldicon = iconzip + '/fields.png';
     designIcon = iconzip + '/designdesign.png';
@@ -140,6 +116,7 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
     @track hovercss;
     @track focuscss;
     @track fcss;
+    @track lcss;
     @track pagecss;
     @track formcss;
     @track btncss;
@@ -152,12 +129,11 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
             .then(result => {
                 this.formcss = result.Form_Styling__c;
                 this.btncss = result.Button_CSS__c;
-                // this.hovercss = result.Button_Position__c;
                 this.pagecss = result.Page_CSS__c;
                 this.hovercss = result.All_Field_Hover__c;
                 this.focuscss = result.All_Field_Focus__c
                 this.fcss = result.All_Field_Styling__c;
-                this.labelcss = result.Label_CSS__c;
+                this.lcss = result.Label_CSS__c;
             })
         this.spinnerDataTable = true;
         this.activesidebar = true;
@@ -170,7 +146,6 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                 Form_Id: this.ParentMessage
             })
             .then(result => {
-                console.log('get form page called');
                 this.PageList = result;
                 console.log('this-->>');
                 console.log('*** pageList ==>', result);
@@ -200,30 +175,6 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
                 allDiv.style = 'background-color: #8EBFF0;padding: 12%;border-radius: 50%;';
             });
 
-        // getHoverCSS({
-        //         id: this.ParentMessage
-        //     })
-        //     .then(result => {
-        //         console.log(result);
-        //         console.log('HoverCSS->> ' + result);
-        //         this.hovercss = result;
-        //     }).catch(error => {
-        //         console.log({
-        //             error
-        //         });
-        //     })
-
-        // getFocusCSS({
-        //         id: this.ParentMessage
-        //     })
-        //     .then(result => {
-        //         console.log(result);
-        //         this.focuscss = result;
-        //     }).catch(error => {
-        //         console.log({
-        //             error
-        //         });
-        //     })
         if (this.tab == 'tab-2') {
             this.activesidebar = true;
         }
@@ -235,68 +186,73 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
         console.log(this.removeObjFields.length);
         this.tempararyfun();
         console.log('Renderedcallback formbuilder');
-        getFormCSS({
-                id: this.ParentMessage
-            })
-            .then(result => {
-                console.log(result);
-                this.getFieldCSS = result;
-                console.log('FormCSS->> ' + this.getFieldCSS);
-                let array = this.template.querySelector('.myform');
-                let str = this.getFieldCSS;
-                array.style = str;
-            }).catch(error => {
-                console.log('Error in getFormCSS ==>' + error);
-                console.log({
-                    error
-                });
-            })
+        // getFormCSS({
+        //         id: this.ParentMessage
+        //     })
+        //     .then(result => {
+                if (this.formcss !=undefined && this.formcss != null) {   
+                    // this.getFieldCSS = result;
+                    console.log('FormCSS->> ' + this.formcss);
+                    let array = this.template.querySelector('.myform');
+                    let str = this.formcss;
+                    array.style = str;
+                }
+            // }).catch(error => {
+            //     console.log('Error in getFormCSS ==>' + error);
+            //     console.log({
+            //         error
+            //     });
+            // })
 
-        getButtonCSS({
-                id: this.ParentMessage
-            })
-            .then(result => {
-                console.log(result);
-                let str = result;
-                let arr = this.template.querySelectorAll('.btn1');
-                for (let i = 0; i < arr.length; i++) {
-                    const element = arr[i];
-                    element.style = str;
+        // getButtonCSS({
+        //         id: this.ParentMessage
+        //     })
+        //     .then(result => {
+        //         console.log(result);
+                if (this.btncss !=undefined && this.btncss != null) {
+                    let str = this.btncss;
+                    let arr = this.template.querySelectorAll('.btn1');
+                    for (let i = 0; i < arr.length; i++) {
+                        const element = arr[i];
+                        element.style = str;
+                    }
+                    let arr2 = this.template.querySelectorAll('.footer');
+                    for (let i = 0; i < arr2.length; i++) {
+                        const element = arr2[i];
+                        element.style = 'justify-content:' + (str.split(';justify-content:')[1]);;
+                    }
                 }
-                let arr2 = this.template.querySelectorAll('.footer');
-                for (let i = 0; i < arr2.length; i++) {
-                    const element = arr2[i];
-                    element.style = 'justify-content:' + (str.split(';justify-content:')[1]);;
-                }
-            }).catch(error => {
-                console.log('Error in getButtonCSS ==>' + error);
-                console.log({
-                    error
-                });
-            })
+            // }).catch(error => {
+            //     console.log('Error in getButtonCSS ==>' + error);
+            //     console.log({
+            //         error
+            //     });
+            // })
 
-        getPageCSS({
-                id: this.ParentMessage
-            })
-            .then(result => {
-                console.log(result);
-                this.getFieldCSS = result;
-                console.log('PageCSS->> ' + this.getFieldCSS);
-                let array = this.template.querySelectorAll('.page');
-                let str = this.getFieldCSS;
-                for (let i = 0; i < array.length; i++) {
-                    const element = array[i];
-                    console.log(i + '*--*' + element);
-                    element.style = str;
+        // getPageCSS({
+        //         id: this.ParentMessage
+        //     })
+        //     .then(result => {
+        //         console.log(result);
+                if (this.pagecss !=undefined && this.pagecss != null) {
+                    // this.getFieldCSS = this.pagecss;
+                    console.log('PageCSS->> ' + this.pagecss);
+                    let array = this.template.querySelectorAll('.page');
+                    let str = this.pagecss;
+                    for (let i = 0; i < array.length; i++) {
+                        const element = array[i];
+                        console.log(i + '*--*' + element);
+                        element.style = str;
+                    }
+                    // this.spinnerDataTable = false;
                 }
-                // this.spinnerDataTable = false;
-            }).catch(error => {
-                console.log('Error in getPageCSS ==>' + error);
-                console.log({
-                    error
-                });
-                // this.spinnerDataTable = false;
-            })
+            // }).catch(error => {
+            //     console.log('Error in getPageCSS ==>' + error);
+            //     console.log({
+            //         error
+            //     });
+            //     // this.spinnerDataTable = false;
+            // })
 
 
     }
@@ -375,46 +331,46 @@ export default class FormBuilder extends NavigationMixin(LightningElement) {
         // }
         // this.spinnerDataTable = false;
         this.spinnerDataTable = false;
-        getPageCSS({
-                id: this.ParentMessage
-            })
-            .then(result => {
-                console.log(result);
-                this.getFieldCSS = result;
-                console.log('PageCSS->> ' + this.getFieldCSS);
+        // getPageCSS({
+        //         id: this.ParentMessage
+        //     })
+        //     .then(result => {
+                console.log(event.detail);
+                this.pagecss = event.detail;
+                console.log('PageCSS->> ' + this.pagecss);
                 let array = this.template.querySelectorAll('.page');
-                let str = this.getFieldCSS;
+                let str = this.pagecss;
                 for (let i = 0; i < array.length; i++) {
                     const element = array[i];
                     console.log(i + '--' + element);
                     element.style = str;
                 }
                 this.spinnerDataTable = false;
-            }).catch(error => {
-                console.log({
-                    error
-                });
-                this.spinnerDataTable = false;
-            })
+            // }).catch(error => {
+            //     console.log({
+            //         error
+            //     });
+            //     this.spinnerDataTable = false;
+            // })
     }
 
     handleformcss(event) {
         this.spinnerDataTable = false;
-        getFormCSS({
-                id: this.ParentMessage
-            })
-            .then(result => {
-                console.log(result);
-                this.getFieldCSS = result;
-                console.log('FieldCSS->> ' + this.getFieldCSS);
+        // getFormCSS({
+        //         id: this.ParentMessage
+        //     })
+        //     .then(result => {
+                console.log(event.detail);
+                this.formcss = event.detail;
+                console.log('FieldCSS->> ' + this.formcss);
                 let array = this.template.querySelector('.myform');
-                let str = this.getFieldCSS;
+                let str = this.formcss;
                 array.style = str;
-            }).catch(error => {
-                console.log({
-                    error
-                });
-            })
+            // }).catch(error => {
+            //     console.log({
+            //         error
+            //     });
+            // })
         // console.log(event.detail);
         // let str = event.detail;
         // let array = this.template.querySelector('.myform');

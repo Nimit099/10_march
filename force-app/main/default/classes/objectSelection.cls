@@ -28,7 +28,7 @@ public without sharing class objectSelection {
 
     @AuraEnabled
     public static List<String> fetchChildObject(String parent){  
-        List<string> SObjectList = new List<string>();
+        Set<string> SObjectList = new Set<string>();
         Schema.SObjectType convertType = Schema.getGlobalDescribe().get(parent);
         Schema.DescribeSObjectResult R = convertType.getDescribe();
         for (Schema.ChildRelationship cr: R.getChildRelationships())
@@ -36,7 +36,8 @@ public without sharing class objectSelection {
             String temp = String.valueOf(cr.getChildSObject());
             SObjectList.add(temp);
         }
-        return SObjectList;
+        List<String> ChildObject = new List<String>(SObjectList);
+        return ChildObject;
     }
 
     @AuraEnabled
@@ -103,7 +104,7 @@ public without sharing class objectSelection {
             String FieldStyle = 'background-color:#FFFFFF;border-color:#000000;border-style:Solid;border-width:1px;border-radius:5px;font-family:Arial;font-weight:Normal;color:#242424;font-size:12px;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;line-height:1.5;';
             String HoverStyle = 'background-color:#FFFFFF;border-color:#000000;border-style:Solid;border-width:1px;border-radius:5px;font-family:Arial;font-weight:Normal;color:#000000;font-size:12px;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;line-height:1.5;';
             String FocusStyle = 'background-color:#FFFFFF;border-color:#000000;border-style:Solid;border-width:1px;border-radius:5px;font-family:Arial;font-weight:Normal;color:#000000;font-size:12px;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;line-height:1.5;';
-            String LabelStyle = 'justify-content:Center;font-family:Arial;font-weight:Normal;font-style:Normal;font-size:12px;line-height:1;color:#000000;margin-top:0px;margin-bottom:0px;';
+            String LabelStyle = 'justify-content:Left;font-family:Arial;font-weight:Normal;font-style:Normal;font-size:12px;line-height:1;color:#000000;margin-top:0px;margin-bottom:0px;';
             String ButtonStyle = ' background-color: #6699CC;border-color:#FFFFFF; height: 35px; width: 120px; font-size: 16px; border-width:0px; border-style:Solid; border-radius: 28px; font-family:Arial;font-weight:Normal;color:#FFFFFF;font-style:Normal;padding-left:5%px;padding-right:0px;padding-top:0px;padding-bottom:0px;';
             Form__c form = new Form__c(Name = FormTitle, Mapped_Objects__c = Mapped_Objects, Captcha_Type__c = CaptchaType, Form_Description__c = FormDesc, Progress_Indicator__c = ProgressIndicator, Form_Styling__c = Styles, All_Field_Styling__c = FieldStyle, Page_CSS__c = PageStyle, Label_CSS__c = LabelStyle, All_Field_Focus__c = FocusStyle, All_Field_Hover__c = HoverStyle, Button_CSS__c = ButtonStyle, Button_Position__c = 'justify-content:Center;gap:0px;');
             Database.insert(form);

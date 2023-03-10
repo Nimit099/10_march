@@ -5,6 +5,7 @@ public without sharing class FormBuilderController{
             List<BaseField_mdt__mdt> basefield = BaseField_mdt__mdt.getAll().values();
             return basefield;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','GetFieldsMetaData');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -26,6 +27,7 @@ public without sharing class FormBuilderController{
             sw.FormDirectionProp = Form_Direction__mdt.getAll().values();
             return sw;
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','GetStyles');
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -54,8 +56,8 @@ public without sharing class FormBuilderController{
                 Set<String> compoundFields = new Set<String>();
                 Integer Position = 0;
                 for (String fieldName : fieldMap.keySet()){
-                System.debug(fieldName);
-                if (fieldMap.get(fieldName).getDescribe().getRelationshipName() != null || fieldMap.get(fieldName).getDescribe().isUpdateable() && fieldMap.get(fieldName).getDescribe().isNillable() == true){
+                    System.debug(fieldName);
+                    if (fieldMap.get(fieldName).getDescribe().getRelationshipName() != null || fieldMap.get(fieldName).getDescribe().isUpdateable() && fieldMap.get(fieldName).getDescribe().isNillable() == true){
                         // list of all field API name
                         System.debug(fieldMap.get(fieldName).getDescribe().getCompoundFieldName() + '===> getfields');
                         if (fieldMap.get(fieldName).getDescribe().getCompoundFieldName() == null){
@@ -919,7 +921,7 @@ public without sharing class FormBuilderController{
                              '?$`~isDisabled<!@!>false' + 
                              '?$`~isLabel<!@!>true' + 
                              '?$`~isHelpText<!@!>false' + 
-                             '?$`~Label<!@!>' + Name.split(',')[0].replace('QF', '') + 
+                             '?$`~Label<!@!>' + Name.split(',')[0].replace('QF', '').toUpperCase() + 
                              '?$`~HelpText<!@!>' + 
                              '?$`~isPlaceholder<!@!>false' + 
                              '?$`~Placeholder<!@!>' + 
@@ -941,7 +943,7 @@ public without sharing class FormBuilderController{
                              '?$`~isDisabled<!@!>false' + 
                              '?$`~isLabel<!@!>true' + 
                              '?$`~isHelpText<!@!>false' + 
-                             '?$`~Label<!@!>' + Name.split(',')[0].replace('QF', '') + 
+                             '?$`~Label<!@!>' + Name.split(',')[0].replace('QF', '').toUpperCase() + 
                              '?$`~HelpText<!@!>' + 
                              '?$`~isPlaceholder<!@!>false' + 
                              '?$`~Placeholder<!@!>' + 
@@ -963,7 +965,7 @@ public without sharing class FormBuilderController{
                              '?$`~isDisabled<!@!>false' + 
                              '?$`~isLabel<!@!>true' + 
                              '?$`~isHelpText<!@!>false' + 
-                             '?$`~Label<!@!>' + Name.split(',')[0].replace('QF', '') + 
+                             '?$`~Label<!@!>' + Name.split(',')[0].replace('QF', '').toUpperCase() + 
                              '?$`~HelpText<!@!>' + 
                              '?$`~isPlaceholder<!@!>false' + 
                              '?$`~Placeholder<!@!>' + 
@@ -1176,21 +1178,21 @@ public without sharing class FormBuilderController{
                         for (String fieldName : fieldMap.keySet()){
 
                             if (fieldName == 'Name' || (!fieldMap.get(fieldName).getDescribe().isNillable() && !fieldMap.get(fieldName).getDescribe().isDefaultedOnCreate() && fieldMap.get(fieldName).getDescribe().isCreateable())){
-                                    Position = Position + 1;
-                                    System.debug('##Field API Name=' + fieldName);
-                                    Form_Fields__c field = new Form_Fields__c();
-                                    //requiredFieldList.add(fieldMap.get(fieldName).getDescribe().getLabel()+'./.'+ fieldMap.get(fieldName).getDescribe().getType());
-                                    field.Mapped_Obj__c = type;
-                                    field.Field_Mapping__c = fieldName;
-                                    field.Name = fieldMap.get(fieldName).getDescribe().getLabel() + ',' + fieldMap.get(fieldName).getDescribe().getType() + ',isrequired';
-                                    field.Form__c = FormDetail.Id;
-                                    field.Form_Page__c = page_Id.Id;
-                                    field.Field_Order__c = Position + 1;
-                                    field.Field_Validations__c = 'isRequired<!@!>true' + 
+                                Position = Position + 1;
+                                System.debug('##Field API Name=' + fieldName);
+                                Form_Fields__c field = new Form_Fields__c();
+                                //requiredFieldList.add(fieldMap.get(fieldName).getDescribe().getLabel()+'./.'+ fieldMap.get(fieldName).getDescribe().getType());
+                                field.Mapped_Obj__c = type;
+                                field.Field_Mapping__c = fieldName;
+                                field.Name = fieldMap.get(fieldName).getDescribe().getLabel() + ',' + fieldMap.get(fieldName).getDescribe().getType() + ',isrequired';
+                                field.Form__c = FormDetail.Id;
+                                field.Form_Page__c = page_Id.Id;
+                                field.Field_Order__c = Position + 1;
+                                field.Field_Validations__c = 'isRequired<!@!>true' + 
                                                              '?$`~isDisabled<!@!>false' + 
                                                              '?$`~isLabel<!@!>true' + 
                                                              '?$`~isHelpText<!@!>false' + 
-                                                             '?$`~Label<!@!>' + fieldName.split(',')[0] + 
+                                                             '?$`~Label<!@!>' + fieldMap.get(fieldName).getDescribe().getLabel().toUpperCase() + 
                                                              '?$`~HelpText<!@!>' + 
                                                              '?$`~isPlaceholder<!@!>false' + 
                                                              '?$`~Placeholder<!@!>' + 
@@ -1207,8 +1209,8 @@ public without sharing class FormBuilderController{
                                                              '?$`~MinimumDate<!@!>' + 
                                                              '?$`~MaximumDate<!@!>' + 
                                                              '?$`~Salutation<!@!>';
-                                    Fields.add(field);
-                                }
+                                Fields.add(field);
+                            }
 
                         }
                         iteration = iteration + 1;
@@ -1534,20 +1536,21 @@ public without sharing class FormBuilderController{
             update editForm;
             return 'saved successfully';
         } catch (Exception e){
+            // error_handler.insert_errordata(e,'FormBuilderController','editFormSubmit');
             throw new AuraHandledException(e.getMessage());
         }
     }
 
     @AuraEnabled
-    public static List<SObject> getreferencevalue(Id id, String searchkey){
+    public static referencewrapper getreferencevalue(Id id, String searchkey){
         try{
             String searchkeyword = '%' + searchkey + '%';
             String Query;
             Form_Fields__c MappedObject = [SELECT Id, Mapped_Obj__c, Field_Mapping__c
                                            FROM Form_Fields__c
                                            WHERE Id = :id];
-
-            Schema.DescribeFieldResult f = Schema.getGlobalDescribe().get(MappedObject.Mapped_Obj__c).getDescribe().fields.getMap().get(MappedObject.Field_Mapping__c).getDescribe();
+            String mappedfield = MappedObject.Field_Mapping__c.split('<!@!>')[0];
+            Schema.DescribeFieldResult f = Schema.getGlobalDescribe().get(MappedObject.Mapped_Obj__c).getDescribe().fields.getMap().get(mappedfield).getDescribe();
             String Objects;
             for (Schema.SObjectType reference : f.getReferenceTo()){
                 Objects = reference.getDescribe().getName();
@@ -1559,7 +1562,19 @@ public without sharing class FormBuilderController{
             }
             List<sObject> ObjectRecords = Database.query(Query);
 
-            return ObjectRecords;
+            referencewrapper rw = new referencewrapper();
+            rw.referenceval = ObjectRecords;
+            
+            Set<String> objectset = new Set<String>{ 'Account', 'Address', 'AlternativePaymentMethod', 'Announcement', 'AppAnalyticsQueryRequest', 'AppointmentTopicTimeSlot', 'ApptBundleAggrDurDnscale', 'ApptBundleAggrPolicy', 'ApptBundleConfig', 'ApptBundlePolicy', 'ApptBundlePolicySvcTerr', 'ApptBundlePropagatePolicy', 'ApptBundleRestrictPolicy', 'ApptBundleSortPolicy', 'Asset', 'AssetDowntimePeriod', 'AssetRelationship', 'AssetWarranty', 'AssociatedLocation', 'AttributeDefinition', 'AuthorizationForm', 'AuthorizationFormConsent', 'AuthorizationFormDataUse', 'AuthorizationFormText', 'BusinessBrand', 'CalendarView', 'Campaign', 'CampaignMember', 'CardPaymentMethod', 'Case', 'CollaborationGroup', 'CollaborationGroupRecord', 'CommSubscription', 'CommSubscriptionChannelType', 'CommSubscriptionConsent', 'CommSubscriptionTiming', 'ConsumptionRate', 'ConsumptionSchedule', 'Contact', 'ContactPointAddress', 'ContactPointConsent', 'ContactPointEmail', 'ContactPointPhone', 'ContactPointTypeConsent', 'ContactRequest', 'ContentVersion', 'Contract', 'ContractGroupPlan', 'ContractGroupPlanGroupClass', 'ContractLineItem', 'Customer', 'DataUseLegalBasis', 'DataUsePurpose', 'DigitalWallet', 'DuplicateRecordItem', 'DuplicateRecordSet', 'EngagementChannelType', 'Entitlement', 'EntitlementContact', 'Error_Handler__c', 'Event', 'Expense', 'ExpenseReport', 'ExpenseReportEntry', 'ExpressionFilter', 'ExpressionFilterCriteria', 'FinanceTransaction', 'FlowRecordRelation', 'GroupCensus', 'GroupCensusMember', 'GroupCensusMemberPlan', 'GroupClass', 'GroupClassContribution', 'Idea', 'Image', 'Individual', 'InsuranceContract', 'JobProfile', 'Lead', 'LegalEntity', 'ListEmail', 'ListEmailIndividualRecipient', 'ListEmailRecipientSource', 'Location', 'LocationGroup', 'LocationGroupAssignment', 'Macro', 'MacroInstruction', 'MaintenanceAsset', 'MaintenancePlan', 'MaintenanceWorkRule', 'Opportunity', 'Order', 'OrgMetric', 'OrgMetricScanResult', 'OrgMetricScanSummary', 'PartyConsent', 'Payment', 'PaymentAuthAdjustment', 'PaymentAuthorization', 'PaymentGateway', 'PaymentGatewayLog', 'PaymentGroup', 'PaymentLineInvoice', 'Pricebook2', 'ProcessException', 'Product2', 'ProductConsumed', 'ProductConsumptionSchedule', 'ProductItem', 'ProductRequest', 'ProductRequestLineItem', 'ProductRequired', 'ProductServiceCampaign', 'ProductServiceCampaignItem', 'ProductTransfer', 'ProductWarrantyTerm', 'ProfileSkill', 'ProfileSkillEndorsement', 'ProfileSkillUser', 'PromptAction', 'PromptError', 'QuickText', 'Recommendation', 'RecommendationResponse', 'RecordAction', 'Refund', 'RefundLinePayment', 'ResourceAbsence', 'ReturnOrder', 'ReturnOrderLineItem', 'SchedulingConstraint', 'Scorecard', 'ScorecardAssociation', 'ScorecardMetric', 'SearchPromotionRule', 'Seller', 'SerializedProduct', 'ServiceAppointment', 'ServiceContract', 'ServiceCrew', 'ServiceCrewMember', 'ServiceResource', 'ServiceResourcePreference', 'ServiceTerritory', 'ServiceTerritoryLocation', 'SetupAssistantStep', 'Shift', 'ShiftTemplate', 'Shipment', 'ShipmentItem', 'Solution', 'Task', 'TimeSheet', 'TimeSheetEntry', 'TravelMode', 'UnitOfMeasure', 'UserEmailPreferredPerson', 'WarrantyTerm', 'WorkAccess', 'WorkBadge', 'WorkBadgeDefinition', 'WorkOrder', 'WorkOrderLineItem', 'WorkPlan', 'WorkPlanSelectionRule', 'WorkPlanTemplate', 'WorkPlanTemplateEntry', 'WorkStep', 'WorkStepTemplate', 'WorkThanks', 'WorkType', 'WorkTypeGroup', 'WorkTypeGroupMember' };
+                
+            if (objectset.contains(Objects)){
+            rw.objicon = 'standard:'+Objects.toLowerCase();
+            }
+             else{
+                rw.objicon = 'custom:custom3';
+             }
+
+            return rw;
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         }
@@ -1572,7 +1587,7 @@ public without sharing class FormBuilderController{
             Form_Fields__c MappedObject = [SELECT Id, Mapped_Obj__c, Field_Mapping__c
                                            FROM Form_Fields__c
                                            WHERE Id = :id];
-
+            String mappedfield = MappedObject.Field_Mapping__c.split('<!@!>')[0];
             Map<String, Schema.SObjectType> gd = Schema.getGlobalDescribe();
             Set<String> objectKeys = gd.keySet();
             Map<String, String> picklistvalue = new Map<String, String>();
@@ -1583,7 +1598,7 @@ public without sharing class FormBuilderController{
             Schema.DescribeSObjectResult r = systemObjectType.getDescribe();
             Map<String, Schema.SObjectField> M = r.fields.getMap();
             Set<String> fieldNames = M.keySet();
-            Schema.SObjectField field = M.get(MappedObject.Field_Mapping__c);
+            Schema.SObjectField field = M.get(mappedfield);
             Schema.DescribeFieldResult fieldDesc = field.getDescribe();
 
 
@@ -1598,6 +1613,73 @@ public without sharing class FormBuilderController{
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         }
+    }
+    @AuraEnabled
+    public static String signatureSave(String fieldId, String fieldData){
+        try{
+            Form_Fields__c formField = [SELECT Id, Form__c
+                                        FROM Form_Fields__c
+                                        WHERE Id = :fieldId];
+            String s = fieldData.replaceFirst('data:image/png;base64,', '');
+            ContentVersion conVer = new ContentVersion();
+            conVer.title = 'signature1456';
+            conVer.versionData = EncodingUtil.base64decode(s);
+            conVer.PathOnClient = 'signature16.png';
+            insert conVer;
+
+            String contentId = [select id, ContentDocumentId
+                                from ContentVersion
+                                WHERE Id = :conVer.Id].ContentDocumentId;
+            ContentDocumentLink cl = new ContentDocumentLink();
+            cl.ContentDocumentId = contentId;
+            cl.LinkedEntityId = formField.Form__c;
+            cl.ShareType = 'V';
+            cl.Visibility = 'AllUsers';
+            insert cl;
+
+            return contentId;
+        } catch (Exception e){
+            // GenericException Exp = ExceptionHandler.logException(e, 'QFFormFieldComponentController', 'signatureSave');
+            return null;
+        }
+    }
+
+    @AuraEnabled
+    public static Id SaveFile(String fieldId, String fileName, String base64Data, String contentType){
+        try{
+            base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');
+            ContentVersion cv = new ContentVersion();
+            cv.Title = fileName;
+            cv.PathOnClient = fileName;
+            cv.VersionData = EncodingUtil.base64Decode(base64Data);
+            cv.IsMajorVersion = true;
+            Insert cv;
+
+            Form_Fields__c formField = [SELECT Id, Form__c
+                                        FROM Form_Fields__c
+                                        WHERE Id = :fieldId];
+            String conDocId = [SELECT ContentDocumentId
+                               FROM ContentVersion
+                               WHERE Id = :cv.Id].ContentDocumentId;
+            ContentDocumentLink cl = new ContentDocumentLink();
+            cl.ContentDocumentId = conDocId;
+            cl.LinkedEntityId = formField.Form__c;
+            cl.ShareType = 'V';
+            cl.Visibility = 'AllUsers';
+            insert cl;
+
+            return conDocId;
+        } catch (Exception e){
+            // GenericException Exp = ExceptionHandler.logException(e, 'QFFormFieldComponentController', 'SaveFile');
+            return null;
+        }
+    }
+    
+    public class referencewrapper{
+        @AuraEnabled
+        public list<SObject> referenceval{ get; set; }
+        @AuraEnabled
+        public String objicon{ get; set; }
     }
 
 }

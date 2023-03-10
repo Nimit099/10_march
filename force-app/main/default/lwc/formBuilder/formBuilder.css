@@ -1489,7 +1489,7 @@ lightning-textarea {
     flex-direction: column;
     /* justify-content: center; */
     height: 100%;
-    padding: 20px 20px 5px 20px;
+    padding: 5px 20px 5px 20px;
 }
 
 .captcha_progressbar_preview_main {

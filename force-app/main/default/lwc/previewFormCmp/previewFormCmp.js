@@ -49,6 +49,7 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
     @track pagecss;
     @track formcss;
     @track btncss;
+    @track lcss;
 
     connectedCallback() {
         this.spinnerDataTable = true;
@@ -110,7 +111,7 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                     this.focuscss = result.All_Field_Focus__c
                     this.fcss = result.All_Field_Styling__c;
                     console.log('fcss -->> '+this.fcss);
-                    this.labelcss = result.Label_CSS__c;
+                    this.lcss = result.Label_CSS__c;
                     let array;
                     let value;
 

@@ -254,33 +254,33 @@
 
         <template if:true={sTrueLink}>
             <div onmouseenter={FieldCSSUpdate}>
-        <template if:true={FieldShown}>
-            <label>
-                <template if:true={labelcheck}>
-                    <div class="flabel">
-                        <template if:true={isReqired}>
-                            <label class="slds-form-element_label">
-                                <abbr class="slds-required" title="required">* </abbr>
-                            </label>
+                <template if:true={FieldShown}>
+                    <label>
+                        <template if:true={labelcheck}>
+                            <div class="flabel">
+                                <template if:true={isReqired}>
+                                    <label class="slds-form-element_label">
+                                        <abbr class="slds-required" title="required">* </abbr>
+                                    </label>
+                                </template>
+                                <label class="slds-form-element__label flabel">
+                                    {labelvalue}
+                                </label>
+                                <template if:true={helptextcheck}>
+                                    <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
+                                </template>
+                            </div>
                         </template>
-                        <label class="slds-form-element__label flabel">
-                            {labelvalue}
-                        </label>
-                        <template if:true={helptextcheck}>
-                            <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
-                        </template>
-                    </div>
-                </template>
-                <div class="slds-form-element__control">
-                    <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                        <div class="slds-form-element__control">
+                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                                 onblur={handleblur1} placeholder={placeholder} type='url' value=""
                                 onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                </div>
+                        </div>
 
-            </label>
-        </template>
+                    </label>
+                </template>
             </div>
-    </template>
+        </template>
 
         <template if:true={sTruePassword}>
             <div onmouseenter={FieldCSSUpdate}>
@@ -549,9 +549,9 @@
             <div onmouseenter={FieldCSSUpdate}>
                 <template if:true={FieldShown}>
                     <label>
-                    <template if:true={labelcheck}>
-                        <div class="flabel">
-                            <template if:true={isReqired}>
+                        <template if:true={labelcheck}>
+                            <div class="flabel">
+                                <template if:true={isReqired}>
                                     <label class="slds-form-element_label">
                                         <abbr class="slds-required" title="required">* </abbr>
                                     </label>
@@ -660,9 +660,9 @@
                             <div class="slds-form slds-form_stacked">
                                 <div class="slds-form-element">
                                     <div class="areatext slds-form-element__control">
-                                        <textarea onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                            onblur={handleblur1} disabled={isdisabled} data-id="street-address"
-                                            class="slds-input" placeholder="Street"></textarea>
+                                        <textarea onmousemove={handlehover} onmouseout={handleblur}
+                                            onfocusin={handlefocus} onblur={handleblur1} disabled={isdisabled}
+                                            data-id="street-address" class="slds-input" placeholder="Street"></textarea>
                                     </div>
                                 </div>
                                 <div class="slds-form-element flex">
@@ -735,9 +735,9 @@
                             <div class="flabel">
                                 <template if:true={isReqired}>
                                     <label class="slds-form-element_label">
-                                    <abbr class="slds-required" title="required">* </abbr>
-                                </label>
-                            </template>
+                                        <abbr class="slds-required" title="required">* </abbr>
+                                    </label>
+                                </template>
                                 <label class="slds-form-element__label flabel">
                                     {labelvalue}
                                 </label>
@@ -747,11 +747,13 @@
                             </div>
                         </template>
                         <div class="slds-form-element__control">
+                            <span class="deleteicon">
                             <input onmousemove={handlehover} onmouseout={handleblur} onkeyup={referencevalues}
-                                onfocusin={handlefocus} onclick={getreferncevalue} value={searchkey} data-id={fieldId}
-                                data-name={fieldstype} onblur={handleblur1} disabled={isdisabled} type="text"
-                                class="slds-input" />
-
+                                onfocusin={handlefocus} onclick={getreferncevalue} data-title="REFERENCE" value={searchkey} data-id={fieldId}
+                                data-name={fieldstype} onblur={handleblur1} disabled={isdisabled} type="search" 
+                                class="slds-input nosubmit fieldcancel " />
+                                <span class="clearref" onclick={clearreference}><img src={blackcross} alt=""></span>
+                            </span>
                             <div if:true={usrViewBool} id="userListView"
                                 class=" slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-dropdown_left">
                                 <ul class="slds-listbox slds-listbox_vertical slds-dropdown_length-5 slds-dropdown_fluid customClass"
@@ -764,8 +766,10 @@
                                                 class="usrnameClass slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
                                                 role="option">
                                                 <span class="slds-media__figure slds-listbox__option-icon">
-                                                    <lightning-icon icon-name="standard:user"
+                                                    <template if:true={usricon}>
+                                                    <lightning-icon icon-name={reficon}
                                                         size="small"></lightning-icon>
+                                                    </template>
                                                 </span>
                                                 <span class="slds-truncate">
                                                     <span>{option.Name}</span>
@@ -867,230 +871,6 @@
                 </template>
             </div>
         </template>
-
-
-
-
-
-
-
-
-
-
-        <!-- <div onmouseenter={FieldCSSUpdate}>
-            <template if:true={FieldShown}>
-                            <label>
-                                {labelvalue}
-                            </label>
-                            <template if:true={helptextcheck}>
-                                <lightning-helptext class="helptxt" content={helptextvalue}></lightning-helptext>
-                            </template>
-                        </div>
-                    </template>
-                    <div class="slds-form-element__control">
-                        <template if:true={sTrueLink}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='url' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTruePassword}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='password' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTrueLongText}>
-                            <textarea onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} disabled={isdisabled} class="slds-input"
-                                placeholder={placeholder}></textarea>
-                        </template>
-                        <template if:true={sTrueName}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='Text' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTrueEmail}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='email' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTrueDateTime}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='datetime-local' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTrueNumber}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='number' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTrueTime}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='Time' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTruePhone}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='number' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTruePercent}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='number' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTrueCurrency}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='number' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTrueDate}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} placeholder={placeholder} type='date' value=""
-                                onclick={OnFieldClick} class="slds-input" disabled={isdisabled} />
-                        </template>
-                        <template if:true={sTrueCheckBox}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                onblur={handleblur1} class={fieldId} placeholder={placeholder} type="checkbox" value=""
-                                name={tView} options={CheckBoxOp} pattern={fieldValidations}
-                                message-when-pattern-mismatch={fieldAttributeValue} onclick={OnFieldClick} key={value}
-                                disabled={isdisabled}></input>
-                        </template>
-                        <template if:true={sTrueAddress}>
-                            <div class="slds-form slds-form_stacked">
-                                <div class="slds-form-element">
-                                    <div class="areatext slds-form-element__control">
-                                        <textarea onmousemove={handlehover} onmouseout={handleblur}
-                                            onfocusin={handlefocus} onblur={handleblur1} disabled={isdisabled}
-                                            class="slds-input" placeholder="Street"></textarea>
-                                    </div>
-                                </div>
-                                <div class="slds-form-element flex">
-                                    <div class="slds-form-element__control leftfield">
-                                        <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                            onblur={handleblur1} disabled={isdisabled} type="text" class="slds-input"
-                                            placeholder="City" />
-                                    </div>
-                                    <div class="slds-form-element__control rightfield">
-                                        <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                            onblur={handleblur1} disabled={isdisabled} type="text" class="slds-input"
-                                            placeholder="State" />
-                                    </div>
-                                </div>
-                                <div class="slds-form-element flex">
-                                    <div class="slds-form-element__control leftfield">
-                                        <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                            onblur={handleblur1} disabled={isdisabled} type="text" class="slds-input"
-                                            placeholder="Zip Code" />
-                                    </div>
-                                    <div class="slds-form-element__control rightfield">
-                                        <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
-                                            onblur={handleblur1} disabled={isdisabled} type="text" class="slds-input"
-                                            placeholder="Country" />
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                        <template if:true={sTruePicklist}>
-                            <select class="slds-input slds-select" onchange={ds} disabled={isdisabled}>
-                                <template for:each={picklistvalue} for:item="value">
-                                    <option value={value.value} key={value}>{value.key}</option>
-                                </template>
-                            </select>
-                        </template>
-                        <template if:true={sTrueRefernce}>
-
-                            <input onmousemove={handlehover} onmouseout={handleblur} onkeyup={referencevalues}
-                                onfocusin={handlefocus} onclick={getreferncevalue} value={searchkey} data-id={fieldId}
-                                data-name={fieldstype} onblur={handleblur1} disabled={isdisabled} type="text"
-                                class="slds-input" />
-
-                            <div if:true={usrViewBool} id="userListView"
-                                class=" slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-dropdown_left">
-                                <ul class="slds-listbox slds-listbox_vertical slds-dropdown_length-5 slds-dropdown_fluid customClass"
-                                    tabindex="0" role="presentation">
-                                    <template for:each={referencevalue} for:item="option">
-                                        <li key={option.Id} role="presentation" class="listbox-item slds-listbox__item"
-                                            data-name={option.Name} onclick={selectreferencevalue} value={option.Id}
-                                            title={option.Name}>
-                                            <div id={option.Id}
-                                                class="usrnameClass slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
-                                                role="option">
-                                                <span class="slds-media__figure slds-listbox__option-icon">
-                                                    <lightning-icon icon-name="standard:user"
-                                                        size="small"></lightning-icon>
-                                                </span>
-                                                <span class="slds-truncate">
-                                                    <span>{option.Name}</span>
-                                                </span>
-                                            </div>
-                                        </li>
-                                    </template>
-                                </ul>
-                            </div>
-                        </template>
-                        <template if:true={sTrueMultiPicklist}>
-                            <div class="multipicklist">
-                                <div class="dropuser slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-dropdown_left"
-                                    style="">
-                                    <ul class="slds-listbox slds-listbox_vertical slds-dropdown_length-5 slds-dropdown_fluid customClass"
-                                        tabindex="0" role="presentation" style="height:100px;">
-                                        <template for:each={picklistvalue} for:item="option">
-                                            <li key={option.value} data-id={option.value} role="presentation"
-                                                class="listbox-item slds-listbox__item" data-name={option.key}
-                                                onclick={selectedvalues} value={option.value} title={option.key}>
-                                                <div id={option.value}
-                                                    class="usrnameClass slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
-                                                    role="option">
-                                                    <span class="slds-media__figure slds-listbox__option-icon">
-                                                        <div data-id={option.value} class="tickicons">
-                                                            <img src={multitick} alt="">
-                                                        </div>
-                                                    </span>
-                                                    <span class="slds-truncate">
-                                                        <span>{option.key}</span>
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </template>
-                                    </ul>
-                                </div>
-
-                                <div class="arrows">
-                                    <div class="" onclick={rightarrowmulti}> <img src={multiright} alt=""></div>
-                                    <div class="" onclick={leftarrowmulti}> <img src={multileft} alt=""> </div>
-                                </div>
-
-                                <div class="dropuser slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-dropdown_left"
-                                    style="">
-                                    <ul class="slds-listbox slds-listbox_vertical slds-dropdown_length-5 slds-dropdown_fluid customClass"
-                                        tabindex="0" role="presentation" style="height:100px;">
-                                        <template for:each={selectedmultipicklistvalues} for:item="option">
-                                            <li key={option.Id} role="presentation"
-                                                class="listbox-item slds-listbox__item" data-name={option.key}
-                                                data-id={option.value} onclick={unselectedvalues} value={option.value}
-                                                title={option.key}>
-                                                <div id={option.value}
-                                                    class="usrnameClass slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
-                                                    role="option">
-                                                    <span class="slds-media__figure slds-listbox__option-icon">
-                                                        <div data-id={option.value} class="tickicons">
-                                                            <img src={multitick} alt="">
-                                                        </div>
-                                                    </span>
-                                                    <span class="slds-truncate">
-                                                        <span>{option.key}</span>
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </template>
-                                    </ul>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </label>
-            </template>
-        </div> -->
     </template>
     <template if:false={fieldtype}>
         <!-- email -->
@@ -1185,7 +965,7 @@
                                     <abbr class="slds-required" title="required">* </abbr>
                                 </label>
                             </template>
-                            <label >
+                            <label>
                                 {labelvalue}
                             </label>
                             <template if:true={helptextcheck}>
@@ -1623,26 +1403,46 @@
                     </template>
                     <div class="starrating">
                         <div class="rate" id={PageId}>
-                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                            <!-- <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                                 onblur={handleblur1} class="slds-input" type="radio" id={ratingfirst} name={ratingfirst}
-                                value="5" onclick={ratingvalue} checked={checkedRating} />
+                                value="5" onchange={ratingvalue} checked={checkedRating} />
                             <label class="ratingfield" for={ratingfirst} title="5 stars">5 stars</label>
                             <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                                 onblur={handleblur1} class="slds-input" type="radio" id={ratingtwo} name={ratingtwo}
-                                value="4" onclick={ratingvalue} checked={checkRating} />
+                                value="4" onchange={ratingvalue} checked={checkRating} />
                             <label class="ratingfield" for={ratingtwo} title="4 stars">4 stars</label>
                             <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                                 onblur={handleblur1} class="slds-input" type="radio" id={ratingthree} name={ratingthree}
-                                value="3" onclick={ratingvalue} checked={checkRating} />
+                                value="3" onchange={ratingvalue} checked={checkRating} />
                             <label class="ratingfield" for={ratingthree} title="3 stars">3 stars</label>
                             <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                                 onblur={handleblur1} class="slds-input" type="radio" id={ratingfour} name={ratingfour}
-                                value="2" onclick={ratingvalue} checked={checkRating} />
+                                value="2" onchange={ratingvalue} checked={checkRating} />
                             <label class="ratingfield" for={ratingfour} title="2 stars">2 stars</label>
                             <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                                 onblur={handleblur1} class="slds-input" type="radio" id={ratingfive} name={ratingfive}
-                                value="1" onclick={ratingvalue} checked={checkRating} />
-                            <label class="ratingfield" for={ratingfive} title="1 stars">1 star</label>
+                                value="1" onchange={ratingvalue} checked={checkRating} />
+                            <label class="ratingfield" for={ratingfive} title="1 stars">1 star</label> -->
+                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                                onblur={handleblur1} class="slds-input" type="radio" id="star35" name="Package"
+                                value="5 Star" onchange={rating} />
+                            <label for="star35" title="text">5 stars</label>
+                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                                onblur={handleblur1} class="slds-input" type="radio" id="star34" name="Package"
+                                value="4 Star" onchange={rating} />
+                            <label for="star34" title="text">4 stars</label>
+                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                                onblur={handleblur1} class="slds-input" type="radio" id="star33" name="Package"
+                                value="3 Star" onchange={rating} />
+                            <label for="star33" title="text">3 stars</label>
+                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                                onblur={handleblur1} class="slds-input" type="radio" id="star32" name="Package"
+                                value="2 Star" onchange={rating} />
+                            <label for="star32" title="text">2 stars</label>
+                            <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                                onblur={handleblur1} class="slds-input" type="radio" id="star31" name="Package"
+                                value="1 Star" onchange={rating} />
+                            <label for="star31" title="text">1 star</label>
                         </div>
                     </div>
                 </template>
@@ -1730,12 +1530,19 @@
                             </tr>
                             <tr>
                                 <td>FeedBack</td>
-                                <template for:each={salutationvalue} for:item="ratng">
+                                <template for:each={salutationvalue} for:item="rating">
                                     <td key={rating}>
-                                        <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
+                                        <!-- <input onmousemove={handlehover} onmouseout={handleblur} onfocusin={handlefocus}
                                             onblur={handleblur1} type="radio" class="radio slds-input" id={rating}
-                                            name={rating} value="5" onclick={ratingvalue} checked={checkedRating}
-                                            style="display:block;margin:auto;width:8rem" />
+                                            name={rating} value={rating} onclick={ratingvalued} checked={checkedRating}
+                                            style="display:block;margin:auto;width:8rem" /> -->
+                                        <div class="likert-style">
+                                            <input onmousemove={handlehover} onmouseout={handleblur}
+                                                onfocusin={handlefocus} onblur={handleblur1} type="radio"
+                                                class="newslds" id={rating} name="rating" value={rating}
+                                                onclick={ratingvalued} checked={checkedRating}
+                                                style="display:block;width:8rem" />
+                                        </div>
                                     </td>
                                 </template>
                             </tr>
