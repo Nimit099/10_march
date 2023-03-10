@@ -16,7 +16,7 @@
                 <label>A</label>
             </value>
             <value>
-                <fullName>B</fullName>
+                <fullName>B__c</fullName>
                 <default>false</default>
                 <label>B</label>
             </value>

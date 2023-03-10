@@ -886,6 +886,7 @@ public without sharing class FormBuilderController{
                 List<String> Objects = form.split(',');
                 List<String> label = Name.split(',');
                 String firstLabel = label[0];
+                String secondlabel = label[1];
                 System.debug(firstLabel);
                 for (String type : Objects){
                     Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
@@ -894,7 +895,7 @@ public without sharing class FormBuilderController{
                     List<String> Fields = new List<String>();
                     for (String fieldName : fieldMap.keySet()){
                         if (fieldMap.get(fieldName).getDescribe().isUpdateable()){
-                            if (fieldMap.get(fieldName).getDescribe().getLabel() == firstLabel){
+                            if (fieldMap.get(fieldName).getDescribe().getLabel() == firstLabel ){
                                 System.debug('##Field API Name=' + fieldName);// list of all field API na
                                 System.debug('type:=>' + type);
                                 field.Mapped_Obj__c = type;
@@ -989,6 +990,17 @@ public without sharing class FormBuilderController{
                 if (Name.split(',')[1] == 'Extra'){
                     field.Mapped_Obj__c = 'Extra';
                     field.Field_Mapping__c = field.Id + '<!@!>' + 'Extra';
+                } else if(Name.split(',')[1] == 'QFADDRESS'){
+                    for (String type : Objects){
+                        Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+                        Schema.SObjectType leadSchema = schemaMap.get(type) ;
+                        Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();    
+                            if (Name.split(',')[1] == 'QFADDRESS'){
+                                    field.Mapped_Obj__c = type;
+                                    field.Field_Mapping__c = fieldMap.get(Name.split(',')[0]) + '<!@!>' + type;
+                            }
+                    }
+
                 }
                 update field;
             }
@@ -1713,7 +1725,7 @@ public without sharing class FormBuilderController{
     }
 
     @AuraEnabled
-    public static void createrecord(Form_Submission__c acc, SObject first_obj_list){
+    public static String createrecord(Form_Submission__c acc, SObject first_obj_list){
         // public static void createrecord(Account acc){
         try{
             System.debug('yasj ' + acc);
@@ -1721,14 +1733,18 @@ public without sharing class FormBuilderController{
             System.debug(acc.name);
             insert acc;
             insert first_obj_list;
-
+            Form__c form = [SELECT Total_Submissions__c FROM Form__c WHERE Id =: acc.Form__c];
+            form.Total_Submissions__c += 1;
+            update form;
+            return acc.Id;
         } catch (Exception e){
             System.debug('error --> ' + e);
+            return null;
         }
     }
 
     @AuraEnabled
-    public static void createrecord_for_secod_object(Form_Submission__c acc, SObject first_obj_list, SObject list_second_obj){
+    public static String createrecord_for_secod_object(Form_Submission__c acc, SObject first_obj_list, SObject list_second_obj){
         try{
             System.debug('yasj ' + acc);
             System.debug(acc.name);
@@ -1743,24 +1759,31 @@ public without sharing class FormBuilderController{
             // tasks.AccountId=first_obj_list.id;
             // // list_second_obj.'AccountId' =first_obj_list.id;
             insert list_second_obj;
-
-
+            Form__c form = [SELECT Total_Submissions__c FROM Form__c WHERE Id =: acc.Form__c];
+            form.Total_Submissions__c += 1;
+            update form;
+            return acc.Id;
         } catch (Exception e){
             System.debug('error --> ' + e);
+            return null;
         }
     }
 
     @AuraEnabled
-    public static void createrecord_for_third_object(Form_Submission__c acc, SObject first_obj_list, SObject list_second_obj, SObject list_third_obj){
+    public static String createrecord_for_third_object(Form_Submission__c acc, SObject first_obj_list, SObject list_second_obj, SObject list_third_obj){
         try{
             System.debug('yasj ' + acc);
             System.debug('yasj first_obj_list' + first_obj_list);
             System.debug(acc.name);
             insert acc;
             insert first_obj_list;
-
+            Form__c form = [SELECT Total_Submissions__c FROM Form__c WHERE Id =: acc.Form__c];
+            form.Total_Submissions__c += 1;
+            update form;
+            return acc.Id;
         } catch (Exception e){
             System.debug('error --> ' + e);
+            return null;
         }
     }
 

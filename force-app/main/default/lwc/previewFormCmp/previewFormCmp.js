@@ -17,7 +17,7 @@ import formpagedetails from '@salesforce/apex/previewFormcmp.formpagedetails';
 import processDecryption from '@salesforce/apex/EncryptDecryptController.processDecryption';
 import bgimages from '@salesforce/apex/previewFormcmp.bgimages';
 import getthankyoupage from '@salesforce/apex/qfthankyou.getthankyoupage';
-
+import sendemailaftersubmission from '@salesforce/apex/previewFormcmp.sendemailaftersubmission';
 import BackButton from '@salesforce/resourceUrl/BackButton';
 
 import {NavigationMixin} from "lightning/navigation";
@@ -590,104 +590,6 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                         this.checkbool = false;
                         let error_msg = 'Please fill out alls required fields.';
                         this.template.querySelector('c-toast-component').showToast('error', error_msg, 3000);
-
-                        getthankyoupage({
-                            currentformid: this.formid
-                        })
-                            .then(result => {
-                               if (result.Thankyou_Page_Type__c == 'None') {
-
-                                let cmpDef = {
-                                    componentDef: "c:thankyouComponent",
-                                    attributes: {
-                                        thankyoutype : result.Thankyou_Page_Type__c,
-                                      }
-                                };
-                                let encodedDef = btoa(JSON.stringify(cmpDef));
-                                console.log('OUTPUT : ', encodedDef);
-                                this[NavigationMixin.Navigate]({
-                                    type: "standard__webPage",
-                                    attributes: {
-                                        url: "/one/one.app#" + encodedDef
-                                    }
-                                });
-                                
-                               } else if(result.Thankyou_Page_Type__c == 'Show Text'){
-
-                                let cmpDef = {
-                                    componentDef: "c:thankyouComponent",
-                                    attributes: {
-                                        thankyoutype : result.Thankyou_Page_Type__c,
-                                        label : result.ThankYou_Label__c,
-                                        changelabel : result.ThankYou_Label__c,
-                                        text : result.Thankyou_Text__c
-                                      }
-                                };
-                                let encodedDef = btoa(JSON.stringify(cmpDef));
-                                console.log('OUTPUT : ', encodedDef);
-                                this[NavigationMixin.Navigate]({
-                                    type: "standard__webPage",
-                                    attributes: {
-                                        url: "/one/one.app#" + encodedDef
-                                    }
-                                });
-
-                               }
-                               else if(result.Thankyou_Page_Type__c == 'Show HTML block'){
-                                let cmpDef = {
-                                    componentDef: "c:thankyouComponent",
-                                    attributes: {
-                                        thankyoutype : result.Thankyou_Page_Type__c,
-                                        label : result.ThankYou_Label__c,
-                                        changelabel : result.ThankYou_Label__c,
-                                        richtext : result.Thankyou_Text__c
-                                      }
-                                };
-                                let encodedDef = btoa(JSON.stringify(cmpDef));
-                                console.log('OUTPUT : ', encodedDef);
-                                this[NavigationMixin.Navigate]({
-                                    type: "standard__webPage",
-                                    attributes: {
-                                        url: "/one/one.app#" + encodedDef
-                                    }
-                                });
-                               }
-                               else if(result.Thankyou_Page_Type__c == 'Redirect to a webpage'){
-                                const config = {
-                                    type: 'standard__webPage',
-                                    attributes: {
-                                        url: result.Thank_you_URL__c
-                                    }
-                                };
-                                this[NavigationMixin.Navigate](config);
-                               }
-                               else if(result.Thankyou_Page_Type__c == 'Show text, then redirect to web page'){
-
-                                let cmpDef = {
-                                    componentDef: "c:thankyouComponent",
-                                    attributes: {
-                                        thankyoutype : result.Thankyou_Page_Type__c,
-                                        label : result.ThankYou_Label__c,
-                                        changelabel : result.ThankYou_Label__c,
-                                        text : result.Thankyou_Text__c,
-                                        url :  result.Thank_you_URL__c
-                                      }
-                                };
-                                let encodedDef = btoa(JSON.stringify(cmpDef));
-                                console.log('OUTPUT : ', encodedDef);
-                                this[NavigationMixin.Navigate]({
-                                    type: "standard__webPage",
-                                    attributes: {
-                                        url: "/one/one.app#" + encodedDef
-                                    }
-                                });
-
-                               }
-                            })
-                            .catch(error => {
-                                console.log(error);
-                                this.spinnerDataTable = false;
-                            });
                         break;
                     }
                 }
@@ -796,6 +698,7 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
         }
     }
     onsubmit(event) {
+        var submissionid;
         let list_submission_obj = {
             'sobjectType': 'Form_Submission__c'
         };
@@ -814,9 +717,10 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                 first_obj_list: this.list_first_obj
             })
                 .then(data => {
-                    console.log({
-                        data
-                    });
+                        submissionid = data;
+                        this.redirecttothankyou(submissionid);
+                        this.sendnotification(submissionid);
+                        console.log((submissionid) + 'ids');
                     alert('y r data is save');
                 })
                 .catch(error => {
@@ -835,6 +739,9 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                     console.log({
                         data
                     });
+                    submissionid = data;
+                    this.redirecttothankyou(submissionid);
+                    this.sendnotification(submissionid);
                     alert('y r data is save');
                 })
                 .catch(error => {
@@ -855,7 +762,10 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                     console.log({
                         data
                     });
-                    alert('y r data is save');
+                    submissionid = data;
+                   this.redirecttothankyou(submissionid);
+                   this.sendnotification(submissionid);
+                    alert('your data is save');
                 })
                 .catch(error => {
                     console.log({
@@ -864,6 +774,7 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                 })
 
         }
+
 
     }
     next_val_by(event) {
@@ -985,5 +896,119 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
         console.log('Store field data OUTPUT : ', JSON.parse(JSON.stringify(this.list_third_obj)));
         console.log('Store field data OUTPUT : ', JSON.parse(JSON.stringify(this.list_ext_obj)));
 
+    }
+
+    redirecttothankyou(submissionid){
+// TO REDIRECT TO THANK YOU PAGE
+    getthankyoupage({
+        currentformid: this.formid
+    })
+    .then(result => {
+       if (result.Thankyou_Page_Type__c == 'None') {
+
+        // let cmpDef = {
+        //     componentDef: "c:thankyouComponent",
+        //     attributes: {
+        //         thankyoutype : result.Thankyou_Page_Type__c,
+        //       }
+        // };
+        // let encodedDef = btoa(JSON.stringify(cmpDef));
+        // console.log('OUTPUT : ', encodedDef);
+        // this[NavigationMixin.Navigate]({
+        //     type: "standard__webPage",
+        //     attributes: {
+        //         url: "/one/one.app#" + encodedDef
+        //     }
+        // });
+        
+       } else if(result.Thankyou_Page_Type__c == 'Show Text'){
+
+        let cmpDef = {
+            componentDef: "c:thankyouComponent",
+            attributes: {
+                thankyoutype : result.Thankyou_Page_Type__c,
+                label : result.ThankYou_Label__c,
+                changelabel : result.ThankYou_Label__c,
+                text : result.Thankyou_Text__c
+              }
+        };
+        let encodedDef = btoa(JSON.stringify(cmpDef));
+        console.log('OUTPUT : ', encodedDef);
+        this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+                url: "/one/one.app#" + encodedDef
+            }
+        });
+
+       }
+       else if(result.Thankyou_Page_Type__c == 'Show HTML block'){
+        let cmpDef = {
+            componentDef: "c:thankyouComponent",
+            attributes: {
+                thankyoutype : result.Thankyou_Page_Type__c,
+                label : result.ThankYou_Label__c,
+                changelabel : result.ThankYou_Label__c,
+                richtext : result.Thankyou_Text__c
+              }
+        };
+        let encodedDef = btoa(JSON.stringify(cmpDef));
+        console.log('OUTPUT : ', encodedDef);
+        this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+                url: "/one/one.app#" + encodedDef
+            }
+        });
+       }
+       else if(result.Thankyou_Page_Type__c == 'Redirect to a webpage'){
+        const config = {
+            type: 'standard__webPage',
+            attributes: {
+                url: result.Thank_you_URL__c
+            }
+        };
+        this[NavigationMixin.Navigate](config);
+       }
+       else if(result.Thankyou_Page_Type__c == 'Show text, then redirect to web page'){
+
+        let cmpDef = {
+            componentDef: "c:thankyouComponent",
+            attributes: {
+                thankyoutype : result.Thankyou_Page_Type__c,
+                label : result.ThankYou_Label__c,
+                changelabel : result.ThankYou_Label__c,
+                text : result.Thankyou_Text__c,
+                url :  result.Thank_you_URL__c
+              }
+        };
+        this[NavigationMixin.Navigate](config1);
+        let encodedDef = btoa(JSON.stringify(cmpDef));
+        console.log('OUTPUT : ', encodedDef);
+        this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+                url: "/one/one.app#" + encodedDef
+            }
+        });
+
+       }
+       else if(result.Thankyou_Page_Type__c == 'Show report of User data'){}
+    })
+    .catch(error => {
+        console.log(error);
+        this.spinnerDataTable = false;
+    });
+// TO REDIRECT TO THANK YOU PAGE
+    }
+    sendnotification(submissionids){
+        console.log(this.formid, submissionids, 'swd');
+        sendemailaftersubmission({
+            formid: this.formid,
+            submissionid : submissionids
+        })
+        .then(result => {
+            console.log(result);
+        });
     }
 }
