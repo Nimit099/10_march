@@ -1,16 +1,4 @@
-import {
-    LightningElement,
-    track,
-    api
-} from 'lwc';
-
-// import GetFormPage from '@salesforce/apex/FormBuilderController.GetFormPage'; // Form Page 
-// import getFieldsRecords from '@salesforce/apex/FormBuilderController.getFieldsRecords'; // Form Field
-// import getFormCSS from '@salesforce/apex/FormBuilderController.getFormCSS'; // Form
-// import getPageCSS from '@salesforce/apex/FormBuilderController.getPageCSS';// Form
-// import getButtonCSS from '@salesforce/apex/FormBuilderController.getButtonCSS'; // Form
-// import getprogressbar from '@salesforce/apex/FormBuilderController.getprogressbar'; // Form
-// import getcaptcha from '@salesforce/apex/FormBuilderController.getcaptcha'; // Form
+import { LightningElement,track,api} from 'lwc';
 import formdetails from '@salesforce/apex/previewFormcmp.formdetails';
 import formfielddetails from '@salesforce/apex/previewFormcmp.formfielddetails';
 import formpagedetails from '@salesforce/apex/previewFormcmp.formpagedetails';
@@ -20,7 +8,7 @@ import getthankyoupage from '@salesforce/apex/qfthankyou.getthankyoupage';
 import sendemailaftersubmission from '@salesforce/apex/previewFormcmp.sendemailaftersubmission';
 import BackButton from '@salesforce/resourceUrl/BackButton';
 
-import {NavigationMixin} from "lightning/navigation";
+import { NavigationMixin } from "lightning/navigation";
 
 // add by yash
 import getFieldsRecords_page from '@salesforce/apex/FormBuilderController.getFieldsRecords_page';
@@ -465,24 +453,24 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
         if (event.currentTarget.dataset.name == 'previous') {
             // this.error_josn_key_list = [];
             if (this.error_josn_key_list.length == 0) {
-            if (this.pageindex == 1) {
-                this.isIndexZero = true;
-            } else if (this.PageList.length > this.pageindex) {
-                this.pageindex--;
                 if (this.pageindex == 1) {
-                    this.isIndexLast = false;
                     this.isIndexZero = true;
-                }
-            } else if (this.PageList.length == this.pageindex) {
-                this.pageindex--;
-                this.isIndexLast = false;
-                if (this.pageindex == 1) {
+                } else if (this.PageList.length > this.pageindex) {
+                    this.pageindex--;
+                    if (this.pageindex == 1) {
+                        this.isIndexLast = false;
+                        this.isIndexZero = true;
+                    }
+                } else if (this.PageList.length == this.pageindex) {
+                    this.pageindex--;
                     this.isIndexLast = false;
-                    this.isIndexZero = true;
+                    if (this.pageindex == 1) {
+                        this.isIndexLast = false;
+                        this.isIndexZero = true;
+                    }
                 }
-            }
-            this.page = this.Mainlist[this.pageindex - 1];
-            this.template.querySelector('c-progress-indicator').calculation(this.Progressbarvalue, this.pageindex, this.PageList.length);
+                this.page = this.Mainlist[this.pageindex - 1];
+                this.template.querySelector('c-progress-indicator').calculation(this.Progressbarvalue, this.pageindex, this.PageList.length);
             }
         } else if (event.currentTarget.dataset.name == 'next') {
             console.log('this.custom_validation :-', this.error_josn_key_list.length);
@@ -659,29 +647,29 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
             console.log('u r in checkbool if');
             console.log('current_bt :- ', this.current_bt);
             if (this.current_bt == 'next') {
-            if (this.pageindex == 1) {
+                if (this.pageindex == 1) {
 
-                if (this.pageindex == this.PageList.length) {
-                    this.isIndexZero = false;
-                    this.isIndexLast = true;
-                } else {
+                    if (this.pageindex == this.PageList.length) {
+                        this.isIndexZero = false;
+                        this.isIndexLast = true;
+                    } else {
+                        this.pageindex++;
+                        this.isIndexZero = false;
+                        this.isIndexLast = false;
+                        if (this.pageindex == this.PageList.length) {
+                            this.isIndexLast = true;
+                        }
+                    }
+                } else if (this.PageList.length > this.pageindex) {
                     this.pageindex++;
-                    this.isIndexZero = false;
-                    this.isIndexLast = false;
                     if (this.pageindex == this.PageList.length) {
                         this.isIndexLast = true;
+                    } else {
+                        this.isIndexLast = false;
                     }
-                }
-            } else if (this.PageList.length > this.pageindex) {
-                this.pageindex++;
-                if (this.pageindex == this.PageList.length) {
-                    this.isIndexLast = true;
-                } else {
-                    this.isIndexLast = false;
-                }
-            } else if (this.PageList.length == this.pageindex) { }
-            this.page = this.Mainlist[this.pageindex - 1];
-            this.template.querySelector('c-progress-indicator').calculation(this.Progressbarvalue, this.pageindex, this.PageList.length);
+                } else if (this.PageList.length == this.pageindex) { }
+                this.page = this.Mainlist[this.pageindex - 1];
+                this.template.querySelector('c-progress-indicator').calculation(this.Progressbarvalue, this.pageindex, this.PageList.length);
             } else if (this.current_bt == 'submit') {
                 console.log('u r clike submit bt ',);
                 if (this.verify == true) {
@@ -690,8 +678,8 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                     this.template.querySelector('c-toast-component').showToast('success', toast_error_msg, 3000);
                     this.onsubmit();
                 } else {
-                let toast_error_msg = 'Invalid Captcha';
-                this.template.querySelector('c-toast-component').showToast('error', toast_error_msg, 3000);
+                    let toast_error_msg = 'Invalid Captcha';
+                    this.template.querySelector('c-toast-component').showToast('error', toast_error_msg, 3000);
                 }
 
             }
@@ -717,11 +705,10 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                 first_obj_list: this.list_first_obj
             })
                 .then(data => {
-                        submissionid = data;
-                        this.redirecttothankyou(submissionid);
-                        this.sendnotification(submissionid);
-                        console.log((submissionid) + 'ids');
-                    alert('y r data is save');
+                    submissionid = data;
+                    this.redirecttothankyou(submissionid);
+                    this.sendnotification(submissionid);
+                    console.log((submissionid) + 'ids');
                 })
                 .catch(error => {
                     console.log({
@@ -763,8 +750,9 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                         data
                     });
                     submissionid = data;
-                   this.redirecttothankyou(submissionid);
-                   this.sendnotification(submissionid);
+                    console.log(submissionid);
+                    this.redirecttothankyou(submissionid);
+                    this.sendnotification(submissionid);
                     alert('your data is save');
                 })
                 .catch(error => {
@@ -872,14 +860,14 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                 this.list_third_obj[nameArr[0]] = nameArr[2];
 
             }
-            } else {
+        } else {
             for (let i = 0; i < this.list_ext_obj.length; i++) {
                 if (this.list_ext_obj[i] == nameArr[0]) {
                     console.log('u r in for loop if ');
                     testt = 'yes'
                     ind = i;
+                }
             }
-        }
             if (testt == 'yes') {
                 console.log(' u r in testt if');
                 this.list_ext_obj[ind].filde_vlue = nameArr[2];
@@ -888,7 +876,7 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
                 console.log(' u r in testt else');
                 this.list_ext_obj[nameArr[0]] = nameArr[2];
 
-    }
+            }
 
         }
         console.log('Store field data OUTPUT : ', JSON.parse(JSON.stringify(this.list_first_obj)));
@@ -898,117 +886,95 @@ export default class PreviewFormCmp extends NavigationMixin(LightningElement) {
 
     }
 
-    redirecttothankyou(submissionid){
-// TO REDIRECT TO THANK YOU PAGE
-    getthankyoupage({
-        currentformid: this.formid
-    })
-    .then(result => {
-       if (result.Thankyou_Page_Type__c == 'None') {
+    redirecttothankyou(submissionid) {
+        // TO REDIRECT TO THANK YOU PAGE
+        getthankyoupage({
+            currentformid: this.formid
+        })
+            .then(result => {
+                if (result.Thankyou_Page_Type__c == 'None') { }
 
-        // let cmpDef = {
-        //     componentDef: "c:thankyouComponent",
-        //     attributes: {
-        //         thankyoutype : result.Thankyou_Page_Type__c,
-        //       }
-        // };
-        // let encodedDef = btoa(JSON.stringify(cmpDef));
-        // console.log('OUTPUT : ', encodedDef);
-        // this[NavigationMixin.Navigate]({
-        //     type: "standard__webPage",
-        //     attributes: {
-        //         url: "/one/one.app#" + encodedDef
-        //     }
-        // });
-        
-       } else if(result.Thankyou_Page_Type__c == 'Show Text'){
+                else if (result.Thankyou_Page_Type__c == 'Show Text') {
 
-        let cmpDef = {
-            componentDef: "c:thankyouComponent",
-            attributes: {
-                thankyoutype : result.Thankyou_Page_Type__c,
-                label : result.ThankYou_Label__c,
-                changelabel : result.ThankYou_Label__c,
-                text : result.Thankyou_Text__c
-              }
-        };
-        let encodedDef = btoa(JSON.stringify(cmpDef));
-        console.log('OUTPUT : ', encodedDef);
-        this[NavigationMixin.Navigate]({
-            type: "standard__webPage",
-            attributes: {
-                url: "/one/one.app#" + encodedDef
-            }
-        });
+                    let cmpDef = {
+                        componentDef: "c:thankyouComponent",
+                        attributes: {
+                            thankyoutype: result.Thankyou_Page_Type__c,
+                            label: result.ThankYou_Label__c,
+                            changelabel: result.ThankYou_Label__c,
+                            text: result.Thankyou_Text__c
+                        }
+                    };
+                    let encodedDef = btoa(JSON.stringify(cmpDef));
+                    console.log('OUTPUT : ', encodedDef);
+                    this[NavigationMixin.Navigate]({
+                        type: "standard__webPage",
+                        attributes: {
+                            url: "/one/one.app#" + encodedDef
+                        }
+                    });
 
-       }
-       else if(result.Thankyou_Page_Type__c == 'Show HTML block'){
-        let cmpDef = {
-            componentDef: "c:thankyouComponent",
-            attributes: {
-                thankyoutype : result.Thankyou_Page_Type__c,
-                label : result.ThankYou_Label__c,
-                changelabel : result.ThankYou_Label__c,
-                richtext : result.Thankyou_Text__c
-              }
-        };
-        let encodedDef = btoa(JSON.stringify(cmpDef));
-        console.log('OUTPUT : ', encodedDef);
-        this[NavigationMixin.Navigate]({
-            type: "standard__webPage",
-            attributes: {
-                url: "/one/one.app#" + encodedDef
-            }
-        });
-       }
-       else if(result.Thankyou_Page_Type__c == 'Redirect to a webpage'){
-        const config = {
-            type: 'standard__webPage',
-            attributes: {
-                url: result.Thank_you_URL__c
-            }
-        };
-        this[NavigationMixin.Navigate](config);
-       }
-       else if(result.Thankyou_Page_Type__c == 'Show text, then redirect to web page'){
-
-        let cmpDef = {
-            componentDef: "c:thankyouComponent",
-            attributes: {
-                thankyoutype : result.Thankyou_Page_Type__c,
-                label : result.ThankYou_Label__c,
-                changelabel : result.ThankYou_Label__c,
-                text : result.Thankyou_Text__c,
-                url :  result.Thank_you_URL__c
-              }
-        };
-        this[NavigationMixin.Navigate](config1);
-        let encodedDef = btoa(JSON.stringify(cmpDef));
-        console.log('OUTPUT : ', encodedDef);
-        this[NavigationMixin.Navigate]({
-            type: "standard__webPage",
-            attributes: {
-                url: "/one/one.app#" + encodedDef
-            }
-        });
-
-       }
-       else if(result.Thankyou_Page_Type__c == 'Show report of User data'){}
-    })
-    .catch(error => {
-        console.log(error);
-        this.spinnerDataTable = false;
-    });
-// TO REDIRECT TO THANK YOU PAGE
+                }
+                else if (result.Thankyou_Page_Type__c == 'Show HTML block') {
+                    let cmpDef = {
+                        componentDef: "c:thankyouComponent",
+                        attributes: {
+                            thankyoutype: result.Thankyou_Page_Type__c,
+                            label: result.ThankYou_Label__c,
+                            changelabel: result.ThankYou_Label__c,
+                            richtext: result.Thankyou_Text__c
+                        }
+                    };
+                    let encodedDef = btoa(JSON.stringify(cmpDef));
+                    console.log('OUTPUT : ', encodedDef);
+                    this[NavigationMixin.Navigate]({
+                        type: "standard__webPage",
+                        attributes: {
+                            url: "/one/one.app#" + encodedDef
+                        }
+                    });
+                }
+                else if (result.Thankyou_Page_Type__c == 'Redirect to a webpage') {
+                    window.open(result.Thank_you_URL__c);
+                }
+                else if (result.Thankyou_Page_Type__c == 'Show text, then redirect to web page') {
+                    let cmpDef = {
+                        componentDef: "c:thankyouComponent",
+                        attributes: {
+                            thankyoutype: result.Thankyou_Page_Type__c,
+                            label: result.ThankYou_Label__c,
+                            changelabel: result.ThankYou_Label__c,
+                            text: result.Thankyou_Text__c,
+                            url: result.Thank_you_URL__c
+                        }
+                    };
+                    let encodedDef = btoa(JSON.stringify(cmpDef));
+                    console.log('OUTPUT : ', encodedDef);
+                    this[NavigationMixin.Navigate]({
+                        type: "standard__webPage",
+                        attributes: {
+                            url: "/one/one.app#" + encodedDef
+                        }
+                    });
+                }
+                else if (result.Thankyou_Page_Type__c == 'Show report of User data') {
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                this.spinnerDataTable = false;
+            });
+        // TO REDIRECT TO THANK YOU PAGE
     }
-    sendnotification(submissionids){
-        console.log(this.formid, submissionids, 'swd');
+    sendnotification(submissionids) {
         sendemailaftersubmission({
             formid: this.formid,
-            submissionid : submissionids
+            submissionid: submissionids
         })
-        .then(result => {
-            console.log(result);
-        });
+            .then(result => {
+                console.log(result);
+            }).catch(error => {
+                console.log('error;= ', JSON.stringify(error.body.message));
+            })
     }
 }

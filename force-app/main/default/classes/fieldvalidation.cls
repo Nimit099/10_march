@@ -27,12 +27,13 @@ public without sharing class fieldvalidation {
         }
     }
     @AuraEnabled
-    public static void savevalidation(Id fieldId, String fieldValidation){
+    public static void savevalidation(Id fieldId, String fieldValidation, String Label){
         try {
             System.debug(fieldValidation);
             fieldValidation = fieldValidation.replaceAll('"', '');
             Form_Fields__c field = [SELECT Id,Field_Validations__c	FROM Form_Fields__c WHERE Id =: fieldId];
             field.Field_Validations__c = fieldValidation;
+            field.Field_Label__c = Label;
             update field;
         } catch (Exception e) {
             error_handler.insert_errordata(e,'fieldvalidation','savevalidation');

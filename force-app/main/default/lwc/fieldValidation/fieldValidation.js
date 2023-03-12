@@ -245,7 +245,7 @@ export default class FieldValidation extends LightningElement {
                 }
 
                 if (this.maximumvalue > this.minimumvalue) {
-                    savevalidation({ fieldId: this.fieldId, fieldValidation: this.fieldValidation })
+                    savevalidation({ fieldId: this.fieldId, fieldValidation: this.fieldValidation, Label: this.labelvalue })
                         .then(result => {
                             event.preventDefault();
                             const selectEvent = new CustomEvent('closevalidation', {

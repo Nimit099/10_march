@@ -114,6 +114,20 @@
                     <div class="page-end"></div>
                 </apex:outputPanel>
 
+                <apex:outputPanel rendered="{!isOtherObject}">
+                    <div class="page-data">
+                        <div class="pg-obj-titile">{!formData.OtherObjectFieldMap['sobjectType']}</div>
+                        <apex:repeat value="{!formData.OtherObjectFieldMap}" var="field">
+                            <apex:outputPanel rendered="{!field !='sobjectType'}">
+                                <tr>
+                                    <td class="field-txt">{!field}</td>
+                                    <td> : {!formData.OtherObjectFieldMap[field]}</td>
+                                </tr>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    </div>
+                    <div class="page-end"></div>
+                </apex:outputPanel>
             </div>
         </div>
     </body>

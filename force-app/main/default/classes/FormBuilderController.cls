@@ -917,6 +917,7 @@ public without sharing class FormBuilderController{
                 field.Form__c = Form_Id;
                 field.Form_Page__c = Form_Page_Id;
                 field.Field_Order__c = Position + 1;
+                field.Field_Label__c =  Name.split(',')[0].replace('QF', '').toUpperCase();
                 if (Name.split(',')[0].replace('QF', '') == 'RADIOBUTTON' || Name.split(',')[0].replace('QF', '') == 'CHECKBOX'){
                     field.Field_Validations__c = 'isRequired<!@!>false' + 
                              '?$`~isDisabled<!@!>false' + 
@@ -1200,6 +1201,7 @@ public without sharing class FormBuilderController{
                                 field.Form__c = FormDetail.Id;
                                 field.Form_Page__c = page_Id.Id;
                                 field.Field_Order__c = Position + 1;
+                                field.Field_Label__c = fieldMap.get(fieldName).getDescribe().getLabel().toUpperCase();
                                 field.Field_Validations__c = 'isRequired<!@!>true' + 
                                                              '?$`~isDisabled<!@!>false' + 
                                                              '?$`~isLabel<!@!>true' + 

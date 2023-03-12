@@ -55,29 +55,33 @@ public without sharing class previewFormcmp {
     public static string sendemailaftersubmission(Id formid, Id submissionid){
         try {
             Notification__c notify = [SELECT Id,To_Recipients__c,CC_Recipients__c,BCC_Recipients__c,Subject__c,Email_Body__c,Attachment__c FROM Notification__c WHERE Form__c =: formid];
+            if(notify != null || notify.Id != null){
             String recipientList = notify.To_Recipients__c;
             String ccmaillist = notify.CC_Recipients__c;
+            String bccmaillist = notify.BCC_Recipients__c;
             String messageBody = notify.Email_Body__c;
             String messageSubject = notify.Subject__c;
             boolean attachmentpdf = notify.Attachment__c;
             List<String> ccAddresses = new List<String>();
+            List<String> bccAddresses = new List<String>();
             List<String> toAddresses = recipientList.split(',');
 
-            // ccmaillist = ccmaillist.replace('[','').replace(']','').replace('"','');
             if(String.isNotBlank(ccmaillist)){
             ccAddresses = ccmaillist.split(',');
+            }
+            if(String.isNotBlank(bccmaillist)){
+                bccAddresses = bccmaillist.split(',');
             }
 
             if(toAddresses.size() != 0 ){
                 Messaging.SingleEmailMessage emailNotification = new Messaging.SingleEmailMessage();
                 emailNotification.setToAddresses(toAddresses);
-                // emailNotification.setReplyTo(replyToEmail);
                 if(ccAddresses.size() > 0){
                     emailNotification.setCCaddresses(ccAddresses);
                 }
-                // else if(ccAddresses.size() != 1){
-                //     emailNotification.setCCaddresses(ccAddresses);
-                // }
+                if(bccAddresses.size() > 0){
+                    emailNotification.setBCCaddresses(bccAddresses);
+                }
                 emailNotification.setSubject(messageSubject);
                 emailNotification.setHtmlBody(messageBody);
 
@@ -98,6 +102,7 @@ public without sharing class previewFormcmp {
                 }
                 Messaging.SendEmailResult [] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {emailNotification});
             }
+        }
             return 'Success';
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
